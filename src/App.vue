@@ -1,12 +1,34 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view />
+    <van-tabbar v-model="activeTabbar" v-show="showTabbar">
+      <van-tabbar-item name="home" to="/">
+        首页
+      </van-tabbar-item>
+      <van-tabbar-item name="learning" to="/">
+        学习
+      </van-tabbar-item>
+      <van-tabbar-item name="jobs" to="/">
+        就业
+      </van-tabbar-item>
+      <van-tabbar-item name="account" to="/">
+        我的
+      </van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      // todo 通过vuex控制
+      activeTabbar: 'home',
+      showTabbar: true
+    };
+  }
+};
+</script>
 
 <style>
 #app {
