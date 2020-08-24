@@ -26,6 +26,16 @@ const routes = [
     component: () => import('../views/learning/index.vue')
   },
   {
+    path: '/learning/practise',
+    name: 'practise',
+    component: () => import('../views/learning/practise.vue')
+  },
+  {
+    path: '/learning/exam',
+    name: 'exam',
+    component: () => import('../views/learning/exam.vue')
+  },
+  {
     path: '/train/detail/:id',
     name: 'traingDetail',
     component: () => import('../views/learning/train-detail.vue')
