@@ -1229,7 +1229,7 @@
   resolved "https://registry.npm.taobao.org/@vue/cli-overlay/download/@vue/cli-overlay-4.5.4.tgz#e07e3ccc2e4d770d4fdbd45cdde777d592822c19"
   integrity sha1-4H48zC5Ndw1P29Rc3ed31ZKCLBk=
 
-"@vue/cli-plugin-babel@^4.5.0":
+"@vue/cli-plugin-babel@~4.5.0":
   version "4.5.4"
   resolved "https://registry.npm.taobao.org/@vue/cli-plugin-babel/download/@vue/cli-plugin-babel-4.5.4.tgz#a01cdcb3d46064675dd88d61b640adadcc851e2b"
   integrity sha1-oBzcs9RgZGdd2I1htkCtrcyFHis=
@@ -1266,7 +1266,7 @@
   resolved "https://registry.npm.taobao.org/@vue/cli-plugin-vuex/download/@vue/cli-plugin-vuex-4.5.4.tgz#6296e307388f61132117e0ac03188013652b0c55"
   integrity sha1-YpbjBziPYRMhF+CsAxiAE2UrDFU=
 
-"@vue/cli-service@^4.5.0":
+"@vue/cli-service@~4.5.0":
   version "4.5.4"
   resolved "https://registry.npm.taobao.org/@vue/cli-service/download/@vue/cli-service-4.5.4.tgz#f903edf555d107404624de2fed5996da8cedc524"
   integrity sha1-+QPt9VXRB0BGJN4v7VmW2oztxSQ=
@@ -2468,7 +2468,7 @@ clone@^1.0.2:
   resolved "https://registry.npm.taobao.org/clone/download/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-clone@^2.1.2:
+clone@^2.1.1:
   version "2.1.2"
   resolved "https://registry.npm.taobao.org/clone/download/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
@@ -5092,17 +5092,16 @@ launch-editor@^2.2.1:
     chalk "^2.3.0"
     shell-quote "^1.6.1"
 
-less-loader@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.npm.taobao.org/less-loader/download/less-loader-6.2.0.tgz?cache=0&sync_timestamp=1593788012269&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fless-loader%2Fdownload%2Fless-loader-6.2.0.tgz#8b26f621c155b342eefc24f5bd6e9dc40c42a719"
-  integrity sha1-iyb2IcFVs0Lu/CT1vW6dxAxCpxk=
+less-loader@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npm.taobao.org/less-loader/download/less-loader-5.0.0.tgz?cache=0&sync_timestamp=1593788012269&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fless-loader%2Fdownload%2Fless-loader-5.0.0.tgz#498dde3a6c6c4f887458ee9ed3f086a12ad1b466"
+  integrity sha1-SY3eOmxsT4h0WO6e0/CGoSrRtGY=
   dependencies:
-    clone "^2.1.2"
-    less "^3.11.3"
-    loader-utils "^2.0.0"
-    schema-utils "^2.7.0"
+    clone "^2.1.1"
+    loader-utils "^1.1.0"
+    pify "^4.0.1"
 
-less@^3.11.3:
+less@^3.0.4:
   version "3.12.2"
   resolved "https://registry.npm.taobao.org/less/download/less-3.12.2.tgz?cache=0&sync_timestamp=1594913935278&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fless%2Fdownload%2Fless-3.12.2.tgz#157e6dd32a68869df8859314ad38e70211af3ab4"
   integrity sha1-FX5t0ypohp34hZMUrTjnAhGvOrQ=

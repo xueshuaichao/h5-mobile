@@ -26,19 +26,44 @@ const routes = [
     component: () => import('../views/learning/index.vue')
   },
   {
-    path: '/train/detail/:id',
+    path: '/learning/live',
+    name: 'exam',
+    component: () => import('../views/learning/live.vue')
+  },
+  {
+    path: '/learning/practise',
+    name: 'practise',
+    component: () => import('../views/learning/practise.vue')
+  },
+  {
+    path: '/learning/exam',
+    name: 'exam',
+    component: () => import('../views/learning/exam.vue')
+  },
+  {
+    path: '/learning/report',
+    name: 'report',
+    component: () => import('../views/learning/report.vue')
+  },
+  {
+    path: '/learning/train/:id',
     name: 'trainDetail',
     component: () => import('../views/learning/train-detail.vue')
   },
   {
-    path: '/train/course/:id',
+    path: '/learning/course/:id',
     name: 'courseDetail',
     component: () => import('../views/learning/course.vue')
   },
   {
-    path: '/train/live/:id',
+    path: '/learning/live/:id',
     name: 'liveDetail',
     component: () => import('../views/learning/live.vue')
+  },
+  {
+    path: '/ykx',
+    name: 'ykx',
+    component: () => import('../components/interactItem.vue')
   }
 ];
 
