@@ -27,8 +27,18 @@ const routes = [
   },
   {
     path: '/train/detail/:id',
-    name: 'traingDetail',
+    name: 'trainDetail',
     component: () => import('../views/learning/train-detail.vue')
+  },
+  {
+    path: '/train/course/:id',
+    name: 'courseDetail',
+    component: () => import('../views/learning/course.vue')
+  },
+  {
+    path: '/train/live/:id',
+    name: 'liveDetail',
+    component: () => import('../views/learning/live.vue')
   }
 ];
 
