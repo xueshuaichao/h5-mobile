@@ -26,6 +26,11 @@ const routes = [
     component: () => import('../views/learning/index.vue')
   },
   {
+    path: '/learning/live',
+    name: 'exam',
+    component: () => import('../views/learning/live.vue')
+  },
+  {
     path: '/learning/practise',
     name: 'practise',
     component: () => import('../views/learning/practise.vue')
@@ -34,6 +39,11 @@ const routes = [
     path: '/learning/exam',
     name: 'exam',
     component: () => import('../views/learning/exam.vue')
+  },
+  {
+    path: '/learning/report',
+    name: 'report',
+    component: () => import('../views/learning/report.vue')
   },
   {
     path: '/train/detail/:id',

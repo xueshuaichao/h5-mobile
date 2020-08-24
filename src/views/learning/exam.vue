@@ -1,7 +1,7 @@
 <template>
     <div>
         <van-nav-bar
-            title="期末考试"
+            :title="type=='exam'? '期末考试' : '章节作业'"
             right-text="答题卡"
             left-arrow
             @click-left="goback"
@@ -53,7 +53,8 @@
         name: "exam",
         data: ()=>{
             return {
-                isAnswerCardShow: true,
+                type: 'exam',
+                isAnswerCardShow: false,
                 time: 40 * 60 * 1000,
                 index: 0,
                 list: [
@@ -71,6 +72,9 @@
                     }
                 ]
             }
+        },
+        created() {
+            this.type = this.$route.query.type || 'exam';
         },
         methods: {
             indexToString:indexToString,
