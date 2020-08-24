@@ -29,6 +29,11 @@ const routes = [
     path: '/train/detail/:id',
     name: 'traingDetail',
     component: () => import('../views/learning/train-detail.vue')
+  },
+  {
+    path: '/ykx',
+    name: 'ykx',
+    component: () => import('../components/interactItem.vue')
   }
 ];
 
