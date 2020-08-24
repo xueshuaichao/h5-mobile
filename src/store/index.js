@@ -5,10 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    showTabbar: true,
-    activeTabbar: 'home'
+    tabbar: {
+      show: true,
+      active: 'home'
+    }
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    setTabbar(state, payload) {
+      state.tabbar = { ...state.tabbar, ...payload };
+    }
+  },
   modules: {}
 });

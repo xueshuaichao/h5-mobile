@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <router-view />
-    <van-tabbar v-model="activeTabbar" v-show="showTabbar">
-      <van-tabbar-item name="home" to="/">
+    <van-tabbar v-model="tabbar.active" v-show="tabbar.show">
+      <van-tabbar-item name="home" :to="{ name: 'home' }">
         首页
       </van-tabbar-item>
-      <van-tabbar-item name="learning" to="/">
+      <van-tabbar-item name="learning" :to="{ name: 'learning' }">
         学习
       </van-tabbar-item>
-      <van-tabbar-item name="jobs" to="/">
+      <van-tabbar-item name="jobs" :to="{ name: 'jobs' }">
         就业
       </van-tabbar-item>
-      <van-tabbar-item name="account" to="/">
+      <van-tabbar-item name="account" :to="{ name: 'account' }">
         我的
       </van-tabbar-item>
     </van-tabbar>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -26,6 +27,9 @@ export default {
       activeTabbar: 'home',
       showTabbar: true
     };
+  },
+  computed: {
+    ...mapState(['tabbar'])
   }
 };
 </script>
