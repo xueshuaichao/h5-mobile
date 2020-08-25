@@ -1,9 +1,10 @@
-html,body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
   font-size: 37.5px;
-  font-family:PingFangSC-Medium,PingFang SC,PingFangSC-Regular;
+  font-family: PingFangSC-Medium, PingFang SC, PingFangSC-Regular;
 }
 .fl {
   float: left;
@@ -16,7 +17,6 @@ html,body {
   content: "";
   clear: both;
 }
-
 .van-hairline--bottom::after {
-  border-bottom-width:0!important;
+  border-bottom-width: 0!important;
 }
