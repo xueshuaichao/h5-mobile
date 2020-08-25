@@ -10,7 +10,10 @@
             <img src="../../assets/images/banner.png" alt />
         </div>
         <div class="btn">
-            <img src="../../assets/images/assessment.png" class="assessment" alt />
+            <router-link :to="{name:'Professional'}">
+                <img src="../../assets/images/assessment.png" class="assessment" alt />
+            </router-link>
+
             <router-link :to="{name:'courseList'}">
                 <img src="../../assets/images/resource.png" class="resource" alt />
             </router-link>
@@ -26,7 +29,11 @@
                     <p>当前培训：一级建造师</p>
                 </div>
                 <div class="right fr">
-                    <router-link tag="a" class="continue-study" :to="{ name: 'home' }">
+                    <router-link
+                        tag="a"
+                        class="continue-study"
+                        :to="{ name: 'trainDetail',params:{id:1} }"
+                    >
                         继续学习
                         <van-icon name="arrow" />
                     </router-link>

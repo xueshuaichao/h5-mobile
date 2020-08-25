@@ -10,7 +10,7 @@ export default new Vuex.Store({
       active: 'home'
     },
     // 是否已实名认证
-    isAuthed: false,
+    isAuthed: true,
     // 是否已打卡
     isClockIn: true
   },

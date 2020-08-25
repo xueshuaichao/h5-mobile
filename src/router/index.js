@@ -80,6 +80,11 @@ const routes = [
     path: '/identification/index',
     name: 'identification',
     component: () => import('../views/identification/index.vue')
+  },
+  {
+    path: '/Professional',
+    name: 'Professional',
+    component: () => import('../views/home/Professional.vue')
   }
 ];
 

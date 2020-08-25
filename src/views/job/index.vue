@@ -297,8 +297,6 @@ h4 {
                 margin-bottom: 5px;
             }
         }
-        .welfare {
-        }
         .companyAddress {
             position: absolute;
             right: 0;

@@ -1,13 +1,7 @@
 <template>
     <div class="course-list">
         <div class="top">
-            <van-nav-bar title="课程">
-                <template #left>
-                    <router-link :to="{name:'home'}">
-                        <img src="../../assets/images/icon_return@2x.png" class="icon_return" alt />
-                    </router-link>
-                </template>
-            </van-nav-bar>
+            <van-nav-bar title="课程" left-arrow @click-left="back" />
             <van-tabs v-model="active" class="tabs" @click="tabClick">
                 <van-tab v-for="(tab,index) in tabs" :key="index" :title="tab"></van-tab>
             </van-tabs>
@@ -90,7 +84,9 @@ export default {
         };
     },
     methods: {
-        tabClick() {}
+        back() {
+            this.$router.back();
+        }
     }
 };
 </script>
