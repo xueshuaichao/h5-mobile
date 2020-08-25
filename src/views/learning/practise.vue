@@ -7,54 +7,42 @@
         />
         <div class="container">
             <div class="item">
-                <p class="title">
-                    <span>实训目标</span>
-                </p>
-                <p class="content">{{target}}</p>
+                <div class="title practise-target"></div>
+                <div class="content">{{target}}</div>
             </div>
             <div class="item">
-                <p class="title">
-                    <span>实训时间</span>
-                </p>
-                <p class="content">{{time}}</p>
+                <div class="title practise-info"></div>
+                <div class="content">
+                    <div>实训时间：{{time}}</div>
+                    <div>实训地点：{{address}}</div>
+                    <div>指导老师：{{teacher}}</div>
+                </div>
             </div>
             <div class="item">
-                <p class="title">
-                    <span>实训地点</span>
-                </p>
-                <p class="content">{{address}}</p>
+                <div class="title practise-desc"></div>
+                <div class="content">
+                    {{desc}}
+                </div>
             </div>
             <div class="item">
-                <p class="title">
-                    <span>指导老师</span>
-                </p>
-                <p class="content">{{teacher}}</p>
-            </div>
-            <div class="item">
-                <p class="title">
-                    <span>实训说明</span>
-                </p>
-                <p class="content">{{desc}}</p>
-            </div>
-            <div class="item">
-                <p class="title">
-                    <span>打卡记录</span>
-                </p>
+                <div class="title practise-sign"></div>
                 <div class="content">
                     <div>{{startSign}}</div>
                     <div>{{endSign}}</div>
                 </div>
             </div>
         </div>
-        <div v-show="!startSign || !endSign" class="sign" @click="sign">{{!startSign? '上课打卡' : '下课打卡'}}</div>
+        <div v-show="!startSign || !endSign" class="sign" @click="sign">
+            {{!startSign? '上课打卡' : '下课打卡'}}
+        </div>
     </div>
 </template>
 
 <script>
-    import moment from 'moment';
+    import moment from "moment";
 
     export default {
-        name: "practise",
+        name: "practise2",
         data: ()=>{
             return {
                 target: '一类环境中，钢筋混凝土梁的保护层厚度最小取 保护层厚度最小取保护层厚度最小取',
@@ -82,52 +70,61 @@
 </script>
 
 <style lang="less" scoped>
-@import '../../css/variables';
-
-.container{
-    padding: 5px 20px;
-}
-
-.item{
-
-    .title{
-        position: relative;
+    .container{
         display: flex;
-        font-weight: 500;
+        flex-direction: column;
+        background: rgba(255,255,255,1);
+        padding: 15px;
 
-        &::before{
-            position: absolute;
-            left: 0;
-            top:50%;
-            width:6px;
-            height: 20px;
-            background-color: @tifiniyGreen;
-            content: '';
-            transform: translateY(-50%);
-        }
+        .item{
+            background:rgba(255,255,255,1);
+            box-shadow:0px 12px 32px 0px rgba(57,97,104,0.06);
+            color: rgba(39,47,85,1);
+            padding: 15px;
+            font-size: 14px;
+            margin-bottom: 15px;
 
-        span{
-            display: inline-block;
-            margin-left: 14px;
+            .title{
+                width: 88px;
+                height: 28px;
+                margin-bottom: 15px;
+                background-size: contain;
+            }
+
+            .practise-info{
+                background-image: url("../../assets/practise-info@2x.png");
+            }
+
+            .practise-sign{
+                background-image: url("../../assets/practise-sign@2x.png");
+            }
+
+            .practise-target{
+                background-image: url("../../assets/practise-target@2x.png");
+            }
+
+            .practise-desc{
+                background-image: url("../../assets/practise-desc@2x.png");
+            }
+
+            .content{
+                text-align: left;
+            }
         }
     }
 
-    .content{
-        font-size: 14px !important;
-        text-align: left !important;
+    .sign{
+        width:80px;
+        height:80px;
+        background:linear-gradient(116deg,rgba(44,193,171,1) 0%,rgba(2,169,159,1) 100%);
+        box-shadow:0px 0px 10px 0px rgba(0,0,0,0.2);
+        border-radius: 999px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 50px;
+        top: 75%;
+        color: #fff;
     }
-}
-
-.sign{
-    width: 100px;
-    height: 100px;
-    border-radius: 999px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: @blue;
-    position: absolute;
-    right: 60px;
-    top: 65%;
-}
 </style>

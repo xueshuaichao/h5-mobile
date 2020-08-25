@@ -33,7 +33,7 @@ const routes = [
   {
     path: '/learning/practise',
     name: 'practise',
-    component: () => import('../views/learning/practise2.vue')
+    component: () => import('../views/learning/practise.vue')
   },
   {
     path: '/learning/exam',
@@ -59,11 +59,6 @@ const routes = [
     path: '/learning/live/:id',
     name: 'liveDetail',
     component: () => import('../views/learning/live.vue')
-  },
-  {
-    path: '/ykx',
-    name: 'ykx',
-    component: () => import('../components/interactItem.vue')
   },
   {
     path: '/job',
