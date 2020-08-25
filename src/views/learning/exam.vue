@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background: #fcfdfd">
         <van-nav-bar
             :title="type=='exam'? '期末考试' : '章节作业'"
             left-arrow
@@ -8,21 +8,18 @@
         >
             <span slot="right">答题卡</span>
         </van-nav-bar>
-        <div class="container">
-            <div class="header">
-                <div class="title">
-                    <span>单选题</span>
-                </div>
-                <div class="time-count">
-                    <span style="color: #038ee3;font-size:14px">倒计时：</span><van-count-down v-if="type == 'exam'" class="time" :time="time" format="mm:ss"/>
-                </div>
-                <div class="right">
-                    <div class="index">
-                        <span class="active-index">{{index+1}}</span>/<span>{{list.length}}</span>
-                    </div>
+        <div class="header">
+            <div class="title"></div>
+            <div class="time-count">
+                <span style="color: #038ee3;font-size:14px">倒计时：</span><van-count-down v-if="type == 'exam'" class="time" :time="time" format="mm:ss"/>
+            </div>
+            <div class="right">
+                <div class="index">
+                    <span class="active-index">{{index+1}}</span> / <span>{{list.length}}</span>
                 </div>
             </div>
-            <van-divider />
+        </div>
+        <div class="container">
             <van-swipe :duration="0" class="my-swipe" indicator-color="white" :show-indicators="false" :loop="false" @change="switchSubject">
                 <van-swipe-item  v-for="(subject) in list" :key="subject.id">
                     <div class="subject">
@@ -31,7 +28,8 @@
                         </div>
                         <div class="select">
                             <div class="item" @click="switchSelect(index)" :class="{active: subject.selectedIndex === index}" v-for="(item,index) in subject.selectList" :key="index">
-                                {{indexToString(index)}}.{{item}}
+                                <div class="item-index">{{indexToString(index)}}.</div>
+                                <div class="item-content">{{item}}</div>
                             </div>
                         </div>
                     </div>
@@ -157,56 +155,50 @@
 <style lang="less" scoped>
     @import "../../css/variables";
 
-    .container{
-        padding: 15px 20px;
+    .header{
+        margin-top: 16px;
+        margin-right: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-        .header{
+        .title{
+            position: relative;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            width: 80px;
+            height: 38px;
+            background-image: url("../../assets/radio-subject@2x.png");
+            background-size: contain;
+        }
 
-            .title{
-                position: relative;
-                display: flex;
+        .time-count{
+            display: flex;
+            position: relative;
+            left: -14px;
 
-                &::before{
-                    position: absolute;
-                    left: 0;
-                    top:50%;
-                    width:6px;
-                    height: 20px;
-                    background-color: @tifiniyGreen;
-                    content: '';
-                    transform: translateY(-50%);
-                }
-
-                span{
-                    display: inline-block;
-                    margin-left: 14px;
-                }
-            }
-
-            .time-count{
-                display: flex;
-
-                .time{
-                    color: @blue !important;
-                    margin-right: 10px;
-                }
-            }
-
-
-
-            .index{
-                font-size: 14px;
-                color: #F04142;
-
-                .active-index{
-                    font-size: 16px;
-                    font-weight: 500;
-                }
+            .time{
+                color: @blue !important;
+                margin-right: 10px;
             }
         }
+
+
+
+        .index{
+            font-size: 14px;
+            color: #F04142;
+
+            .active-index{
+                font-size: 16px;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .container{
+        margin: 16px 15px;
+        padding: 24px 25px;
+        background: #FFF;
 
         .subject{
             .content{
@@ -222,19 +214,28 @@
 
                 .item{
                     border-radius: 4px;
-                    width: 90%;
-                    min-height: 40px;
+                    width: 100%;
+                    min-height: 48px;
                     margin-bottom: 12px;
                     display: flex;
                     align-items: center;
-                    padding: 7px;
+                    padding: 10px 10px 10px 20px;
                     background: rgba(249,250,253,1);
                     text-align: left;
+                    font-weight: 500;
+                    color: rgba(39,47,85,1);
+                    display: flex;
+                    box-sizing: border-box;
 
                     &.active{
                         background-color: rgba(2,179,138,.1);
                         color:rgba(2,179,138,1);
-                        font-weight: 500;
+                    }
+
+                    .item-index{
+                        display: flex;
+                        justify-content: center;
+                        margin-right: 5px;
                     }
                 }
             }
