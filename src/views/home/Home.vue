@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <van-nav-bar title="首页">
+        <van-nav-bar title="首页" :border="false">
             <template #right>
                 <img src="../../assets/images/Search@2x.png" class="Search icon" alt />
                 <img src="../../assets/images/message.png" class="message icon" alt />
@@ -249,11 +249,11 @@ export default {
     }
     .van-nav-bar__title {
         margin: 0;
-        font-size: 48px;
+        font-size: 24px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 600;
         color: @textColor1;
-        line-height: 67px;
+        line-height: 34.5px;
     }
 }
 </style>
@@ -333,6 +333,7 @@ p {
                 color: @textColor1;
                 line-height: 40px;
                 vertical-align: middle;
+                display: inline-block;
             }
             p {
                 margin-top: 25px;
@@ -409,6 +410,7 @@ p {
                     position: absolute;
                     right: 0;
                     bottom: 6px;
+                    padding: 0;
                 }
             }
         }

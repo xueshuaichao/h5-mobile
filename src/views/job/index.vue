@@ -1,20 +1,20 @@
 <template>
     <div class="job-index">
-        <van-nav-bar title="就业机会" />
-        <van-tabs v-model="active" class="tabs">
+        <!-- <van-nav-bar title="就业机会" /> -->
+        <van-tabs v-model="active" class="tabs1">
             <van-tab title="招聘岗位"></van-tab>
             <van-tab title="招聘企业"></van-tab>
         </van-tabs>
 
         <div v-show="active==0" class="jobList">
             <div class="intention">
-                <div class="l">建筑师</div>
+                <div class="l">高级建筑师</div>
                 <div class="r">
-                    岗位意向
+                    <span>岗位意向</span>
                     <van-icon name="arrow" />
                 </div>
             </div>
-            <van-tabs v-model="active1" class="tabs">
+            <van-tabs v-model="active1" class="tabs2">
                 <van-tab title="推荐"></van-tab>
                 <van-tab title="最新"></van-tab>
                 <van-tab title="最热"></van-tab>
@@ -23,33 +23,41 @@
                 <ul class="list">
                     <li v-for="job in jobList" :key="job.id">
                         <div class="left">
-                            <p class="name">{{ job.name }}</p>
-                            <p>{{ job.education }} {{ job.experience }}</p>
-                            <div>
-                                <img :src="job.contactUserPortrait" />
-                                <span>{{ job.companyName }}</span>
+                            <img :src="job.contactUserPortrait" />
+
+                            <div class="text">
+                                <p class="name">{{ job.name }}</p>
+                                <p class="education">{{ job.education }} {{ job.experience }}</p>
+                                <span class="companyName">{{ job.companyName }}</span>
                                 <!-- <span>{{ job.contactUserName }}</span> -->
                             </div>
                         </div>
                         <div class="right">
-                            <p>{{ job.salary }}</p>
-                            <p class="companyAddress">{{ job.companyAddress }}</p>
+                            <p class="salary">{{ job.salary }}</p>
+                            <p class="add">{{ job.companyAddress }}</p>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
-        <div v-show="active==1" class="company">
-            <ul class="list">
-                <li v-for="company in companyList" :key="company.id">
-                    <img :src="company.logo" />
-                    <div class="content">
-                        <h4>{{company.name}}</h4>
-                        <p>{{company.welfare}}</p>
-                    </div>
-                    <p class="add">{{company.companyAddress}}</p>
-                </li>
-            </ul>
+        <div v-show="active==1" class="jobList">
+            <van-tabs v-model="active1" class="tabs2">
+                <van-tab title="北京"></van-tab>
+                <van-tab title="全部职位"></van-tab>
+                <van-tab title="全部职位"></van-tab>
+            </van-tabs>
+            <div class="listBox">
+                <ul class="list">
+                    <li v-for="company in companyList" :key="company.id">
+                        <img :src="company.logo" />
+                        <div class="text">
+                            <h4 class="name">{{company.name}}</h4>
+                            <p class="welfare">{{company.welfare}}</p>
+                        </div>
+                        <p class="companyAddress">{{company.companyAddress}}</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -183,77 +191,158 @@ export default {
 };
 </script>
 <style lang="less">
+@import "../../css/variables.less";
 .job-index {
-    .van-nav-bar__title {
-        margin: 0 0 0 10px;
+    .van-tabs__wrap {
+        overflow: inherit;
     }
-    .van-tabs__line {
-        background-color: #1989fa;
+    .intention .van-icon {
+        top: 5px;
     }
-    .van-tabs--line .van-tabs__wrap {
-        margin-bottom: 15px;
+    .tabs1 {
+        .van-tab {
+            font-size: 17px;
+            font-weight: 400;
+            color: @grayfont;
+            line-height: 48px;
+            display: inline-block;
+            text-align: left;
+            flex: inherit;
+            margin-right: 45px;
+        }
+        .van-tab--active {
+            font-size: 21px;
+            font-weight: 600;
+            color: @textColor1;
+        }
+        .van-tabs__line {
+            width: 19px !important;
+            height: 6px;
+            background: #30ba8b;
+            border-radius: 2px;
+            bottom: 5px;
+        }
+    }
+    .tabs2 {
+        padding-left: 30px;
+        .van-tab {
+            flex: inherit;
+            font-size: 12px;
+            font-weight: 400;
+            color: @textColor1;
+            line-height: 16px;
+            margin-right: 20px;
+        }
+        .van-tabs__line {
+            display: none;
+        }
+        .van-tab--active {
+            color: #30ba8b;
+        }
     }
 }
 </style>
 <style lang="less" scoped>
+@import "../../css/variables.less";
 .job-index {
-    width: 95%;
-    margin: 0 auto;
-    .tabs {
-        margin-bottom: 10px;
-    }
+    margin: 89px auto 0;
+}
+p {
+    margin: 0;
+}
+h4 {
+    margin: 0;
+}
+.tabs1 {
+    padding-left: 30px;
+}
+.tabs2 {
+    // padding-bottom: 26px;
+    border-bottom: 1px solid #e6e6eb;
+    margin-bottom: 63px;
 }
 .intention {
     overflow: hidden;
+    margin-bottom: 35px;
+    padding: 0 30px;
     .l {
         float: left;
+        font-size: 32px;
+        font-weight: 400;
+        color: @textColor1;
+        line-height: 45px;
     }
     .r {
         float: right;
+        font-size: 28px;
+        font-weight: 600;
+        color: @tifiniyGreen;
     }
 }
-.company {
-    .list {
-        li {
-            margin-bottom: 10px;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            text-align: left;
-            position: relative;
-            img {
-                width: 50px;
-                vertical-align: middle;
-            }
-            .content {
-                display: inline-block;
-                vertical-align: middle;
-                margin-left: 15px;
-            }
-            .add {
-                display: inline-block;
-                vertical-align: bottom;
-                position: absolute;
-                right: 15px;
-                bottom: 10px;
-            }
-        }
-    }
+.listBox {
+    width: 690px;
+    margin: 0 auto;
 }
 .jobList {
+    margin-top: 43px;
+    text-align: left;
     .list {
         li {
             overflow: hidden;
-            margin-bottom: 10px;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            margin-bottom: 33px;
+            padding-bottom: 31px;
+            border-bottom: 1px solid #e6e6eb;
+            position: relative;
             p {
                 margin-bottom: 5px;
             }
         }
+        .welfare {
+        }
+        .companyAddress {
+            position: absolute;
+            right: 0;
+            bottom: 30px;
+        }
+        .text {
+            display: inline-block;
+            vertical-align: top;
+            .name {
+                font-size: 30px;
+                font-weight: 600;
+                color: @textColor1;
+                line-height: 42px;
+                margin-bottom: 12px;
+            }
+            .education {
+                font-size: 24px;
+                font-weight: 400;
+                color: @grayfont;
+                line-height: 33px;
+            }
+            .companyName {
+                font-size: 28px;
+                font-weight: 400;
+                color: rgba(87, 87, 101, 1);
+                line-height: 40px;
+            }
+        }
+        .salary {
+            font-size: 40px;
+            font-family: AvenirNextCondensed-DemiBold, AvenirNextCondensed;
+            font-weight: 600;
+            color: rgba(232, 90, 58, 1);
+            line-height: 55px;
+        }
+        .add {
+            font-size: 24px;
+            font-weight: 400;
+            color: rgba(167, 173, 187, 1);
+            line-height: 33px;
+        }
         img {
-            width: 16px;
+            width: 84px;
+            margin-right: 35px;
         }
     }
 }
@@ -267,8 +356,5 @@ export default {
     float: right;
     text-align: right;
     vertical-align: middle;
-    .companyAddress {
-        margin-top: 10px;
-    }
 }
 </style>

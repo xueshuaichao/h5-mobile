@@ -1,27 +1,30 @@
 <template>
     <div class="course-list">
-        <van-nav-bar title="课程">
-            <template #left>
-                <router-link :to="{name:'home'}">
-                    <van-icon name="arrow-left" />返回
-                </router-link>
-            </template>
-        </van-nav-bar>
-        <van-tabs v-model="active" class="tabs" @click="tabClick">
-            <van-tab v-for="(tab,index) in tabs" :key="index" :title="tab"></van-tab>
-        </van-tabs>
+        <div class="top">
+            <van-nav-bar title="课程">
+                <template #left>
+                    <router-link :to="{name:'home'}">
+                        <img src="../../assets/images/icon_return@2x.png" class="icon_return" alt />
+                    </router-link>
+                </template>
+            </van-nav-bar>
+            <van-tabs v-model="active" class="tabs" @click="tabClick">
+                <van-tab v-for="(tab,index) in tabs" :key="index" :title="tab"></van-tab>
+            </van-tabs>
+        </div>
         <ul class="list">
             <li v-for="course in courseList" :key="course.id">
                 <img :src="course.courseCoverUrl" class="courseCoverUrl" />
                 <div class="text">
                     <h4>{{course.title}}</h4>
-                    <p class="courseType">{{course.courseType}}</p>
+
                     <div class="bottom">
                         <!-- <p class="teacherName">{{course.teacherName}}</p> -->
                         <p class="num">
-                            <van-icon name="user-o" />
+                            <img src="../../assets/images/person-num.png" alt />
                             {{course.num}}
                         </p>
+                        <p class="courseType">{{course.courseType}}</p>
                     </div>
                 </div>
             </li>
@@ -38,7 +41,7 @@ export default {
                 {
                     id: 1,
                     title: "家政(护理)基础集中培训",
-                    courseCoverUrl: require("../../assets/images/8@2x.png"),
+                    courseCoverUrl: require("../../assets/images/pic@2x(1).png"),
                     teacherName: "讲师姓名",
                     courseType: "免费",
                     num: 1324
@@ -46,7 +49,7 @@ export default {
                 {
                     id: 2,
                     title: "教师资格培训",
-                    courseCoverUrl: require("../../assets/images/8@2x.png"),
+                    courseCoverUrl: require("../../assets/images/pic@2x(2).png"),
                     teacherName: "讲师姓名",
                     courseType: "￥299",
                     num: 1324
@@ -54,7 +57,7 @@ export default {
                 {
                     id: 3,
                     title: "汽车自动变速器结构",
-                    courseCoverUrl: require("../../assets/images/8@2x.png"),
+                    courseCoverUrl: require("../../assets/images/pic@2x(3).png"),
                     teacherName: "讲师姓名",
                     courseType: "免费",
                     num: 1324
@@ -62,7 +65,7 @@ export default {
                 {
                     id: 4,
                     title: "新能源汽车",
-                    courseCoverUrl: require("../../assets/images/8@2x.png"),
+                    courseCoverUrl: require("../../assets/images/pic@2x.png"),
                     teacherName: "讲师姓名",
                     courseType: "￥99",
                     num: 1324
@@ -70,7 +73,7 @@ export default {
                 {
                     id: 5,
                     title: "工业互联网助力疫情防控与复工复产",
-                    courseCoverUrl: require("../../assets/images/8@2x.png"),
+                    courseCoverUrl: require("../../assets/images/pic@2x(2).png"),
                     teacherName: "讲师姓名",
                     courseType: "免费",
                     num: 1324
@@ -78,7 +81,7 @@ export default {
                 {
                     id: 6,
                     title: "收益管理工具PMS系列",
-                    courseCoverUrl: require("../../assets/images/8@2x.png"),
+                    courseCoverUrl: require("../../assets/images/pic@2x(1).png"),
                     teacherName: "讲师姓名",
                     courseType: "免费",
                     num: 1324
@@ -92,44 +95,108 @@ export default {
 };
 </script>
 <style lang="less">
-.course-list .van-tabs__line {
-    background-color: #1989fa;
+@import "../../css/variables.less";
+.course-list {
+    .van-nav-bar__title {
+        font-size: 18px;
+        font-weight: 600;
+        color: @textColor1;
+        line-height: 25px;
+    }
+    .van-nav-bar {
+        margin-bottom: 20px;
+    }
+    .van-tabs__line {
+        width: 17px;
+        height: 3px;
+        background: rgba(48, 186, 139, 1);
+        border-radius: 5px;
+        left: -12.5px;
+        bottom: 0px;
+    }
+    .van-tab {
+        font-size: 15px;
+        font-weight: 400;
+        color: @grayfont;
+        flex: inherit;
+        padding: 13px 24px 12px 0;
+        display: inline-block;
+    }
+    .van-tabs__wrap--scrollable .van-tabs__nav--complete {
+        padding: 0 15px;
+    }
+    .van-tab--active {
+        font-size: 15px;
+        font-weight: 400;
+        color: rgba(48, 186, 139, 1);
+    }
+    .van-tabs--line .van-tabs__wrap {
+        height: auto;
+        overflow: inherit;
+    }
 }
 </style>
 <style lang="less" scoped>
+@import "../../css/variables.less";
 .course-list {
+    background: #f9fafd;
     p,
     h4 {
         margin: 0;
     }
+    .top {
+        margin-top: 20px;
+        background: #fff;
+    }
+    .icon_return {
+        width: 48px;
+    }
     .list {
-        width: 95%;
-        margin: 15px auto;
+        // padding: 0 30px;
+        margin: 24px auto;
         text-align: left;
         li {
+            padding: 30px;
             margin-bottom: 15px;
+            background: #fff;
+            position: relative;
         }
         .courseType {
-            text-align: right;
-            margin-top: 15px;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            font-size: 36px;
+            font-weight: 600;
+            color: #e85a3a;
         }
         .courseCoverUrl {
-            width: 49%;
-            vertical-align: middle;
-            margin-right: 2%;
+            width: 224px;
+            vertical-align: top;
+            margin-right: 32px;
         }
         .text {
-            width: 48%;
             display: inline-block;
-            vertical-align: middle;
+            vertical-align: top;
+            margin-top: 16px;
+            width: 400px;
+            h4 {
+                font-size: 34px;
+                font-weight: 600;
+                color: @textColor1;
+                line-height: 45px;
+                margin-bottom: 62px;
+            }
         }
         .bottom {
-            margin-top: 10px;
-            .teacherName {
-                float: left;
-            }
             .num {
-                float: right;
+                font-size: 28px;
+                font-weight: 400;
+                color: @grayfont;
+                line-height: 28px;
+                img {
+                    width: 28px;
+                    margin-right: 12px;
+                }
             }
         }
     }
