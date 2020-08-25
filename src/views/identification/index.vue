@@ -7,12 +7,12 @@
         </van-nav-bar>
         <div class="identity-picture">
             <div class="front picture">
-                <p>身份证正面</p>
                 <van-uploader v-model="fileList" multiple :max-count="1" />
+                <p>上传身份证正面</p>
             </div>
             <div class="back picture">
-                <p>身份证背面</p>
                 <van-uploader v-model="fileList1" multiple :max-count="1" />
+                <p>上传身份证背面</p>
             </div>
         </div>
         <van-form @submit="onSubmit">
@@ -69,13 +69,10 @@ export default {
 </style>
 <style lang="less" scoped>
 .identity-picture {
+    margin-top: 30px;
     .picture {
-        float: left;
-        width: 45%;
-    }
-    .front {
-        margin-left: 4%;
-        margin-right: 2%;
+        width: 64%;
+        margin: 0 auto;
     }
 }
 </style>

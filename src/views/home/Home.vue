@@ -245,13 +245,18 @@ export default {
     }
     .van-nav-bar__title {
         margin: 0;
+        font-size: 48px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 600;
+        color: rgba(39, 47, 85, 1);
+        line-height: 67px;
     }
 }
 </style>
 <style lang="less" scoped>
 .home {
-    width: 95%;
-    margin: 0 auto;
+    width: 92%;
+    margin: 40px auto;
 }
 h4 {
     display: inline-block;
@@ -260,8 +265,15 @@ h4 {
 p {
     margin: 0;
 }
-.banner img {
-    width: 100%;
+.title {
+    font-size: 38px;
+    font-weight: 600;
+}
+.banner {
+    margin-top: 48px;
+    img {
+        width: 100%;
+    }
 }
 .assessment,
 .resource {
