@@ -10,8 +10,8 @@
         </van-nav-bar>
         <div class="header">
             <div class="title"></div>
-            <div class="time-count">
-                <span style="color: #038ee3;font-size:14px">倒计时：</span><van-count-down v-if="type == 'exam'" class="time" :time="time" format="mm:ss"/>
+            <div class="time-count" v-if="type == 'exam'">
+                <span style="color: #038ee3;font-size:14px">倒计时：</span><van-count-down  class="time" :time="time" format="mm:ss"/>
             </div>
             <div class="right">
                 <div class="index">
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="container">
-            <van-swipe :duration="0" class="my-swipe" indicator-color="white" :show-indicators="false" :loop="false" @change="switchSubject">
+            <van-swipe ref="subjectList" :duration="200" class="my-swipe" indicator-color="white" :show-indicators="false" :loop="false" @change="switchSubject">
                 <van-swipe-item  v-for="(subject) in list" :key="subject.id">
                     <div class="subject">
                         <div class="content">
@@ -121,6 +121,19 @@
                 this.isAnswerCardShow = true;
             },
             switchSelect: function (index) {
+                //第一次没选过
+                if(!this.list[this.index].selectedIndex){
+                    if(this.index != this.list.length - 1){
+                        setTimeout(()=>{
+                            this.$refs.subjectList.next()
+                        },500)
+                    }else{
+                        setTimeout(()=>{
+                            this.isAnswerCardShow = true;
+                        },500)
+                    }
+                }
+
                 this.list[this.index].selectedIndex = index;
             },
             switchSubject: function(index){
