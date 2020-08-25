@@ -107,7 +107,7 @@ router.beforeEach((to, from, next) => {
   }
   if (to.name === 'learning' && !store.state.isAuthed) {
     return next({
-      name: 'faceDetect',
+      name: 'identification',
       query: {
         callback: to.fullPath
       }

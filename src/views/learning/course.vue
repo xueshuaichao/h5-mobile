@@ -1,8 +1,11 @@
 <template>
   <div class="course-detail">
     <van-nav-bar :title="course.title" left-arrow @click-left="back" />
-    <div class="player">
-      <img class="cover" :src="course.cover" />
+    <div class="video">
+      <div class="poster">
+        <div class="play"></div>
+      </div>
+<!--  <video src="https://www.runoob.com/try/demo_source/movie.mp4" playsinline controls></video>-->
     </div>
     <van-tabs v-model="tabIndex" class="tabs" color="#30BA8B">
       <van-tab title="目录">
@@ -83,12 +86,30 @@ export default {
   text-align: left;
   background: #F5F5FA;
 }
-.player {
-  padding: 8px 16px 16px;
-}
-.cover {
+.video{
   width: 100%;
-  height: 70vw;
+  height: 192px;
+
+  .poster{
+    background: url('../../assets/livebg@2x.png');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+    height: 100%;
+
+    .play{
+      width: 50px;
+      height: 50px;
+      background: url('../../assets/videoPlay@2x.png');
+      background-size: contain;
+    }
+  }
+
+  video{
+    width: 100%;
+    height: 100%;
+  }
 }
 .tabs {
   background: #fff;

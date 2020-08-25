@@ -1,9 +1,9 @@
 <template>
     <div class="identification">
-        <van-nav-bar title="实名认证">
-            <template #left>
+        <van-nav-bar title="实名认证" left-arrow="">
+            <!-- <template #left>
                 <van-icon name="arrow-left" />
-            </template>
+            </template> -->
         </van-nav-bar>
         <div class="identity-picture">
             <div class="front picture">
@@ -31,7 +31,15 @@
                 :rules="[{ required: true, message: '请输入身份证号' }]"
             />
             <div style="margin: 16px;">
-                <van-button round block type="info" native-type="submit">提交</van-button>
+                <van-button
+                    round
+                    block 
+                    type="primary" 
+                    native-type="submit"
+                    :loading="loading"
+                >
+                    下一步
+                </van-button>
             </div>
         </van-form>
     </div>
@@ -44,11 +52,20 @@ export default {
             username: "",
             idCard: "",
             fileList: [],
-            fileList1: []
+            fileList1: [],
+            loading: false,
         };
     },
     methods: {
         onSubmit(values) {
+            this.loading = true;
+            setTimeout(() => {
+                this.loading = false;
+                this.$router.push({
+                    name: 'faceDetect',
+                    query: this.$route.query
+                });
+            }, 1000);
             console.log("submit", values);
         }
     }
