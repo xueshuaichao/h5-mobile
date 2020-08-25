@@ -15,41 +15,44 @@
                 </div>
                 <div class="overview">
                     <div>答对：{{rightNum}}</div>
+                    <div class="divide"></div>
                     <div>总题数：{{list.length}}</div>
+                    <div class="divide"></div>
                     <div>用时：{{time}}</div>
                 </div>
                 <div class="seal"></div>
             </div>
-            <van-divider />
             <div class="subject-container">
-                <p class="title">答题卡</p>
-                <div class="example">
-                    <div class="example-item">
-                        <div class="icon right"></div>
-                        <span>正确</span>
-                    </div>
-                    <div class="example-item">
-                        <div class="icon wrong"></div>
-                        <span>错误</span>
-                    </div>
-                    <div class="example-item">
-                        <div class="icon empty"></div>
-                        <span>未做</span>
+                <div class="header">
+                    <p class="title">答题卡</p>
+                    <div class="example">
+                        <div class="example-item">
+                            <div class="icon right"></div>
+                            <span>正确</span>
+                        </div>
+                        <div class="example-item">
+                            <div class="icon wrong"></div>
+                            <span>错误</span>
+                        </div>
+                        <div class="example-item">
+                            <div class="icon empty"></div>
+                            <span>未做</span>
+                        </div>
                     </div>
                 </div>
                 <div class="list">
                     <div
                         class="item" :class="{right: subject.state==1,wrong:subject.state==2,empty:subject.state==0}"
                         v-for="(subject,index) in list" :key="index">
-                        {{index}}
+                        {{index+1}}
                     </div>
                 </div>
             </div>
-            <van-button v-if="type=='exam'" style="width: 95%" plain round color="#038ee3" type="primary">查看答案解析</van-button>
-            <van-button v-else style="width: 95%" plain round color="#038ee3" type="primary">查看作业</van-button>
+            <van-button v-if="type=='exam'" style="width: 95%" plain color="#02B38A" type="primary">查看答案解析</van-button>
+            <van-button v-else style="width: 95%" plain color="#02B38A" type="primary">查看作业</van-button>
             <div class="remark">
                 您的考试数据已写入伟东区块链，作业信息将永久保存，防篡改，可追溯
-                区块链存证HASH：9cfb5a351035180a16d50ad605a939f089a2e89440ddd57dbfa90c35fde3fc0b
+                区块链存证HASH：9cfb5a351035180a16d50ad605a939f089a2e894<br/>
                 区块链浏览器：www.explore.wdblockchain.com
             </div>
         </div>
@@ -94,6 +97,12 @@
                     {
                         state: 1
                     },
+                    {
+                        state: 2
+                    },
+                    {
+                        state: 1
+                    },
                 ]
             }
         },
@@ -120,32 +129,42 @@
 @import '../../css/variables';
 
 .right{
-    background: @tifiniyGreen;
-    color: #FFF;
+    background: rgba(0,193,86,0.1);
+    color: rgba(2,179,138,1);
+    border:1px solid rgba(2,179,138,0.6);
 }
 
 .wrong{
-    background: red;
-    color: #FFF;
+    background: rgba(225,44,44,0.1);
+    color: rgba(240,65,66,1);
+    border: 1px solid rgba(240,65,66,0.6);
 }
 
 .empty{
-    border: 1px solid #a7a7a7;
-    color: #a7a7a7;
+    border: 1px solid rgba(167,173,187,1);
+    color: rgba(39,47,85,1);
+}
+
+.divide{
+    width: 1px;
+    height: 16px;
+    background: #E6E6EB;
 }
 
 .report-container{
-    padding: 10px 15px;
+    padding: 24px 15px 10px;
 
     .overview-container{
+        margin-bottom: 25px;
+
         .img{
             width: 100%;
-            height: 140px;
+            height: 144px;
             background: url("../../assets/report@2x.png");
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             position: relative;
         }
 
@@ -166,37 +185,51 @@
             font-size: 14px;
             display: flex;
             justify-content: space-around;
+            align-items: center;
         }
     }
 
     .subject-container{
-        margin-bottom: 10px;
+        padding-top: 24px;
+        margin-bottom: 13px;
 
-        .title{
-            text-align: left;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .example{
+        .header{
             display: flex;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
 
-            .example-item{
-                margin-right: 15px;
+            .title{
+                margin: 0;
+                text-align: left;
+                font-size: 16px;
+                font-weight: 500;
+            }
 
-                .icon{
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 999px;
-                    margin-right: 10px;
-                    display: inline-block;
+            .example{
+                display: flex;
+                align-items: center;
+
+                .example-item{
+                    margin-right: 15px;
+                    font-size: 12px;
+
+                    .icon{
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 999px;
+                        margin-right: 8px;
+                        display: inline-block;
+                        position: relative;
+                        top: 3px;
+                    }
                 }
             }
         }
 
+
         .list{
+            margin-top: 24px;
             display: flex;
             flex-wrap: wrap;
 
@@ -204,12 +237,24 @@
                 width: 40px;
                 height: 40px;
                 border-radius: 999px;
-                margin: 10px 12px;
+                margin-bottom: 16px;
+                margin-right: 18px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border: 1px solid;
                 font-weight: 500;
+            }
+
+            @media screen and (min-width: 375px) {
+                .item:nth-child(6n+0){
+                    margin-right: 0;
+                }
+            }
+
+            @media screen and (max-width: 374px) {
+                .item{
+                    margin-right: 16px;
+                }
             }
         }
     }
@@ -222,7 +267,8 @@
         overflow: auto;
         height: 80px;
         border-radius: 4px;
-        background: #cffdcf;
+        background: rgba(249,250,253,1);
+        color:rgba(115,115,134,1);;
     }
 }
 

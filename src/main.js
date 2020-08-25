@@ -5,7 +5,7 @@ import store from './store';
 import Vant from 'vant';
 import 'vant/lib/index.css';
 import './assets/iconfont/iconfont.css'
-
+import './libs/rem.js';
 Vue.use(Vant);
 
 Vue.config.productionTip = false;
