@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ 'has-bottom-tabbar': tabbar.show }">
     <router-view />
     <van-tabbar v-model="tabbar.active" v-show="tabbar.show">
       <van-tabbar-item name="home" :to="{ name: 'home' }">
@@ -21,26 +21,23 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-  data() {
-    return {
-      // todo 通过vuex控制
-      activeTabbar: 'home',
-      showTabbar: true
-    };
-  },
   computed: {
     ...mapState(['tabbar'])
   }
 };
 </script>
 
-<style>
+<style lang="less">
+@import './global.less';
+
 #app {
+  // height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #323233;
+  font-size: 16px;
 }
 
 #nav {
@@ -56,7 +53,11 @@ export default {
   color: #42b983;
 }
 
-.van-nav-bar__arrow{
+.van-nav-bar__arrow {
   color: #000 !important;
+}
+
+.has-bottom-tabbar {
+  padding-bottom: 50px;
 }
 </style>

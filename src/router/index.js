@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import Home from '../views/home/Home.vue';
 import store from '../store/index';
 
 Vue.use(VueRouter);
@@ -46,14 +46,44 @@ const routes = [
     component: () => import('../views/learning/report.vue')
   },
   {
-    path: '/train/detail/:id',
-    name: 'traingDetail',
+    path: '/learning/train/:id',
+    name: 'trainDetail',
     component: () => import('../views/learning/train-detail.vue')
+  },
+  {
+    path: '/learning/course/:id',
+    name: 'courseDetail',
+    component: () => import('../views/learning/course.vue')
+  },
+  {
+    path: '/learning/live/:id',
+    name: 'liveDetail',
+    component: () => import('../views/learning/live.vue')
   },
   {
     path: '/ykx',
     name: 'ykx',
     component: () => import('../components/interactItem.vue')
+  },
+  {
+    path: '/job',
+    name: 'jobs',
+    component: () => import('../views/job/index.vue')
+  },
+  {
+    path: '/course/list',
+    name: 'courseList',
+    component: () => import('../views/home/course.vue')
+  },
+  {
+    path: '/account',
+    name: 'account',
+    component: () => import('../views/account/index.vue')
+  },
+  {
+    path: '/identification/index',
+    name: 'identification',
+    component: () => import('../views/identification/index.vue')
   }
 ];
 
