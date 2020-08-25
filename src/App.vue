@@ -55,4 +55,8 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.van-nav-bar__arrow{
+  color: #000 !important;
+}
 </style>

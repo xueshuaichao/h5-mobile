@@ -33,7 +33,7 @@ const routes = [
   {
     path: '/learning/practise',
     name: 'practise',
-    component: () => import('../views/learning/practise.vue')
+    component: () => import('../views/learning/practise2.vue')
   },
   {
     path: '/learning/exam',
