@@ -1,8 +1,11 @@
 <template>
-  <div class="week-base-calendar van-hairline--surround">
-    <div class="hd van-hairline--bottom">
+  <div class="week-base-calendar">
+    <div class="hd">
       <span>{{ currentWeek.title }}</span>
-      <span class="fr">{{ currentWeek.stringRange }}</span>
+      <span class="fr" @click="showPicker=true">
+        {{ currentWeek.stringRange }}
+        <van-icon name="arrow" />
+      </span>
     </div>
     <div class="bd">
       <ul class="date-list">
@@ -12,40 +15,30 @@
           class="date-item"
           :class="item.classNames"
         >
-          <span class="date">{{ item.short }}</span>
+          <i v-if="item.isToday" class="today">
+            <van-icon name="success" />
+          </i>
+          <div class="date">{{ item.short }}</div>
           <div class="event-name">
             {{ item.event ? item.event.text : item.dateZh }}
           </div>
         </li>
       </ul>
     </div>
+    <van-popup v-model="showPicker" round position="bottom">
+      <van-picker
+        show-toolbar
+        :columns="pickerData"
+        :default-index="pickerIndex"
+        @cancel="showPicker = false"
+        @confirm="handleChangeWeek"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script>
-function formatDate(date, fmt) {
-  var o = {
-    'M+': date.getMonth() + 1,
-    'd+': date.getDate(),
-    'h+': date.getHours(),
-    'm+': date.getMinutes(),
-    's+': date.getSeconds(),
-    'q+': Math.floor((date.getMonth() + 3) / 3),
-    S: date.getMilliseconds()
-  };
-  if (/(y+)/.test(fmt))
-    fmt = fmt.replace(
-      RegExp.$1,
-      (date.getFullYear() + '').substr(4 - RegExp.$1.length)
-    );
-  for (var k in o)
-    if (new RegExp('(' + k + ')').test(fmt))
-      fmt = fmt.replace(
-        RegExp.$1,
-        RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)
-      );
-  return fmt;
-}
+import { formatDate } from '../../../libs/utils';
 export default {
   props: {
     events: {
@@ -56,8 +49,19 @@ export default {
   data() {
     return {
       weeks: [],
-      currentWeek: {}
+      currentWeek: {},
+      today: formatDate(new Date(), 'yyyy-MM-dd'),
+      showPicker: false
     };
+  },
+  computed: {
+    pickerData() {
+      return this.weeks.map(week => week.stringRange);
+    },
+    pickerIndex() {
+      const index =  this.weeks.indexOf(this.currentWeek);
+      return index > -1 ? index : 0;
+    }
   },
   created() {
     var now = new Date();
@@ -83,21 +87,32 @@ export default {
         let d = new Date(i);
         var s = formatDate(d, 'yyyy-MM-dd');
         var event = this.events.find(event => event.date == s);
+        var classNames = [];
+        if (event) {
+          classNames.push('has-event');
+          classNames.push(`event-${event.type}`);
+        }
         dates.push({
           short: d.getDate(),
           date: s,
           event,
           dateZh: weekDays[d.getDay()],
-          classNames: event ? ['has-event', 'event-' + event.type] : undefined
+          isToday: s === this.today,
+          classNames: classNames
         });
       }
       return {
-        stringRange: `${formatDate(start, 'MM.dd')} ~ ${formatDate(
+        stringRange: `${formatDate(start, 'MM.dd')}-${formatDate(
           end,
           'MM.dd'
         )}`,
         dates
       };
+    },
+
+    handleChangeWeek(value) {
+      this.currentWeek = this.weeks.find(w => w.stringRange === value) || this.weeks[1];
+      this.showPicker = false;
     }
   }
 };
@@ -107,28 +122,68 @@ export default {
 @import '../../../variables.less';
 
 .week-base-calendar {
-  margin: 8px 16px;
+  padding-top: 8px; 
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 13px;
   text-align: left;
+  background: #fff;
   .hd {
+    font-size: 15px;
     padding: 8px;
+    color: #737386;
+    .van-icon {
+      vertical-align: -2px;
+    }
   }
   .date-list {
-    padding: 8px 16px;
+    padding: 20px 0px 29px;
     display: flex;
     text-align: center;
   }
   .date-item {
+    position: relative;
     flex: 1;
+    margin-right: 9px;
+    border-radius: 6;
+    overflow: hidden;
+  }
+  .today {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 999em 6px 0 999em;
+    background: @green;
+    .van-icon {
+      position: absolute;
+      bottom: 0;
+      left: 2px;
+      font-size: 12px;
+      transform: scale(0.7);
+    }
+  }
+  .date-item:last-child {
+    margin-right: 0;
+  }
+  .date {
+    margin-top: 8px;
+    font-size: 18px;
+    font-weight: 400;
   }
   .event-name {
-    padding: 6px 0 2px;
+    padding: 6px 0 7px;
     font-size: 12px;
   }
   .has-event {
-    background: @blue;
-    color: #fff;
+    background: #D2EADE;
+  }
+  .event-live {
+    background: #E6E6EB;
+  }
+  .event-exam {
+    background: rgba(246,114,84,0.3);
   }
 }
 </style>

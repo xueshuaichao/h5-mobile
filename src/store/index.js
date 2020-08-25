@@ -8,11 +8,21 @@ export default new Vuex.Store({
     tabbar: {
       show: true,
       active: 'home'
-    }
+    },
+    // 是否已实名认证
+    isAuthed: true,
+    // 是否已打卡
+    isClockIn: true
   },
   mutations: {
     setTabbar(state, payload) {
       state.tabbar = { ...state.tabbar, ...payload };
+    },
+    authed(state) {
+      state.isAuthed = true;
+    },
+    clockIn(state) {
+      state.isClockIn = true;
     }
   },
   modules: {}

@@ -4,21 +4,34 @@
     <div class="player">
       <img class="cover" :src="course.cover" />
     </div>
-    <van-tabs v-model="tabIndex" class="tabs">
+    <van-tabs v-model="tabIndex" class="tabs" color="#30BA8B">
       <van-tab title="目录">
-        <div class="progress">
-          <div class="progress-inner" :style="{ width: progress + '%' }">
-            <div v-if="progress > 20">已学{{ progress }}%</div>
+        <div class="flex-wrap">
+          <span>学习总进度{{ progress }}%</span>
+          <div class="progress">
+            <div class="progress-inner" :style="{ width: progress + '%' }" />
+              <!-- <div v-if="progress > 20">已学{{ progress }}%</div> -->
           </div>
         </div>
         <div class="chapters">
-          <div v-for="item in course.chapters" :key="item.id" class="level1">
+          <div class="line" />
+          <div
+            v-for="(item, index) in course.chapters"
+            :key="item.id"
+            class="level1"
+            :class="{ ended: index > 0}"
+          >
             <p>{{ item.title }}</p>
             <ul class="level2">
-              <li v-for="chapter in item.children" :key="chapter.id">
-                <div>
-                  {{ chapter.title }}
-                  <span class="green fr">{{ chapter.progress }}%</span>
+              <li 
+                v-for="chapter in item.children"
+                :key="chapter.id"
+                :class="{ ended: chapter.progress == 100, started: chapter.progress > 0}"
+              >
+                <div class="wrap">
+                  <van-icon :name="mapIcon(chapter.type)" />
+                  <span class="title">{{ chapter.title }}</span>
+                  <span v-if="chapter.progress > 0" class="green fr">{{ chapter.progress }}%</span>
                 </div>
               </li>
             </ul>
@@ -33,65 +46,7 @@
 </template>
 
 <script>
-const chapters = [
-  {
-    id: '1',
-    title: '第一章 钢筋现场验收重点',
-    children: [
-      {
-        id: 'chapter_1_1',
-        type: 'video',
-        title: '01 什么是钢筋',
-        progress: 100
-      },
-      {
-        id: 'chapter_1_2',
-        type: 'video',
-        title: '02 钢筋的用途',
-        progress: 100
-      },
-      {
-        id: 'chapter_1_3',
-        type: 'video',
-        title: '03 钢筋的用途',
-        progress: 100
-      },
-      {
-        id: 'chapter_1_4',
-        type: 'homework',
-        title: '04 章节作业',
-        progress: 100
-      }
-    ]
-  },
-  {
-    id: '2',
-    title: '第二章 钢筋现场验收',
-    children: [
-      {
-        id: 'chapter_2_1',
-        type: 'video',
-        title: '01 什么是钢筋',
-        progress: 20
-      },
-      {
-        id: 'chapter_2_2',
-        type: 'video',
-        title: '02 钢筋的用途'
-      },
-      {
-        id: 'chapter_2_3',
-        type: 'video',
-        title: '03 钢筋的用途'
-      },
-      {
-        id: 'chapter_3_4',
-        type: 'homework',
-        title: '04 章节作业'
-      }
-    ]
-  }
-];
+import { chapters } from '../../data/course';
 export default {
   data() {
     return {
@@ -108,16 +63,25 @@ export default {
   methods: {
     back() {
       this.$router.back();
+    },
+    mapIcon(type) {
+      const map = {
+        'video': 'video',
+        'live': 'live',
+        'homework': 'gem',
+        'doc': 'todo-list'
+      };
+      return map[type] || 'video';
     }
   }
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import '../../variables.less';
 .course-detail {
   text-align: left;
-  background: #f4f4f4;
+  background: #F5F5FA;
 }
 .player {
   padding: 8px 16px 16px;
@@ -129,28 +93,85 @@ export default {
 .tabs {
   background: #fff;
 }
-.chapters {
-  padding: 0 16px;
-  font-size: 12px;
-}
-.green {
-  color: @green;
+.flex-wrap {
+  display: flex;
+  margin: 16px;
+  font-size: 13px;
 }
 .progress {
+  flex: 1;
   width: 80%;
-  margin: 16px auto;
-  background: #f1f1f1;
+  margin-top: 4px;
+  margin-left: 14px;
+  background: #C5EAE2;
   height: 12px;
   font-size: 12px;
   line-height: 1;
   border-radius: 6px;
   text-align: center;
   .progress-inner {
+    height: 100%;
     background: @green;
     border-radius: 6px;
     color: @white;
     overflow: hidden;
     white-space: nowrap;
+  }
+}
+.chapters {
+  position: relative;
+  padding: 0 16px;
+  font-size: 12px;
+  .line {
+    position: absolute;
+    width: 0;
+    left: 19px;
+    top: 7px;
+    bottom: 7px;
+    border: 1px dashed #30BA8B;
+    transform: scaleX(0.6);
+  }
+  .level1 {
+    position: relative;
+    padding-left: 20px;
+    font-size: 16px;
+    &::before {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      left: 0;
+      top: 7px; 
+      border-radius: 50%;
+      background: @green;
+      content: ' ';
+      z-index: 10;
+    }
+  }
+  .ended::before {
+    background: @gray-6;
+  }
+  .level2 {
+    font-size: 14px;
+    li {
+      margin-bottom: 7px;
+    }
+    .wrap {
+      display: flex;
+      align-items: center;
+    }
+    .title {
+      flex: 1;
+      margin: 0 6px;
+    }
+    .green {
+      color: @green;
+    }
+    .van-icon {
+      vertical-align: middle;
+    }
+    .ended {
+      color: @gray-6;
+    }
   }
 }
 </style>

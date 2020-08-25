@@ -74,7 +74,7 @@
             }
         },
         created() {
-            this.type = this.$route.query.type || 'exam';
+            this.type = this.$route.query.type || this.$route.name || 'exam';
         },
         methods: {
             indexToString:indexToString,

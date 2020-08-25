@@ -1,5 +1,5 @@
 <template>
-  <div class="learing-index">
+  <div class="learning-home">
     <van-nav-bar title="学习中心" />
     <!-- <van-calendar
       title="日历"
@@ -9,8 +9,8 @@
       style="height: 410px"
     /> -->
     <week-base-calendar :events="events" />
-    <van-tabs v-model="tab">
-      <van-tab title="正在进行">
+    <van-tabs v-model="tab" color="#30BA8B" class="tabs" animated>
+      <van-tab title="学习中">
         <div class="train-list">
           <train-item
             v-for="item in undergoingTrains"
@@ -36,40 +36,31 @@
 <script>
 import TrainItem from './components/train-item.vue';
 import WeekBaseCalendar from './components/week-base-calendar.vue';
+import { createEvents } from '../../data/events';
 
-const events = [
-  { date: '2020-08-24', type: '', text: '实训' },
-  { date: '2020-08-26', type: '', text: '直播' },
-  { date: '2020-08-27', type: '', text: '考试' }
-];
 const trainData = [
   {
-    id: '1',
-    title: '钢筋工培训班培训 - 第8期',
-    date: '2020.08.01~2020.08.30',
-    progress: 18,
-    hours: 15,
-    total_hours: 80,
-    current: '课程： 1.2建设工程项目管理',
-    state: 'end'
-  },
-  {
-    id: '2',
-    title: '钢筋工培训班培训 - 第8期',
+    id: '0',
+    title: '钢筋工培训班培训-第8期',
     date: '2020.08.01~2020.08.30',
     progress: 18,
     hours: 15,
     total_hours: 80,
     current: '课程： 1.2建设工程项目管理',
     state: 'undergoing'
+  },
+  {
+    id: '1',
+    title: '2021年北京线下企业管理培训-第9期',
+    date: '2020.08.01~2020.08.30',
+    progress: 18,
+    hours: 15,
+    total_hours: 80,
+    current: '课程： 1.2建设工程项目管理',
+    state: 'ended'
   }
 ];
-function pad(number) {
-  if (number < 10) {
-    return '0' + number;
-  }
-  return String(number);
-}
+
 export default {
   components: {
     TrainItem,
@@ -78,36 +69,29 @@ export default {
   data() {
     return {
       tab: 0,
-      events,
+      events: createEvents(),
       trainData
     };
   },
   computed: {
     endedTrains() {
-      return this.trainData.filter(t => t.state === 'end');
+      return this.trainData.filter(t => t.state === 'ended');
     },
     undergoingTrains() {
       return this.trainData.filter(t => t.state === 'undergoing');
-    }
-  },
-  methods: {
-    dayFormatter(day) {
-      const month = day.date.getMonth() + 1;
-      const date = day.date.getDate();
-      const dateStr = pad(month) + '-' + pad(date);
-
-      const event = events.find(e => e.date === dateStr);
-      if (event) {
-        day.bottomInfo = event.text;
-        day.className = 'day-' + event.type;
-      }
-      return day;
     }
   }
 };
 </script>
 
 <style lang="less">
+.learning-home {
+  background: #F9FAFD;
+  .tabs {
+    margin-top: 14px;
+    background: #fff;
+  }
+}
 .train-list {
   margin: 8px 16px;
 

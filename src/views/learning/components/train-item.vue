@@ -1,17 +1,20 @@
 <template>
-  <div class="train-item van-hairline--surround">
-    <div class="main">
-      <div class="bg"></div>
-      <div class="info">
+  <div class="train-item">
+    <div class="main" :class="{ light: +data.id % 2 == 1}">
+      <div class="info" @click="toDetail">
         <div class="title">{{ data.title }}</div>
         <div class="date">{{ data.date }}</div>
         <div class="progress">
-          <p>学习进度： {{ data.progress }}%</p>
-          <van-progress :percentage="data.progress" />
-          <p>
-            已学<span class="em">{{ data.hours }}</span
-            >/共{{ data.total_hours }}学时
-          </p>
+          学习进度：{{ data.progress }}%
+          <van-progress
+            :percentage="data.progress"
+            :show-pivot="false"
+            color="#8CFEF3"
+            track-color="#049E91"
+          />
+          <div class="clearfix" style="margin-top: 3px;text-align: right;">
+            已学{{ data.hours }}/共{{ data.total_hours }}学时
+          </div>
         </div>
       </div>
     </div>
@@ -22,12 +25,20 @@
           <div class="chapter">{{ data.current }}</div>
         </div>
         <div class="right">
-          <router-link
+          <!-- <router-link
             class="link"
             :to="{ name: 'trainDetail', params: { id: data.id } }"
           >
             <van-icon name="arrow" />
-          </router-link>
+          </router-link> -->
+          <van-button
+            type="primary"
+            plain
+            size="small"
+            @click="toDetail"
+          >
+            查看详情
+          </van-button>
         </div>
       </div>
     </div>
@@ -45,6 +56,16 @@ export default {
       type: Boolean,
       default: true
     }
+  },
+  methods: {
+    toDetail() {
+      this.$router.push({ 
+        name: 'trainDetail', 
+        params: { 
+          id: this.data.id 
+        }
+      });
+    }
   }
 };
 </script>
@@ -55,12 +76,31 @@ export default {
 .train-item {
   background: #fff;
   text-align: left;
+  box-shadow:0px 6px 16px 0px rgba(57,97,104,0.06);
+  border-radius: 7px;
+  overflow: hidden;
+  .main {
+    background: linear-gradient(116deg,rgba(44,193,171,1) 0%,rgba(2,169,159,1) 100%);
+    &.light {
+      background:linear-gradient(116deg,rgba(100,175,189,1) 0%,rgba(149,208,216,1) 100%);
+    }
+  }
   .info {
     padding: 16px;
-    font-size: 12px;
+    font-size: 11px;
+    color: #fff;
+    .van-progress {
+      display: inline-block;
+      width: 100px;
+      height: 7px;
+    }
+    .date,
+    .progress {
+      margin-top: 10px;
+    }
   }
   .title {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
   }
   .em {
@@ -71,20 +111,23 @@ export default {
 
 .train-item .flex-row {
   display: flex;
-  font-size: 14px;
   .left {
     flex: 1;
     padding: 8px 16px;
-  }
-  .chapter {
     font-size: 16px;
     font-weight: 500;
   }
+  .chapter {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #575765;
+    line-height: 22px;
+  }
   .right {
-    width: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 16px;
     .link {
       width: 32px;
       height: 32px;
