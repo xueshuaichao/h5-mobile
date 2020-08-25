@@ -57,7 +57,7 @@ const routes = [
     component: () => import('../views/learning/course.vue')
   },
   {
-    path: '/learning/live/:id',
+    path: '/learning/live',
     name: 'liveDetail',
     component: () => import('../views/learning/live.vue')
   },
