@@ -219,6 +219,7 @@
         background: #FFF;
 
         .subject{
+            font-size: 16px;
             .content{
                 text-align: left;
                 font-weight: 500;
@@ -286,6 +287,7 @@
         flex-direction: column;
         justify-content: space-between;
         padding: 0 15px 15px;
+        font-size: 14px;
 
         .answer-preview{
             display: flex;

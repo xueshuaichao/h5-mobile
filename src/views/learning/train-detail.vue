@@ -228,9 +228,10 @@ export default {
       font-size: 16px;
     }
     .tag {
-      position: absolute;
-      right: 0;
-      top: 0;
+      // position: absolute;
+      // right: 0;
+      // top: 0;
+      float: right;
       font-style: normal;
       font-size: 11px;
       padding: 3px 6px;

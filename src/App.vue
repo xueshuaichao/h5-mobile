@@ -62,7 +62,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #272F55;
-  font-size: 16px;
+  font-size: 32px;
 }
 
 #nav {
