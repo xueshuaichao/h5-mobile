@@ -228,7 +228,7 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                margin-top: 20px;
+                margin-top: 32px;
 
                 .item{
                     border-radius: 4px;
@@ -240,7 +240,6 @@
                     padding: 10px 10px 10px 32px;
                     background: rgba(249,250,253,1);
                     text-align: left;
-                    font-weight: 500;
                     color: rgba(39,47,85,1);
                     box-sizing: border-box;
 

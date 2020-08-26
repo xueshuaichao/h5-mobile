@@ -48,8 +48,8 @@
                     </div>
                 </div>
             </div>
-            <van-button v-if="type=='exam'" style="width: 95%;border-width: 2px;" plain color="#02B38A" type="primary">查看答案解析</van-button>
-            <van-button v-else style="width: 95%;border:2px;" plain color="#02B38A" type="primary">查看作业</van-button>
+            <van-button v-if="type=='exam'" style="width: 95%;" plain color="#02B38A" type="primary">查看答案解析</van-button>
+            <van-button v-else style="width: 95%;" plain color="#02B38A" type="primary">查看作业</van-button>
             <div class="remark">
                 您的考试数据已写入伟东区块链，作业信息将永久保存，防篡改，可追溯
                 区块链存证HASH：9cfb5a351035180a16d50ad605a939f089a2e894<br/>

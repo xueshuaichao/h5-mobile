@@ -7,7 +7,7 @@
             </div>
 <!--            <video src="https://www.runoob.com/try/demo_source/movie.mp4" playsinline controls></video>-->
         </div>
-        <van-tabs title-active-color="#00B288" color="#00B288" :line-width="16">
+        <van-tabs class="container" title-active-color="#00B288" color="#00B288" :line-width="16">
             <van-tab title="简介">
                 <div class="brief">
                     <p>直播已结束，可观看回放</p>
@@ -16,7 +16,7 @@
                     <p class="desc">{{desc}}</p>
                 </div>
             </van-tab>
-            <van-tab title="聊天"></van-tab>
+            <van-tab title="聊天"><div class="brief"></div></van-tab>
         </van-tabs>
         <div class="replay">查看回放</div>
     </div>
@@ -76,6 +76,14 @@
             width: 100%;
             height: 100%;
         }
+    }
+
+    .container{
+        position: absolute;
+        top: 238px;
+        bottom: 0;
+        background: #FAFBFC;
+        width: 100%;
     }
 
     .brief{
