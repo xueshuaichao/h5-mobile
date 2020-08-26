@@ -84,6 +84,7 @@ export default {
         };
     },
     methods: {
+        tabClick() {},
         back() {
             this.$router.back();
         }
