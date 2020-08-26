@@ -23,8 +23,10 @@
             </div>
         </div>
         <van-form @submit="onSubmit">
-            <van-field v-model="username" name="姓名" label="姓名" placeholder="请输入姓名" />
-            <van-field v-model="idCard" name="身份证号" label="身份证号" placeholder="请输入身份证号" />
+            <div class="input">
+                <van-field v-model="username" name="姓名" label="姓名" placeholder="请输入姓名" />
+                <van-field v-model="idCard" name="身份证号" label="身份证号" placeholder="请输入身份证号" />
+            </div>
             <div style="margin: 16px;">
                 <van-button round block type="primary" native-type="submit" :loading="loading">下一步</van-button>
             </div>
@@ -54,7 +56,7 @@ export default {
                 this.$router.push({
                     name: "faceDetect",
                     query: {
-                        action: 'auth',
+                        action: "auth",
                         ...this.$route.query
                     }
                 });
@@ -87,10 +89,18 @@ export default {
 <style lang="less" scoped>
 .identity-picture {
     margin-top: 30px;
+
     .picture {
         width: 482px;
         margin: 0 auto 30px;
         position: relative;
+        p {
+            font-size: 28px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: rgba(167, 173, 187, 1);
+            line-height: 28px;
+        }
         img {
             width: 100%;
         }
@@ -101,6 +111,14 @@ export default {
             left: 192px;
             top: 110px;
         }
+    }
+}
+.input {
+    width: 690px;
+    margin: 0 auto;
+    background: #f9fafd;
+    .van-cell {
+        background: transparent;
     }
 }
 </style>

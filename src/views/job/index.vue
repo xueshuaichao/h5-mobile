@@ -14,11 +14,12 @@
                     <van-icon name="arrow" />
                 </div>
             </div>
-            <van-tabs v-model="active1" class="tabs2">
+            <van-tabs v-model="active1" line-width class="tabs2">
                 <van-tab title="推荐"></van-tab>
                 <van-tab title="最新"></van-tab>
                 <van-tab title="最热"></van-tab>
             </van-tabs>
+            <p class="line"></p>
             <div class="listBox">
                 <ul class="list">
                     <li v-for="job in jobList" :key="job.id">
@@ -41,10 +42,25 @@
             </div>
         </div>
         <div v-show="active==1" class="jobList">
-            <van-tabs v-model="active1" class="tabs2">
-                <van-tab title="北京"></van-tab>
-                <van-tab title="全部职位"></van-tab>
-                <van-tab title="全部职位"></van-tab>
+            <van-tabs v-model="active1" class="tabs3">
+                <van-tab title="北京">
+                    <template #title>
+                        北京
+                        <van-icon name="arrow-down" />
+                    </template>
+                </van-tab>
+                <van-tab title="全部职位">
+                    <template #title>
+                        全部职位
+                        <van-icon name="arrow-down" />
+                    </template>
+                </van-tab>
+                <van-tab title="全部职位">
+                    <template #title>
+                        全部职位
+                        <van-icon name="arrow-down" />
+                    </template>
+                </van-tab>
             </van-tabs>
             <div class="listBox">
                 <ul class="list">
@@ -139,49 +155,49 @@ export default {
                 {
                     id: 1,
                     name: "公路建设(集团)有限公司",
-                    logo: require("../../assets/images/portrait.png"),
+                    logo: require("../../assets/images/logo1.png"),
                     companyAddress: "北京",
                     welfare: "已上市        世界500强"
                 },
                 {
                     id: 2,
                     name: "亿尚龙建筑公司",
-                    logo: require("../../assets/images/portrait.png"),
+                    logo: require("../../assets/images/logo2.png"),
                     companyAddress: "北京",
                     welfare: "五险一金   定期体检"
                 },
                 {
                     id: 3,
                     name: "华迅锐建筑公司",
-                    logo: require("../../assets/images/portrait.png"),
+                    logo: require("../../assets/images/logo3.png"),
                     companyAddress: "北京",
                     welfare: "已上市"
                 },
                 {
                     id: 4,
                     name: "梦都建筑（集团）有限公司",
-                    logo: require("../../assets/images/portrait.png"),
+                    logo: require("../../assets/images/logo4.png"),
                     companyAddress: "北京",
                     welfare: "五险一金"
                 },
                 {
                     id: 5,
                     name: "中浩建筑有限责任公司",
-                    logo: require("../../assets/images/portrait.png"),
+                    logo: require("../../assets/images/logo1.png"),
                     companyAddress: "北京",
                     welfare: "五险一金    带薪年假"
                 },
                 {
                     id: 6,
                     name: "建工程有限公司",
-                    logo: require("../../assets/images/portrait.png"),
+                    logo: require("../../assets/images/logo2.png"),
                     companyAddress: "北京",
                     welfare: "已上市        世界500强"
                 },
                 {
                     id: 7,
                     name: "缘振智建筑公司",
-                    logo: require("../../assets/images/portrait.png"),
+                    logo: require("../../assets/images/logo3.png"),
                     companyAddress: "北京",
                     welfare: "已上市        世界500强"
                 }
@@ -197,7 +213,7 @@ export default {
         overflow: inherit;
     }
     .intention .van-icon {
-        top: 5px;
+        top: 3px;
     }
     .tabs1 {
         .van-tab {
@@ -213,14 +229,14 @@ export default {
         .van-tab--active {
             font-size: 21px;
             font-weight: 600;
-            color: @textColor1;
+            color: @textColor1!important;
         }
         .van-tabs__line {
             width: 19px !important;
-            height: 6px;
+            height: 3px;
             background: #30ba8b;
             border-radius: 2px;
-            bottom: 5px;
+            bottom: 16px;
         }
     }
     .tabs2 {
@@ -256,11 +272,19 @@ h4 {
 .tabs1 {
     padding-left: 30px;
 }
-.tabs2 {
+.tabs2,
+.tabs3 {
     // padding-bottom: 26px;
-    border-bottom: 1px solid #e6e6eb;
+    // border-bottom: 1px solid #e6e6eb;
     margin-bottom: 63px;
 }
+.tabs3 .van-tabs__line {
+    display: none;
+    .van-icon {
+        top: 5px;
+    }
+}
+
 .intention {
     overflow: hidden;
     margin-bottom: 35px;
@@ -325,9 +349,15 @@ h4 {
                 line-height: 40px;
             }
         }
+        .welfare {
+            font-size: 24px;
+            font-weight: 400;
+            color: @grayfont;
+            line-height: 33px;
+        }
         .salary {
             font-size: 40px;
-            font-family: AvenirNextCondensed-DemiBold, AvenirNextCondensed;
+            font-family: Avenir Next, Avneir;
             font-weight: 600;
             color: rgba(232, 90, 58, 1);
             line-height: 55px;

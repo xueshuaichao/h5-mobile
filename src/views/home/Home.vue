@@ -153,7 +153,7 @@ export default {
                 {
                     id: 1,
                     img: require("../../assets/images/professional1.png"),
-                    title: "2020年CPA战略风险管理",
+                    title: "2020年CPA战略风险管理职业技能集训班",
                     num: "13.4万人已报名"
                 },
                 {
@@ -251,6 +251,11 @@ export default {
         display: inline-block;
         margin-right: 10px;
     }
+    .van-button__text {
+        position: relative;
+        top: 1px;
+        left: 1px;
+    }
     .van-swipe-item {
         margin-right: 24px;
     }
@@ -261,6 +266,9 @@ export default {
         font-weight: 600;
         color: @textColor1;
         line-height: 34.5px;
+    }
+    .van-button--info {
+        border: 0;
     }
 }
 </style>
@@ -288,7 +296,7 @@ p {
     font-weight: 600;
 }
 .banner {
-    margin: 48px 0 54px;
+    margin: 48px 0 34px;
     img {
         width: 100%;
     }
@@ -356,6 +364,7 @@ p {
             .continue-study {
                 color: @tifiniyGreen2;
                 text-align: right;
+                font-size: 26px;
             }
         }
     }
@@ -403,6 +412,9 @@ p {
                     line-height: 50px;
                     margin-bottom: 14px;
                 }
+                p {
+                    font-size: 24px;
+                }
                 .live {
                     width: 27px;
                     margin-left: 8px;
@@ -441,6 +453,7 @@ p {
             width: 368px;
             margin-right: 24px;
             vertical-align: top;
+            padding-bottom: 5px;
             img {
                 width: 100%;
                 height: 185px;
@@ -565,8 +578,8 @@ p {
             right: 20px;
         }
         .salary {
-            font-size: 28px;
-            font-weight: 600;
+            font-size: 30px;
+            font-weight: 500;
             color: @tifiniyGreen2;
             line-height: 44px;
         }
