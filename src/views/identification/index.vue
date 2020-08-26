@@ -53,7 +53,10 @@ export default {
                 this.loading = false;
                 this.$router.push({
                     name: "faceDetect",
-                    query: this.$route.query
+                    query: {
+                        action: 'auth',
+                        ...this.$route.query
+                    }
                 });
             }, 1000);
             console.log("submit", values);

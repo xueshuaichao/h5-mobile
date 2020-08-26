@@ -157,7 +157,12 @@
                     message: '提交中',
                     forbidClick: true,
                     onClose: ()=>{
-                        this.$router.push('/learning/home')
+                        this.$router.push({
+                            name: 'report',
+                            query: {
+                                type: this.type
+                            }
+                        })
                     }
                 });
             }

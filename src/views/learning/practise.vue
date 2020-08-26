@@ -27,8 +27,8 @@
             <div class="item">
                 <div class="title practise-sign"></div>
                 <div class="content">
-                    <div>{{startSign}}</div>
-                    <div>{{endSign}}</div>
+                    <div v-if="startSign">上课打卡：{{ startSign }}正常</div>
+                    <div v-if="endSign">下课打卡：{{ endSign }}正常</div>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-    import moment from "moment";
+    import { mapState } from 'vuex';
 
     export default {
         name: "practise2",
@@ -50,20 +50,37 @@
                 address: '大钟寺怡和8号院',
                 teacher: '张三',
                 desc: '一类环境中，钢筋混凝土梁的保护层厚度最小取保护层厚度最小取保护层厚度最小取',
-                startSign: '',
-                endSign: ''
+                // startSign: '',
+                // endSign: ''
             }
+        },
+        computed: {
+            ...mapState({
+                startSign(state) {
+                    return state.practiseSign.start;
+                },
+                endSign(state) {
+                    return state.practiseSign.end;
+                }
+            })
         },
         methods: {
             goback: function(){
                 history.back();
             },
             sign: function(){
-                if(!this.startSign){
-                    this.startSign = `上课打卡：${moment().format('YYYY-MM-DD hh:mm')} 正常`
-                }else{
-                    this.endSign = `下课打卡：${moment().format('YYYY-MM-DD hh:mm')} 正常`
-                }
+                // if(!this.startSign){
+                //     this.startSign = `上课打卡：${moment().format('YYYY-MM-DD hh:mm')} 正常`
+                // }else{
+                //     this.endSign = `下课打卡：${moment().format('YYYY-MM-DD hh:mm')} 正常`
+                // }
+                this.$router.push({
+                    name: 'location',
+                    query: {
+                        from: 'practise',
+                        type: !this.startSign ? "start" : "end"
+                    }
+                });
             }
         }
     }

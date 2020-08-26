@@ -85,13 +85,24 @@ export default {
       if (!this.locationName) {
         return ;
       }
-      store.commit('clockIn');
-      this.$router.push({
-        name: 'faceDetect',
-        query: this.$route.query
-      });
-      // this.$toast.success('打卡成功');
-      // setTimeout(() => this.back(), 2000);
+      if (this.$route.query?.from == 'practise') {
+        // 实训打卡
+        const type = this.$route.query?.type ?? 'start';
+        store.commit('practiseSignIn', {
+          [type]: formatDate(new Date(), 'yyyy-MM-dd hh:mm')
+        });
+        this.back();
+      } else {
+        // 培训
+        store.commit('clockIn');
+        this.$router.push({
+          name: 'faceDetect',
+          query: {
+            action: 'clockIn',
+            ...this.$route.query
+          }
+        });
+      }
     }
   }
 };

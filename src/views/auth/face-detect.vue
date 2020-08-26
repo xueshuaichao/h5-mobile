@@ -77,6 +77,30 @@ export default {
                 console.error(e);
                 this.loading = false;
             }
+        },
+
+        handleSuccess() {
+            const action = this.$route.query?.action;
+            switch(action) {
+                case 'auth': {
+                    //实名认证
+                    store.commit('auth');
+                    this.$toast.success('认证成功');
+                    this.back();
+                    break;
+                }
+                case 'clockIn': {
+                    // 培训打卡
+                    store.commit('clockIn');
+                    this.$toast.success('打卡成功');
+                    this.back();
+                    break;
+                }
+                default: {
+                    console.warn(`unrecongnized action "${action}"`);
+                    this.back();
+                }
+            }
         }
     }
 };

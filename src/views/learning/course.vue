@@ -42,7 +42,10 @@
         </div>
       </van-tab>
       <van-tab title="简介">
-        {{ course.description }}
+        <div style="padding: 0 16px;font-size: 14px;">
+          <p>本课程紧跟企业人力资源岗位需求，高效构建HR所需的知识体系和专业能力。</p>
+          <p>通过本课程的学习，学员能够正确理解人力资源管理的概念，掌握人力资源管理的主要职能，并能综合用于对实际问题的分析与解决，培养并提高他们在人力资源管理领域的实操能力。</p>
+        </div>
       </van-tab>
     </van-tabs>
   </div>
@@ -58,7 +61,7 @@ export default {
         title: '钢筋现场验收重点',
         cover: '',
         chapters,
-        description: ''
+        desc: '',
       },
       progress: 38
     };
