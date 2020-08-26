@@ -28,8 +28,7 @@
                         </div>
                         <div class="select">
                             <div class="item" @click="switchSelect(index)" :class="{active: subject.selectedIndex === index}" v-for="(item,index) in subject.selectList" :key="index">
-                                <div class="item-index">{{indexToString(index)}}.</div>
-                                <div class="item-content">{{item}}</div>
+                                {{indexToString(index)}}.{{item}}
                             </div>
                         </div>
                     </div>
@@ -229,7 +228,7 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                margin-top: 20px;
+                margin-top: 32px;
 
                 .item{
                     border-radius: 4px;
@@ -238,23 +237,15 @@
                     margin-bottom: 12px;
                     display: flex;
                     align-items: center;
-                    padding: 10px 10px 10px 20px;
+                    padding: 10px 10px 10px 32px;
                     background: rgba(249,250,253,1);
                     text-align: left;
-                    font-weight: 500;
                     color: rgba(39,47,85,1);
-                    display: flex;
                     box-sizing: border-box;
 
                     &.active{
                         background-color: rgba(2,179,138,.1);
                         color:rgba(2,179,138,1);
-                    }
-
-                    .item-index{
-                        display: flex;
-                        justify-content: center;
-                        margin-right: 5px;
                     }
                 }
             }
@@ -286,6 +277,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        margin-top: 20px;
         padding: 0 15px 15px;
         font-size: 14px;
 
@@ -302,7 +294,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-weight: 500;
                 border:1px solid rgba(167,173,187,1);
 
                 &.hasAnswered{

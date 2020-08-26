@@ -14,12 +14,23 @@
                     <van-icon name="arrow" />
                 </div>
             </div>
-            <van-tabs v-model="active1" line-width class="tabs2">
-                <van-tab title="推荐"></van-tab>
-                <van-tab title="最新"></van-tab>
-                <van-tab title="最热"></van-tab>
-            </van-tabs>
-            <p class="line"></p>
+            <div class="tabBox">
+                <van-tabs v-model="active1" line-width class="tabs2">
+                    <van-tab title="推荐"></van-tab>
+                    <van-tab title="最新"></van-tab>
+                    <van-tab title="最热"></van-tab>
+                </van-tabs>
+                <div class="shaixuan">
+                    <span>
+                        北京
+                        <van-icon name="arrow-down" />
+                    </span>
+                    <span>
+                        筛选
+                        <van-icon name="arrow-down" />
+                    </span>
+                </div>
+            </div>
             <div class="listBox">
                 <ul class="list">
                     <li v-for="job in jobList" :key="job.id">
@@ -92,7 +103,7 @@ export default {
                     salary: "20-25K",
                     companyName: "公路建设(集团)有限公司 ",
                     contactUserName: "·张经理",
-                    contactUserPortrait: require("../../assets/images/portrait.png"),
+                    contactUserPortrait: require("../../assets/images/logo1.png"),
                     companyAddress: "北京·西直门"
                 },
                 {
@@ -103,7 +114,7 @@ export default {
                     salary: "20-25K",
                     companyName: "亿尚龙建筑公司 ",
                     contactUserName: "·张经理",
-                    contactUserPortrait: require("../../assets/images/portrait.png"),
+                    contactUserPortrait: require("../../assets/images/logo2.png"),
                     companyAddress: "北京·西直门"
                 },
                 {
@@ -114,7 +125,7 @@ export default {
                     salary: "20-25K",
                     companyName: "三建工程有限公司 ",
                     contactUserName: "·张经理",
-                    contactUserPortrait: require("../../assets/images/portrait.png"),
+                    contactUserPortrait: require("../../assets/images/logo3.png"),
                     companyAddress: "北京·西直门"
                 },
                 {
@@ -125,7 +136,7 @@ export default {
                     salary: "20-25K",
                     companyName: "中浩建筑有限责任公司",
                     contactUserName: "·张经理",
-                    contactUserPortrait: require("../../assets/images/portrait.png"),
+                    contactUserPortrait: require("../../assets/images/logo4.png"),
                     companyAddress: "北京·西直门"
                 },
                 {
@@ -136,7 +147,7 @@ export default {
                     salary: "20-25K",
                     companyName: "缘振智建筑公司",
                     contactUserName: "·张经理",
-                    contactUserPortrait: require("../../assets/images/portrait.png"),
+                    contactUserPortrait: require("../../assets/images/logo1.png"),
                     companyAddress: "北京·西直门"
                 },
                 {
@@ -147,7 +158,7 @@ export default {
                     salary: "20-25K",
                     companyName: "华迅锐建筑公司",
                     contactUserName: "·张经理",
-                    contactUserPortrait: require("../../assets/images/portrait.png"),
+                    contactUserPortrait: require("../../assets/images/logo2.png"),
                     companyAddress: "北京·西直门"
                 }
             ],
@@ -241,9 +252,10 @@ export default {
     }
     .tabs2 {
         padding-left: 30px;
+        float: left;
         .van-tab {
             flex: inherit;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 400;
             color: @textColor1;
             line-height: 16px;
@@ -272,6 +284,25 @@ h4 {
 .tabs1 {
     padding-left: 30px;
 }
+.tabBox {
+    overflow: hidden;
+    padding-right: 30px;
+    .shaixuan {
+        float: right;
+        font-size: 28px;
+        margin-top: 20px;
+        .van-icon {
+            top: 2px;
+        }
+        span:nth-child(1) {
+            margin-right: 41px;
+        }
+    }
+    .tabs2 {
+        // float: left;
+    }
+}
+
 .tabs2,
 .tabs3 {
     // padding-bottom: 26px;
@@ -299,7 +330,7 @@ h4 {
     .r {
         float: right;
         font-size: 28px;
-        font-weight: 600;
+        font-weight: 500;
         color: @tifiniyGreen;
     }
 }
@@ -362,7 +393,8 @@ h4 {
             color: rgba(232, 90, 58, 1);
             line-height: 55px;
         }
-        .add {
+        .add,
+        .companyAddress {
             font-size: 24px;
             font-weight: 400;
             color: rgba(167, 173, 187, 1);

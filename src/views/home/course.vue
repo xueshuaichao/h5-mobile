@@ -84,6 +84,7 @@ export default {
         };
     },
     methods: {
+        tabClick() {},
         back() {
             this.$router.back();
         }
@@ -103,7 +104,7 @@ export default {
         margin-bottom: 20px;
     }
     .van-tabs__line {
-        width: 17px;
+        width: 17px !important;
         height: 3px;
         background: rgba(48, 186, 139, 1);
         border-radius: 5px;
@@ -169,6 +170,7 @@ export default {
             width: 224px;
             vertical-align: top;
             margin-right: 32px;
+            border-radius: 4px;
         }
         .text {
             display: inline-block;

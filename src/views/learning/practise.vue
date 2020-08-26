@@ -102,10 +102,11 @@
             margin-bottom: 15px;
 
             .title{
-                width: 88px;
-                height: 28px;
+                width: 86px;
+                height: 26px;
                 margin-bottom: 15px;
-                background-size: contain;
+                background-size: cover;
+                background-repeat: no-repeat;
             }
 
             .practise-info{
@@ -143,5 +144,6 @@
         right: 50px;
         top: 75%;
         color: #fff;
+        font-size: 14px;
     }
 </style>

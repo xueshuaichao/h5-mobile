@@ -2,12 +2,12 @@
     <div class="Professional">
         <van-nav-bar title="职业测评" left-arrow @click-left="back" />
         <div class="t">
-            <img src="../../assets/images/Professional3.png" alt />
+            <!-- <img src="../../assets/images/Professional3.png" alt />
             <div class="text">
                 <p class="name">Hi，张三</p>
                 <p class="tip">您还未进行水平测试</p>
             </div>
-            <van-button type="info" plain to="index">开始测评</van-button>
+            <van-button type="info" plain to="index">开始测评</van-button>-->
         </div>
         <div class="step1 step">
             <!-- <p>企业能力测评</p> -->
@@ -49,22 +49,27 @@ export default {
 </style>
 <style lang="less" scoped>
 .Professional {
+    overflow-x: hidden;
     p {
         margin: 0;
     }
     .t {
-        width: 690px;
-        margin: 30px auto;
-        background: linear-gradient(
-            116deg,
-            rgba(44, 193, 171, 1) 0%,
-            rgba(2, 169, 159, 1) 100%
-        );
-        box-shadow: 0px 0px 20px 0px rgba(3, 180, 139, 0.2);
-        border-radius: 16px;
-        box-sizing: border-box;
-        text-align: left;
-        padding: 32px;
+        width: 730px;
+        height: 160px;
+        margin: 0 auto;
+        // margin: 30px auto;
+        // background: linear-gradient(
+        //     116deg,
+        //     rgba(44, 193, 171, 1) 0%,
+        //     rgba(2, 169, 159, 1) 100%
+        // );
+        // box-shadow: 0px 0px 20px 0px rgba(3, 180, 139, 0.2);
+        // border-radius: 16px;
+        // box-sizing: border-box;
+        // text-align: left;
+        // padding: 32px;
+        background: url(../../assets/images/ceping.png) no-repeat;
+        background-size: 100%;
         position: relative;
         img {
             width: 96px;
@@ -87,7 +92,7 @@ export default {
         }
     }
     .step {
-        width: 690px;
+        // width: 690px;
         margin: 0 auto 30px;
         height: 380px;
         background-size: 100%;
