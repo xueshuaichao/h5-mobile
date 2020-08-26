@@ -45,7 +45,7 @@
             <div class="answer-card">
                 <div class="answer-preview">
                     <div class="item" :class="{hasAnswered: subject.selectedIndex !== ''}" v-for="(subject,index) in list" :key="subject.id">
-                        {{index}}
+                        {{ index + 1 }}
                     </div>
                 </div>
                 <van-button type="primary" @click="submit()" class="submit">提交</van-button>
