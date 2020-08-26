@@ -50,7 +50,13 @@ export default {
         clearInterval(timer);
       });
     },
-    getLocation() {
+    async getLocation() {
+      if (this.geoLocationError) {
+        // 定位失败一次后，给固定地址
+        this.geoLocationError = false;
+        this.locationName = '北京市海淀区大钟寺';
+        return ;
+      }
       return new Promise((resolve, reject) => {
         console.time('geolocation')
         navigator.geolocation.getCurrentPosition((position) => {
@@ -73,7 +79,6 @@ export default {
         });
       })
       .then(location => {
-        console.log(location);
         this.locationName = location;
       })
       .catch(e => {
