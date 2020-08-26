@@ -127,13 +127,15 @@ export default {
   font-size: 12px;
 
   .action {
-    width: 136px;
-    height: 136px;
-    padding-top: 50px;
+    width: 168px;
+    height: 168px;
+    padding-top: 66px;
+    line-height: 1;
     border-radius: 50%;
-    background: @blue;
     color: #fff;
     box-sizing: border-box;
+    background: url(../../assets/location-bg.png) 0 0 no-repeat;
+    background-size: 100%;
     &.disabled {
       opacity: .6;
     }
@@ -143,9 +145,11 @@ export default {
     font-weight: 400;
   }
   .timer {
-    color: 14px;
+    margin-top: 8px;
+    font-size: 14px;
   }
   .location {
+    margin-top: 24px;
     max-width: 80%;
   }
   .van-icon {

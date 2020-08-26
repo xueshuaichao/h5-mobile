@@ -1,28 +1,34 @@
 <template>
     <div class="learning-home">
-        <van-nav-bar title="学习中心" />
-        <!-- <van-calendar
-      title="日历"
-      :poppable="false"
-      :show-confirm="false"
-      :formatter="dayFormatter"
-      style="height: 410px"
-        />-->
+        <div class="page-title">学习中心</div>
         <week-base-calendar :events="events" />
-        <van-tabs v-model="tab" color="#30BA8B" class="tabs" animated>
+        <van-tabs v-model="tab" color="#30BA8B" class="tabs" animated line-width="18">
             <van-tab title="学习中">
                 <div class="train-list">
-                    <train-item v-for="item in undergoingTrains" :key="item.id" :data="item" />
+                    <train-item
+                        v-for="(item, index) in undergoingTrains" 
+                        :key="item.id"
+                        :data="item"
+                        :s="index % 2 == 0 ? 'style1': 'style2'" 
+                    />
                 </div>
             </van-tab>
             <van-tab title="全部">
                 <div class="train-list">
-                    <train-item v-for="item in trainData" :key="item.id" :data="item" />
+                    <train-item v-for="(item, index) in trainData"
+                        :key="item.id"
+                        :data="item"
+                        :s="index % 2 == 0 ? 'style1': 'style2'"
+                    />
                 </div>
             </van-tab>
             <van-tab title="已结束">
                 <div class="train-list">
-                    <train-item v-for="item in endedTrains" :key="item.id" :data="item" />
+                    <train-item v-for="(item, index) in endedTrains"
+                        :key="item.id"
+                        :data="item"
+                        :s="index % 2 == 0 ? 'style1': 'style2'"
+                    />
                 </div>
             </van-tab>
         </van-tabs>
@@ -30,7 +36,7 @@
 </template>
 
 <script>
-import TrainItem from "./components/train-item.vue";
+import TrainItem from "./components/train-item-image.vue";
 import WeekBaseCalendar from "./components/week-base-calendar.vue";
 import { createEvents } from "../../data/events";
 
@@ -93,16 +99,23 @@ export default {
 <style lang="less">
 .learning-home {
     background: #f9fafd;
+    .page-title {
+        background: #fff;
+        font-weight:500;
+        line-height: 33px;
+        padding: 25px 16px 16px;
+        font-size: 24px;
+        text-align: left;
+    }
     .tabs {
         margin-top: 14px;
         background: #fff;
     }
 }
 .train-list {
-    margin: 8px 16px;
-
+    margin: 24px 0px 8px;
     .train-item {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
 }
 </style>

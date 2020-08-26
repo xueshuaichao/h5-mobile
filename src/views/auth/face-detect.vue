@@ -17,9 +17,9 @@
                 <van-button
                     type="primary"
                     block
-                    round
                     @click="openCamera"
                     :disabled="loading"
+                    style="border-radius:4px;font-size:16px"
                 >开始人脸识别</van-button>
                 <p>
                     查看用户授权协议
@@ -74,8 +74,8 @@ export default {
                 });
             } catch (e) {
                 console.error(e);
-                this.loading = false;
                 setTimeout(() => {
+                    this.loading = false;
                     this.cameraOpened = false;
                     this.loading = false;
                     this.handleSuccess();

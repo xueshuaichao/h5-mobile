@@ -7,7 +7,7 @@
       </div>
 <!--  <video src="https://www.runoob.com/try/demo_source/movie.mp4" playsinline controls></video>-->
     </div>
-    <van-tabs v-model="tabIndex" class="tabs" color="#30BA8B">
+    <van-tabs v-model="tabIndex" class="tabs" color="#30BA8B" line-width="18">
       <van-tab title="目录">
         <div class="flex-wrap">
           <span>学习总进度{{ progress }}%</span>
@@ -16,6 +16,7 @@
               <!-- <div v-if="progress > 20">已学{{ progress }}%</div> -->
           </div>
         </div>
+        <div style="height: 10px;background: #F5F5FA"></div>
         <div class="chapters">
           <div class="line" />
           <div
@@ -119,7 +120,7 @@ export default {
 }
 .flex-wrap {
   display: flex;
-  margin: 16px;
+  margin: 25px 16px 18px;
   font-size: 13px;
 }
 .progress {
@@ -128,8 +129,7 @@ export default {
   margin-top: 4px;
   margin-left: 14px;
   background: #C5EAE2;
-  height: 12px;
-  font-size: 12px;
+  height: 11px;
   line-height: 1;
   border-radius: 6px;
   text-align: center;
@@ -170,6 +170,9 @@ export default {
       content: ' ';
       z-index: 10;
     }
+    &:not(:first-child) {
+      margin-top: 30px;
+    }
   }
   .ended::before {
     background: @gray-6;
@@ -181,7 +184,6 @@ export default {
     }
     .wrap {
       display: flex;
-      align-items: center;
     }
     .title {
       flex: 1;
@@ -189,12 +191,18 @@ export default {
     }
     .green {
       color: @green;
+      min-width: 40px;
+      text-align: right;
     }
     .van-icon {
-      vertical-align: middle;
+      margin-top: 2px;
+      color: #9095A8;
     }
     .ended {
-      color: @gray-6;
+      color: #737386;
+      .van-icon {
+        color: #CBCFD7;
+      }
     }
   }
 }

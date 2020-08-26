@@ -33,7 +33,7 @@
           </p>
         </div>
     </div>
-    <van-tabs v-model="tabIndex" class="tabs" color="#30BA8B">
+    <van-tabs v-model="tabIndex" class="tabs" color="#30BA8B" line-width="18">
       <van-tab title="培训内容">
         <div class="course-list">
           <div
@@ -65,7 +65,7 @@
       <van-tab title="互动专区">
         <div class="forum">
           <div
-            v-for="item in posts"
+            v-for="(item, index) in posts"
             :key="item.id"
             class="post-item van-hairline--bottom"
           >
@@ -73,14 +73,14 @@
             <div class="content">{{ item.content }}</div>
             <div class="bottom">
               <div class="avatar-wrap">
-                <img class="avatar" src="../../assets/images/19@2x.png" />
+                <img class="avatar" :src="avatars[index % 3]" />
                 {{ item.author }}
               </div>
               <div class="nums">
-                <van-icon name="chat-o" />
+                <i class="icon-comment" />
                 {{ item.comment_num }}
-                <van-icon
-                  name="good-job-o"
+                <i
+                  class="icon-thumbup"
                   :class="{ active: item.flag }"
                   style="margin-left: 21px"
                 />
@@ -96,6 +96,10 @@
 
 <script>
 import { posts } from '../../data/posts';
+import avtar1 from '../../assets/forum-avatar-0.png';
+import avtar2 from '../../assets/forum-avatar-1.png';
+import avtar3 from '../../assets/forum-avatar-2.png';
+
 const courseList = [
   {
     id: 1,
@@ -135,12 +139,11 @@ const courseList = [
     id: 5,
     type: 'practise',
     tag: '线下实训',
-    title: '《建筑施工高处作业安全技术规范》解读',
+    title: '《建筑施工高处作业安全技术规范》',
     date: '2020.08.01 14:00',
     time: 0.5
   }
 ];
-
 
 export default {
   data() {
@@ -157,7 +160,8 @@ export default {
         current: '课程： 1.2建设工程项目管理',
         state: 'end'
       },
-      posts
+      posts,
+      avatars: [avtar1, avtar2, avtar3]
     };
   },
   methods: {
@@ -201,10 +205,11 @@ export default {
     top: 0;
     width: 100%;
     height: 75vw;
-    background:linear-gradient(119deg,rgba(5,202,156,1) 0%,rgba(0,170,130,1) 100%);
+    background: url(../../assets/training-bg.png) 0 0 no-repeat;
+    background-size: 100%;
   }
   .van-nav-bar {
-    background:linear-gradient(119deg,rgba(5,202,156,1) 0%,rgba(0,170,130,1) 100%);
+    background: url(../../assets/training-bg.png) 0 0 no-repeat;
     background-size: 100% 75vw;
 
     .van-icon,
@@ -252,7 +257,6 @@ export default {
     text-align: left;
     padding: 14px 16px;
     .title {
-      font-weight: 500;
       font-size: 16px;
     }
     .tag {
@@ -262,24 +266,27 @@ export default {
       float: right;
       font-style: normal;
       font-size: 11px;
-      padding: 3px 6px;
+      height: 15px;
+      line-height: 15px;
+      padding: 0 6px;
       border-radius: 0 0 0 6px;
     }
     .course {
-      background: @red;
+      background: #F05353;
     }
     .live {
-      background: @blue;
+      background: #1B7EF3;
     }
     .homework {
-      background: @green;
+      background: #02B48A;
     }
     .exam {
-      background: @orange;
+      background: #F4AC5C;
     }
     .bottom {
       margin-top: 6px;
       line-height: 22px;
+      color: #7B8097;
     }
   }
 
@@ -310,9 +317,22 @@ export default {
       border-radius: 50%;
       vertical-align: middle;
     }
-    .van-icon {
-      font-size: 16px;
-      vertical-align: -3px;
+    .icon-comment,
+    .icon-thumbup {
+      display: inline-block;
+      width: 19px;
+      height: 19px;
+      vertical-align: -4px;
+      background-size: 100%;
+    }
+    .icon-comment {
+      background-image: url(../../assets/forum-comment.png);
+    }
+    .icon-thumbup {
+      background-image: url(../../assets/forum-thumbup-normal.png);
+    }
+    .icon-thumbup.active {
+      background-image: url(../../assets/forum-thumbup.png);
     }
     .active {
       color: #F04142;

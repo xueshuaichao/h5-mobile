@@ -28,7 +28,7 @@
                 <van-field v-model="idCard" name="身份证号" label="身份证号" placeholder="请输入身份证号" />
             </div>
             <div style="margin: 16px;">
-                <van-button round block type="primary" native-type="submit" :loading="loading">下一步</van-button>
+                <van-button block type="primary" native-type="submit" :loading="loading">下一步</van-button>
             </div>
         </van-form>
     </div>
