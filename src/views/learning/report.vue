@@ -5,23 +5,23 @@
             left-arrow
             @click-left="goback"
         />
-        <div class="report-container">
-            <div class="overview-container">
-                <div class="img">
-                    <div style="position: relative;top:60px;color: #1ea99f">
-                        <div>正确率</div>
-                        <div style="font-size: 24px;font-weight: 500">{{Math.floor(rightNum/list.length*100)}}%</div>
-                    </div>
+        <div class="overview-container">
+            <div class="img">
+                <div style="position: relative;top:60px;color: #1ea99f">
+                    <div>正确率</div>
+                    <div style="font-size: 24px;font-weight: 500">{{Math.floor(rightNum/list.length*100)}}%</div>
                 </div>
-                <div class="overview">
-                    <div>答对：{{rightNum}}</div>
-                    <div class="divide"></div>
-                    <div>总题数：{{list.length}}</div>
-                    <div class="divide"></div>
-                    <div>用时：{{time}}</div>
-                </div>
-                <div class="seal"></div>
             </div>
+            <div class="overview">
+                <div>答对：{{rightNum}}</div>
+                <div class="divide"></div>
+                <div>总题数：{{list.length}}</div>
+                <div class="divide"></div>
+                <div>用时：{{time}}</div>
+            </div>
+            <div class="seal"></div>
+        </div>
+        <div class="report-container">
             <div class="subject-container">
                 <div class="header">
                     <p class="title">答题卡</p>
@@ -151,43 +151,44 @@
     background: #E6E6EB;
 }
 
-.report-container{
-    padding: 24px 15px 10px;
+.overview-container{
+    padding: 24px 15px 25px;
+    box-shadow:0px 12px 32px 0px rgba(57,97,104,0.06);
 
-    .overview-container{
-        margin-bottom: 25px;
-
-        .img{
-            width: 100%;
-            height: 144px;
-            background: url("../../assets/report@2x.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            margin-bottom: 26px;
-            position: relative;
-        }
-
-        .seal{
-            width: 70px;
-            height: 70px;
-            z-index: 100;
-            background: url("../../assets/seal@2x.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            position: absolute;
-            right: 30px;
-            top:35px
-        }
-
-        .overview{
-            font-size: 14px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
+    .img{
+        width: 100%;
+        height: 144px;
+        background: url("../../assets/report@2x.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-bottom: 26px;
+        position: relative;
     }
+
+    .seal{
+        width: 70px;
+        height: 70px;
+        z-index: 100;
+        background: url("../../assets/seal@2x.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: absolute;
+        right: 30px;
+        top:35px
+    }
+
+    .overview{
+        font-size: 14px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+
+.report-container{
+    padding: 0px 15px 10px;
 
     .subject-container{
         padding-top: 24px;
