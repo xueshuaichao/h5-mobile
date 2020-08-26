@@ -124,7 +124,7 @@ export default {
     text-align: left;
     font-size: 14px;
     .tips {
-        margin: 0 15px 0;
+        margin: 0 15px 120px;
         padding: 24px;
         background: rgba(249, 250, 253, 1);
         border-radius: 8px;
@@ -141,7 +141,7 @@ export default {
         }
     }
     .bottom {
-        position: absolute;
+        position: fixed;
         bottom: 0;
         left: 0;
         right: 0;

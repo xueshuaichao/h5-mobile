@@ -129,14 +129,14 @@ export default {
   background: #fff;
   .hd {
     font-size: 15px;
-    padding: 8px;
+    padding: 8px 16px;
     color: #737386;
     .van-icon {
       vertical-align: -2px;
     }
   }
   .date-list {
-    padding: 20px 0px 29px;
+    padding: 20px 16px 29px;
     display: flex;
     text-align: center;
   }

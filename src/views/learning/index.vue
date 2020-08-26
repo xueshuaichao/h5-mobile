@@ -113,7 +113,7 @@ export default {
     }
 }
 .train-list {
-    margin: 24px 0px 8px;
+    margin: 24px 8px 8px;
     .train-item {
         margin-bottom: 15px;
     }
