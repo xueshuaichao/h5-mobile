@@ -63,13 +63,39 @@
         </div>
       </van-tab>
       <van-tab title="互动专区">
-        <div class="forum"></div>
+        <div class="forum">
+          <div
+            v-for="item in posts"
+            :key="item.id"
+            class="post-item van-hairline--bottom"
+          >
+            <div class="title">{{ item.title }}</div>
+            <div class="content">{{ item.content }}</div>
+            <div class="bottom">
+              <div class="avatar-wrap">
+                <img class="avatar" src="../../assets/images/19@2x.png" />
+                {{ item.author }}
+              </div>
+              <div class="nums">
+                <van-icon name="chat-o" />
+                {{ item.comment_num }}
+                <van-icon
+                  name="good-job-o"
+                  :class="{ active: item.flag }"
+                  style="margin-left: 21px"
+                />
+                {{ item.thumb_num}}
+              </div>
+            </div>
+          </div>
+        </div>
       </van-tab>
     </van-tabs>
   </div>
 </template>
 
 <script>
+import { posts } from '../../data/posts';
 const courseList = [
   {
     id: 1,
@@ -115,6 +141,7 @@ const courseList = [
   }
 ];
 
+
 export default {
   data() {
     return {
@@ -129,7 +156,8 @@ export default {
         total_hours: 80,
         current: '课程： 1.2建设工程项目管理',
         state: 'end'
-      }
+      },
+      posts
     };
   },
   methods: {
@@ -252,6 +280,42 @@ export default {
     .bottom {
       margin-top: 6px;
       line-height: 22px;
+    }
+  }
+
+  .forum {
+    background: #FAFBFC;
+    font-size: 13px;
+    padding: 5px 16px;
+    text-align: left;
+    .post-item {
+      padding: 16px 0;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .content {
+      margin: 8px 0 12px;
+    }
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      height: 25px;
+      line-height: 25px;
+    }
+    .avatar {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+    .van-icon {
+      font-size: 16px;
+      vertical-align: -3px;
+    }
+    .active {
+      color: #F04142;
     }
   }
 }
