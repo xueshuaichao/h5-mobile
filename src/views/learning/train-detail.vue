@@ -304,6 +304,7 @@ export default {
     }
     .content {
       margin: 8px 0 12px;
+      color: #575765;
     }
     .bottom {
       display: flex;
