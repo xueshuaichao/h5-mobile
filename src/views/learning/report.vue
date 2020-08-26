@@ -119,7 +119,12 @@
         },
         methods: {
             goback: function () {
-                history.back();
+                this.$router.push({
+                    name: 'trainDetail',
+                    params: {
+                        id: 0
+                    }
+                });
             }
         }
     }
