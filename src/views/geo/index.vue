@@ -94,7 +94,7 @@ export default {
         this.back();
       } else {
         // 培训
-        store.commit('clockIn');
+        //store.commit('clockIn');
         this.$router.push({
           name: 'faceDetect',
           query: {
