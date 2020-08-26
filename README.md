@@ -1,4 +1,4 @@
-# mohrss-h5-demo
+# mohrss_h5
 
 ## Project setup
 ```

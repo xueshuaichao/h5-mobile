@@ -156,7 +156,12 @@
                     message: '提交中',
                     forbidClick: true,
                     onClose: ()=>{
-                        this.$router.push('/learning/home')
+                        this.$router.push({
+                            name: 'report',
+                            query: {
+                                type: this.type
+                            }
+                        })
                     }
                 });
             }
@@ -213,6 +218,7 @@
         background: #FFF;
 
         .subject{
+            font-size: 16px;
             .content{
                 text-align: left;
                 font-weight: 500;
@@ -274,6 +280,7 @@
         justify-content: space-between;
         margin-top: 20px;
         padding: 0 15px 15px;
+        font-size: 14px;
 
         .answer-preview{
             display: flex;

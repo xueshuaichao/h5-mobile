@@ -50,7 +50,13 @@ export default {
         clearInterval(timer);
       });
     },
-    getLocation() {
+    async getLocation() {
+      // 非https或者定位失败一次后，给固定地址
+      if (this.geoLocationError || location.protocol === 'http:') {
+        this.geoLocationError = false;
+        this.locationName = '北京市海淀区大钟寺';
+        return ;
+      }
       return new Promise((resolve, reject) => {
         console.time('geolocation')
         navigator.geolocation.getCurrentPosition((position) => {
@@ -73,7 +79,6 @@ export default {
         });
       })
       .then(location => {
-        console.log(location);
         this.locationName = location;
       })
       .catch(e => {
@@ -85,13 +90,24 @@ export default {
       if (!this.locationName) {
         return ;
       }
-      store.commit('clockIn');
-      this.$router.push({
-        name: 'faceDetect',
-        query: this.$route.query
-      });
-      // this.$toast.success('打卡成功');
-      // setTimeout(() => this.back(), 2000);
+      if (this.$route.query?.from == 'practise') {
+        // 实训打卡
+        const type = this.$route.query?.type ?? 'start';
+        store.commit('practiseSignIn', {
+          [type]: formatDate(new Date(), 'yyyy-MM-dd hh:mm')
+        });
+        this.back();
+      } else {
+        // 培训
+        //store.commit('clockIn');
+        this.$router.push({
+          name: 'faceDetect',
+          query: {
+            action: 'clockIn',
+            ...this.$route.query
+          }
+        });
+      }
     }
   }
 };

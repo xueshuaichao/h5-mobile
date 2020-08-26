@@ -12,7 +12,12 @@ export default new Vuex.Store({
     // 是否已实名认证
     isAuthed: false,
     // 是否已打卡
-    isClockIn: true
+    isClockIn: false,
+
+    practiseSign: {
+      start: '',
+      end: ''
+    }
   },
   mutations: {
     setTabbar(state, payload) {
@@ -23,6 +28,9 @@ export default new Vuex.Store({
     },
     clockIn(state) {
       state.isClockIn = true;
+    },
+    practiseSignIn(state, payload) {
+      state.practiseSign = { ...state.practiseSign, ...payload};
     }
   },
   modules: {}

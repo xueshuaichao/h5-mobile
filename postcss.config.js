@@ -8,7 +8,7 @@ module.exports = {
             rootValue: 37.5,
             propList: ['*'],
             selectorBlackList: ['van'],
-            "exclude": "/node_modules/i"
+            "exclude": "node_modules|learning|geo|auth"
         },
     }
 }

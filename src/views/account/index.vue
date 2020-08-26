@@ -4,8 +4,8 @@
             <div class="t">
                 <img src="../../assets/images/19@2x.png" class="photo" alt />
                 <div class="name">
-                    <p class="userName">未登录</p>
-                    <p class="tip">点击登录,有好礼</p>
+                    <p class="userName">聪聪</p>
+                    <!-- <p class="tip">点击登录,有好礼</p> -->
                 </div>
                 <img src="../../assets/images/ic_gengduo@2x(1).png" class="arrows" alt />
             </div>
@@ -103,12 +103,13 @@ p {
     border: 0px solid rgba(234, 234, 234, 1);
     box-sizing: border-box;
     .icon {
-        width: 51px;
+        width: 67px;
     }
 
     .photo {
         width: 124px;
         margin-right: 27px;
+        vertical-align: middle;
     }
     .row {
         font-size: 26px;
@@ -119,6 +120,7 @@ p {
     .t {
         text-align: left;
         position: relative;
+        margin-bottom: 72px;
         .arrows {
             width: 10px;
             position: absolute;
@@ -127,15 +129,16 @@ p {
         }
     }
     .name {
-        margin-bottom: 74px;
+        // margin-bottom: 74px;
         display: inline-block;
-        vertical-align: top;
+        vertical-align: middle;
         .userName {
             font-size: 40px;
             font-weight: 400;
             color: @textColor1;
             line-height: 56px;
             margin-bottom: 6px;
+            vertical-align: middle;
         }
         .tip {
             font-size: 28px;
@@ -148,6 +151,7 @@ p {
 .list {
     width: 690px;
     margin: 0 auto;
+    font-size: 26px;
     li {
         margin-bottom: 72px;
         position: relative;
@@ -156,10 +160,14 @@ p {
             width: 38px;
             vertical-align: middle;
             margin-right: 23px;
+            &:nth-child(2) {
+                width: 40px;
+            }
         }
         p {
             display: inline-block;
             vertical-align: middle;
+            font-size: 28px;
         }
         .arrows {
             position: absolute;
