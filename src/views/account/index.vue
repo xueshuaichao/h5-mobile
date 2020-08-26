@@ -148,6 +148,7 @@ p {
 .list {
     width: 690px;
     margin: 0 auto;
+    font-size: 26px;
     li {
         margin-bottom: 72px;
         position: relative;

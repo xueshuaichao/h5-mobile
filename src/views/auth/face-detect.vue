@@ -65,8 +65,7 @@ export default {
                 let timer = setTimeout(() => {
                     this.cameraOpened = false;
                     this.loading = false;
-                    store.commit("authed");
-                    this.back();
+                    this.handleSuccess();
                 }, 3000);
                 this.$once("hook:beforeDestroy", () => {
                     // 关闭摄像头
@@ -76,6 +75,11 @@ export default {
             } catch (e) {
                 console.error(e);
                 this.loading = false;
+                setTimeout(() => {
+                    this.cameraOpened = false;
+                    this.loading = false;
+                    this.handleSuccess();
+                }, 3000);
             }
         },
 
@@ -84,7 +88,7 @@ export default {
             switch(action) {
                 case 'auth': {
                     //实名认证
-                    store.commit('auth');
+                    store.commit('authed');
                     this.$toast.success('认证成功');
                     this.back();
                     break;
@@ -118,6 +122,7 @@ export default {
 }
 .face-detect {
     text-align: left;
+    font-size: 14px;
     .tips {
         margin: 0 15px 0;
         padding: 24px;
