@@ -47,6 +47,16 @@ const trainData = [
     },
     {
         id: "1",
+        title: "钢筋工培训班培训-第9期",
+        date: "2020.08.01~2020.08.30",
+        progress: 18,
+        hours: 15,
+        total_hours: 80,
+        current: "课程： 1.1建设工程项目管理",
+        state: "undergoing"
+    },
+    {
+        id: "2",
         title: "2021年北京线下企业管理培训-第9期",
         date: "2020.08.01~2020.08.30",
         progress: 18,

@@ -83,6 +83,6 @@ export default {
 }
 
 .has-bottom-tabbar {
-  padding-bottom: 50px;
+  padding-bottom: 100px;
 }
 </style>
