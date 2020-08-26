@@ -10,7 +10,7 @@
                 <div class="img">
                     <div style="position: relative;top:60px;color: #1ea99f">
                         <div>正确率</div>
-                        <div>{{Math.floor(rightNum/list.length*100)}}%</div>
+                        <div style="font-size: 24px;font-weight: 500">{{Math.floor(rightNum/list.length*100)}}%</div>
                     </div>
                 </div>
                 <div class="overview">
@@ -48,8 +48,8 @@
                     </div>
                 </div>
             </div>
-            <van-button v-if="type=='exam'" style="width: 95%" plain color="#02B38A" type="primary">查看答案解析</van-button>
-            <van-button v-else style="width: 95%" plain color="#02B38A" type="primary">查看作业</van-button>
+            <van-button v-if="type=='exam'" style="width: 95%;border-width: 2px;" plain color="#02B38A" type="primary">查看答案解析</van-button>
+            <van-button v-else style="width: 95%;border:2px;" plain color="#02B38A" type="primary">查看作业</van-button>
             <div class="remark">
                 您的考试数据已写入伟东区块链，作业信息将永久保存，防篡改，可追溯
                 区块链存证HASH：9cfb5a351035180a16d50ad605a939f089a2e894<br/>
@@ -164,7 +164,7 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            margin-bottom: 15px;
+            margin-bottom: 26px;
             position: relative;
         }
 
@@ -242,7 +242,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-weight: 500;
             }
 
             @media screen and (min-width: 375px) {
