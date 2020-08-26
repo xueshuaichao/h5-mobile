@@ -71,6 +71,7 @@ export default {
         background: url(../../assets/images/ceping.png) no-repeat;
         background-size: 100%;
         position: relative;
+        margin-bottom: 20px;
         img {
             width: 96px;
             margin-right: 16px;
