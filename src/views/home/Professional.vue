@@ -7,7 +7,7 @@
                 <p class="name">Hi，张三</p>
                 <p class="tip">您还未进行水平测试</p>
             </div>
-            <van-button type="info" plain to="index">路由跳转</van-button>
+            <van-button type="info" plain to="index">开始测评</van-button>
         </div>
         <div class="step1 step">
             <!-- <p>企业能力测评</p> -->
