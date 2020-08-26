@@ -51,8 +51,8 @@ export default {
       });
     },
     async getLocation() {
-      if (this.geoLocationError) {
-        // 定位失败一次后，给固定地址
+      // 非https或者定位失败一次后，给固定地址
+      if (this.geoLocationError || location.protocol === 'http:') {
         this.geoLocationError = false;
         this.locationName = '北京市海淀区大钟寺';
         return ;
