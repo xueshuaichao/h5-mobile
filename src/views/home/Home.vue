@@ -310,7 +310,7 @@ p {
 }
 
 .learning {
-    margin-top: 68px;
+    margin-top: 60px;
     background: rgba(255, 255, 255, 1);
     box-shadow: 0px 6px 16px 0px rgba(57, 97, 104, 0.11);
     border-radius: 6px;
