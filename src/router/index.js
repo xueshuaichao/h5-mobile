@@ -85,6 +85,33 @@ const routes = [
     path: '/Professional',
     name: 'Professional',
     component: () => import('../views/home/Professional.vue')
+  },
+
+  // 设置
+  {
+    path: '/setting',
+    name: 'Setting',
+    component: () => import('../views/setting/index.vue')
+  },
+  {
+    path: '/setting/name',
+    name: 'SetName',
+    component: () => import('../views/setting/name.vue')
+  },
+  {
+    path: '/setting/photo',
+    name: 'SetPhoto',
+    component: () => import('../views/setting/photo.vue')
+  },
+  {
+    path: '/setting/password',
+    name: 'SetPassword',
+    component: () => import('../views/setting/password.vue')
+  },
+  {
+    path: '/setting/phone',
+    name: 'SetPhone',
+    component: () => import('../views/setting/phone.vue')
   }
 ];
 

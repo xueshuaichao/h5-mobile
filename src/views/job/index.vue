@@ -54,24 +54,22 @@
         </div>
         <div v-show="active==1" class="jobList">
             <van-tabs v-model="active1" class="tabs3">
-                <van-tab title="北京">
+                <van-tab title="任务">
                     <template #title>
-                        北京
-                        <van-icon name="arrow-down" />
+                        任务
                     </template>
                 </van-tab>
-                <van-tab title="全部职位">
+                <van-tab title="选学">
                     <template #title>
-                        全部职位
-                        <van-icon name="arrow-down" />
+                        选学
                     </template>
                 </van-tab>
-                <van-tab title="全部职位">
+                <!-- <van-tab title="全部职位">
                     <template #title>
                         全部职位
                         <van-icon name="arrow-down" />
                     </template>
-                </van-tab>
+                </van-tab> -->
             </van-tabs>
             <div class="listBox">
                 <ul class="list">
@@ -81,19 +79,29 @@
                             <h4 class="name">{{company.name}}</h4>
                             <p class="welfare">{{company.welfare}}</p>
                         </div>
-                        <p class="companyAddress">{{company.companyAddress}}</p>
+                        <van-progress pivot-text="橙色" color="#f2826a" :percentage="25" :show-pivot="false"/>
+                        <!-- <p class="companyAddress">{{company.companyAddress}}</p> -->
                     </li>
                 </ul>
             </div>
         </div>
+
+        <!-- 筛选 -->
+        <van-popup v-model="show" position="right" :style="{ width: '80%', height: '100%' }">
+            <div>
+                筛选条件
+            </div>
+
+        </van-popup>
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            active: 0,
+            active: 1,
             active1: 0,
+            show: true,
             jobList: [
                 {
                     id: 1,

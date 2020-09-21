@@ -36,7 +36,7 @@
                     v-if="$route.name == 'jobs'"
                 />
                 <img src="./assets/images/ic_faxian_wxz@2x.png" class="nav-icon" v-else />
-                <br />就业
+                <br />学习计划
             </van-tabbar-item>
             <van-tabbar-item name="account" :to="{ name: 'account' }">
                 <!-- icon="contact" -->

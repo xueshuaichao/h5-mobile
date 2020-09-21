@@ -2,34 +2,24 @@
     <div class="account">
         <div class="top">
             <div class="t">
-                <img src="../../assets/images/19@2x.png" class="photo" alt />
+                <img :src="require('../../assets/images/19@2x.png') || userInfo.src" class="photo" alt />
                 <div class="name">
-                    <p class="userName">聪聪</p>
-                    <!-- <p class="tip">点击登录,有好礼</p> -->
+                    <p class="userName">{{ userInfo.name }}</p>
                 </div>
-                <img src="../../assets/images/ic_gengduo@2x(1).png" class="arrows" alt />
             </div>
             <van-row gutter="25" class="row">
-                <van-col span="6">
-                    <img src="../../assets/images/18@2x.png" class="icon" alt />
-                    <p>我的培训</p>
+                <van-col span="12">
+                    <p>{{ count.finishTaskCount }}/ {{ count.allTaskCount }}</p>
+                    <p>任务</p>
                 </van-col>
-                <van-col span="6">
-                    <img src="../../assets/images/17@2x.png" class="icon" alt />
-                    <p>我的证书</p>
-                </van-col>
-                <van-col span="6">
-                    <img src="../../assets/images/16@2x.png" class="icon" alt />
-                    <p>我的测评</p>
-                </van-col>
-                <van-col span="6">
-                    <img src="../../assets/images/15@2x.png" class="icon" alt />
-                    <p>我的简历</p>
+                <van-col span="12">
+                    <p>{{ count.finishCourseCount }}/ {{ count.allCourseCount }}</p>
+                    <p>选学</p>
                 </van-col>
             </van-row>
         </div>
         <ul class="list">
-            <li v-for="(item,index) in list" :key="index">
+            <li v-for="(item,index) in list" :key="index" @click="$router.push(item.path)">
                 <img :src="item.icon" class="icon" alt />
                 <p>{{item.title}}</p>
                 <img :src="item.arrows" class="arrows" alt />
@@ -38,37 +28,57 @@
     </div>
 </template>
 <script>
+import api from '@/api/account';
+
 export default {
     data() {
         return {
+            userInfo: {
+                name: '就哈哈',
+                portrait: '',
+            },
+            count: {
+                finishTaskCount: 1,
+                allTaskCount: 2,
+                finishCourseCount: 1,
+                allCourseCount: 2    
+            },
             list: [
                 {
-                    title: "实名认证",
+                    title: "个人评估",
                     icon: require("../../assets/images/ic_gr_wdbj@2x.png"),
                     arrows: require("../../assets/images/ic_gengduo@2x(1).png")
                 },
                 {
-                    title: "我的足迹",
+                    title: "我的测试",
                     icon: require("../../assets/images/7@2x.png"),
                     arrows: require("../../assets/images/ic_gengduo@2x(1).png")
                 },
                 {
-                    title: "客服",
+                    title: "我的消息",
                     icon: require("../../assets/images/5@2x.png"),
                     arrows: require("../../assets/images/ic_gengduo@2x(1).png")
                 },
                 {
-                    title: "关于我们",
-                    icon: require("../../assets/images/gy@2x.png"),
-                    arrows: require("../../assets/images/ic_gengduo@2x(1).png")
-                },
-                {
-                    title: "设置",
+                    title: "我的设置",
+                    path: '/setting',
                     icon: require("../../assets/images/9@2x.png"),
                     arrows: require("../../assets/images/ic_gengduo@2x(1).png")
                 }
             ]
         };
+    },
+
+    methods: {
+        async getUserInfo() {
+            const res = await api.getUserInfo();
+            this.userInfo = res;
+        },
+
+        async getLearnCount() {
+            const res = await api.getLearnCount();
+            this.count = res;
+        }
     }
 };
 </script>
