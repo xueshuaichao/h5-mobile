@@ -113,7 +113,7 @@ router.beforeEach((to, from, next) => {
       }
     });
   }
-  if (to.name === 'trainDetail' && !store.state.isClockIn) {
+  if (to.name === 'trainDetail' && !store.state.isClockIn && to.query.state !== 'ended') {
     return next({
       name: 'location',
       query: {
