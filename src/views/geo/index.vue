@@ -32,6 +32,10 @@ export default {
     mounted() {
         this.startTimer();
         this.getLocation().then(() => console.log(this.locationName));
+        if (this.$route.query?.from == "practise") {
+            this.action =
+                this.$route.query.type === "start" ? "上课打卡" : "下课打卡";
+        }
     },
     methods: {
         back() {
