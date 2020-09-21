@@ -3,28 +3,31 @@
         <div class="page-title">学习中心</div>
         <week-base-calendar :events="events" />
         <van-tabs v-model="tab" color="#30BA8B" class="tabs" animated line-width="18">
-            <van-tab title="学习中">
-                <div class="train-list">
-                    <train-item
-                        v-for="(item, index) in undergoingTrains" 
-                        :key="item.id"
-                        :data="item"
-                        :s="index % 2 == 0 ? 'style1': 'style2'" 
-                    />
-                </div>
-            </van-tab>
             <van-tab title="全部">
                 <div class="train-list">
-                    <train-item v-for="(item, index) in trainData"
+                    <train-item
+                        v-for="(item, index) in trainData"
                         :key="item.id"
                         :data="item"
                         :s="index % 2 == 0 ? 'style1': 'style2'"
                     />
                 </div>
             </van-tab>
+            <van-tab title="学习中">
+                <div class="train-list">
+                    <train-item
+                        v-for="(item, index) in undergoingTrains"
+                        :key="item.id"
+                        :data="item"
+                        :s="index % 2 == 0 ? 'style1': 'style2'"
+                    />
+                </div>
+            </van-tab>
+
             <van-tab title="已结束">
                 <div class="train-list">
-                    <train-item v-for="(item, index) in endedTrains"
+                    <train-item
+                        v-for="(item, index) in endedTrains"
                         :key="item.id"
                         :data="item"
                         :s="index % 2 == 0 ? 'style1': 'style2'"
@@ -101,7 +104,7 @@ export default {
     background: #f9fafd;
     .page-title {
         background: #fff;
-        font-weight:500;
+        font-weight: 500;
         line-height: 33px;
         padding: 25px 16px 16px;
         font-size: 24px;
