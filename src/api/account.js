@@ -8,5 +8,10 @@ export default {
     // /statistics/learn/count
     getLearnCount() {
         return axios.get('/statistics/learn/count')
+    },
+
+    // 个人评估 /statistics/learn
+    getStatisticsOfLearn() {
+        return axios.get('/statistics/learn')
     }
 }

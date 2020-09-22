@@ -12,79 +12,19 @@ const routes = [
     component: Home
   },
   {
-    path: '/geo_location',
-    name: 'location',
-    component: () => import('../views/geo/index.vue')
+    path: '/course',
+    name: 'course',
+    component: () => import('../views/course/index.vue')
   },
   {
-    path: '/face_detect',
-    name: 'faceDetect',
-    component: () => import('../views/auth/face-detect.vue')
-  },
-  {
-    path: '/learning/home',
+    path: '/learning',
     name: 'learning',
     component: () => import('../views/learning/index.vue')
-  },
-  {
-    path: '/learning/practise',
-    name: 'practise',
-    component: () => import('../views/learning/practise.vue')
-  },
-  {
-    path: '/learning/exam',
-    name: 'exam',
-    component: () => import('../views/learning/exam.vue')
-  },
-  {
-    path: '/learning/homework',
-    name: 'homework',
-    component: () => import('../views/learning/exam.vue')
-  },
-  {
-    path: '/learning/report',
-    name: 'report',
-    component: () => import('../views/learning/report.vue')
-  },
-  {
-    path: '/learning/train/:id',
-    name: 'trainDetail',
-    component: () => import('../views/learning/train-detail.vue')
-  },
-  {
-    path: '/learning/course/:id',
-    name: 'courseDetail',
-    component: () => import('../views/learning/course.vue')
-  },
-  {
-    path: '/learning/live',
-    name: 'liveDetail',
-    component: () => import('../views/learning/live.vue')
-  },
-  {
-    path: '/job',
-    name: 'jobs',
-    component: () => import('../views/job/index.vue')
-  },
-  {
-    path: '/course/list',
-    name: 'courseList',
-    component: () => import('../views/home/course.vue')
   },
   {
     path: '/account',
     name: 'account',
     component: () => import('../views/account/index.vue')
-  },
-  {
-    path: '/identification/index',
-    name: 'identification',
-    component: () => import('../views/identification/index.vue')
-  },
-  {
-    path: '/Professional',
-    name: 'Professional',
-    component: () => import('../views/home/Professional.vue')
   },
 
   // 设置
@@ -112,6 +52,13 @@ const routes = [
     path: '/setting/phone',
     name: 'SetPhone',
     component: () => import('../views/setting/phone.vue')
+  },
+  
+  // 个人评估
+  {
+   path: '/assessment',
+   name: 'Assessment',
+   component: () => import('../views/account/assessment.vue') 
   }
 ];
 
@@ -122,7 +69,7 @@ const router = new VueRouter({
 });
 
 //
-const SHOW_TABBARS = ['home', 'learning', 'jobs', 'account'];
+const SHOW_TABBARS = ['home', 'course', 'learning', 'account'];
 router.beforeEach((to, from, next) => {
   if (SHOW_TABBARS.includes(to.name)) {
     store.commit('setTabbar', {
@@ -131,22 +78,6 @@ router.beforeEach((to, from, next) => {
     });
   } else {
     store.commit('setTabbar', { show: false });
-  }
-  if (to.name === 'learning' && !store.state.isAuthed) {
-    return next({
-      name: 'identification',
-      query: {
-        callback: to.fullPath
-      }
-    });
-  }
-  if (to.name === 'trainDetail' && !store.state.isClockIn && to.query.state !== 'ended') {
-    return next({
-      name: 'location',
-      query: {
-        callback: to.fullPath
-      }
-    });
   }
   next();
 });

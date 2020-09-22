@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     tabbar: {
       show: true,
-      active: 'home'
+      active: 'home',
     },
     // 是否已实名认证
     isAuthed: false,
@@ -16,8 +16,16 @@ export default new Vuex.Store({
 
     practiseSign: {
       start: '',
-      end: ''
-    }
+      end: '',
+    },
+  },
+  getters: {
+    getConfigByPage(state) {
+      return (module, pageName) =>
+        state.pageConfigs.find(
+          (page) => page.moduleId === module && page.name === pageName
+        );
+    },
   },
   mutations: {
     setTabbar(state, payload) {
@@ -30,8 +38,13 @@ export default new Vuex.Store({
       state.isClockIn = true;
     },
     practiseSignIn(state, payload) {
-      state.practiseSign = { ...state.practiseSign, ...payload};
-    }
+      state.practiseSign = { ...state.practiseSign, ...payload };
+    },
+
+    //
+    setPageConfigs(state, payload) {
+      state.pageConfigs = payload;
+    },
   },
-  modules: {}
+  modules: {},
 });

@@ -18,22 +18,22 @@
 
                 <br />首页
             </van-tabbar-item>
-            <van-tabbar-item name="learning" :to="{ name: 'learning' }">
+            <van-tabbar-item name="course" :to="{ name: 'course' }">
                 <!-- icon="notes-o" -->
                 <img
                     src="./assets/images/ic_kecheng_xz@2x.png"
                     class="nav-icon"
-                    v-if="$route.name == 'learning'"
+                    v-if="$route.name == 'course'"
                 />
                 <img src="./assets/images/ic_kecheng_wxz@2x.png" class="nav-icon" v-else />
-                <br />学习
+                <br />课程中心
             </van-tabbar-item>
-            <van-tabbar-item name="jobs" :to="{ name: 'jobs' }">
+            <van-tabbar-item name="learning" :to="{ name: 'learning' }">
                 <!-- icon="records" -->
                 <img
                     src="./assets/images/ic_faxian_xz@2x.png"
                     class="nav-icon"
-                    v-if="$route.name == 'jobs'"
+                    v-if="$route.name == 'learning'"
                 />
                 <img src="./assets/images/ic_faxian_wxz@2x.png" class="nav-icon" v-else />
                 <br />学习计划

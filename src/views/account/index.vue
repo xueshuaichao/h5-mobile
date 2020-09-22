@@ -46,6 +46,7 @@ export default {
             list: [
                 {
                     title: "个人评估",
+                    path: '/assessment',
                     icon: require("../../assets/images/ic_gr_wdbj@2x.png"),
                     arrows: require("../../assets/images/ic_gengduo@2x(1).png")
                 },
