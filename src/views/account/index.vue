@@ -2,7 +2,7 @@
     <div class="account">
         <div class="top">
             <div class="t">
-                <img :src="require('../../assets/images/19@2x.png') || userInfo.src" class="photo" alt />
+                <img :src="require('../../assets/images/19@2x.png') || userInfo.portrait" class="photo" alt />
                 <div class="name">
                     <p class="userName">{{ userInfo.name }}</p>
                 </div>
@@ -68,6 +68,11 @@ export default {
                 }
             ]
         };
+    },
+    
+    created() {
+        this.getUserInfo();
+        this.getLearnCount();
     },
 
     methods: {

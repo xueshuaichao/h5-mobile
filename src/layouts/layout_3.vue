@@ -1,9 +1,9 @@
 <template>
     <div class="layout_1">
-        <Row>
-            <i-col span="24">
+        <van-row>
+            <van-col span="24">
                 <slot name="aid_1" />
-            </i-col>
-        </Row>
+            </van-col>
+        </van-row>
     </div>
 </template>

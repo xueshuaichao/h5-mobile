@@ -45,7 +45,7 @@ const interceptors = (instance) => {
                     return Promise.reject(data);
                 }
             }
-            return data;
+            return data.data;
         },
         (error) => {
             // 对响应错误做点什么
@@ -62,6 +62,7 @@ const create = () => {
         timeout: 1000,
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
+            token: 'fffffffffffffff',
         },
         withCredentials: true,
     };

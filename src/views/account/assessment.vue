@@ -4,6 +4,8 @@
             title="个人评估"
             left-arrow
             @click-left="onClickLeft"
+            right-text="分享"
+            @click-right="onClickRight"
         />
         <div class="content">
             <p class="tip">Hi,这是您的学习数据</p>
@@ -37,15 +39,27 @@
                 <van-progress :percentage="learnData.electiveProgress" stroke-width="8" />
             </div>
         </div>
+
+        <!-- 分享 -->
+        <van-share-sheet
+            v-model="showShare"
+            title="立即分享给好友"
+            :options="options"
+            @select="onSelect"
+        />
+
+        
     </div>
 </template>
 <script>
+import { Toast } from 'vant';
 import api from '@/api/account';
 
 export default {
     name: 'Assessment',
     data() {
         return {
+            showShare: false,
             learnData: {
                 todayLearnTime: 99,// 今日学长
                 lastWeekLearnTime: 150, // 上周学长
@@ -55,16 +69,35 @@ export default {
                 taskProgress: 30,// 任务进度
                 electiveProgress: 40 // 选学进度
             },
+            options: [
+                { name: '分享至好友/群', icon: 'wechat' },
+                { name: '分享至朋友圈', icon: 'weibo' },
+            ],
         }
     },
+
+    created() {
+        this.getStatisticsOfLearn();
+    },
+
     methods: {
-        getStatisticsOfLearn() {
-            const res = api.getStatisticsOfLearn();
-            this.learnData = res;      
+        async getStatisticsOfLearn() {
+            const res = await api.getStatisticsOfLearn();
+            this.learnData = res; 
         },
+
         onClickLeft() {
             this.$router.go(-1);
-        }
+        },
+
+        onClickRight() {
+            this.showShare = true;
+        },
+
+        onSelect(option) {
+            Toast(option.name);
+            this.showShare = false;
+        },
     }
 }
 </script>
@@ -79,7 +112,7 @@ export default {
         font-size: 26px;
     }
     .van-grid-item__content {
-        padding: 0;
+        padding: 0; 
     }
 
     .progress {

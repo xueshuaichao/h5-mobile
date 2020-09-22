@@ -1,10 +1,10 @@
 const URL = {
     development: {
-        API: '/',
+        API: '/api',
     },
 
     production: {
-        API: '/',
+        API: '/api',
     },
 };
 
