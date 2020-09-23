@@ -69,8 +69,9 @@ export default {
         async getLearnList() {
             try {
                 const { list } = await api.getLearnList(this.pageSize, this.pageNum, this.params);
-                this.list.push(...list);
+                
                 this.loading = false;
+                this.list.push(...list);
 
                 if (!list || list.length < 10) {
                     this.finished = true;
