@@ -2,16 +2,19 @@ import { axios } from '../libs/axios';
 
 export default {
     getUserInfo() {
-        return axios.get('/user/info')
+        return axios.get('/learnCenter/user/info')
     },
 
-    // /statistics/learn/count
     getLearnCount() {
-        return axios.get('/statistics/learn/count')
+        return axios.get('/learnCenter/statistics/learn/count')
     },
 
-    // 个人评估 /statistics/learn
     getStatisticsOfLearn() {
-        return axios.get('/statistics/learn')
+        return axios.get('/learnCenter/statistics/learn')
+    },
+
+    // upload img
+    upload(params) {
+        return axios.file('/file/upload', params)
     }
 }

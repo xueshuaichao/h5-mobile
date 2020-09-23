@@ -19,13 +19,18 @@ html,body {
   clear: both;
 }
 
+p {
+  margin: 0;
+  padding: 0;
+}
+
 /**/
 .van-tab--active {
   color: #00B288 !important; 
 }
-// .van-hairline--bottom::after {
-//   border-bottom-width:0!important;
-// }
+.van-hairline--bottom::after {
+  border-color: #E6E6EB!important;
+}
 
 #app {
   width: 100%;
@@ -46,10 +51,33 @@ html,body {
 }
 
 .content {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .van-cell__title {
   text-align: left;
+}
+
+.common-form {
+  .form-item {
+    height: 108px;
+
+    input {
+        height: 100%;
+        font-size: 32px;
+    }
+    
+    .van-field__label {
+      display: flex;
+      flex-flow: row;
+      color: #272F55;
+      align-items: center;
+      font-size: 16px;
+    }
+
+    .van-field__body {
+        height: 100%;
+    }
+}
 }
 

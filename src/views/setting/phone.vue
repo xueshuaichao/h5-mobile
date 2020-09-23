@@ -1,4 +1,6 @@
 <script>
+import './index.less';
+
 export default {
     name: "Name",
 
@@ -12,26 +14,21 @@ export default {
 
     render() {
         return (
-            <div class="container">
+            <div class="container setting-phone">
                 <van-nav-bar
                     title="修改手机号"
                     left-arrow
                     on-click-left={ this.onClickLeft }
                 />
-                <div class="content">
-                    <van-cell-group>
-                        <van-field v-model={ this.form.name } label="手机号" placeholder="请输入手机号" />
-                        <van-field v-model={ this.form.name } label="验证码" placeholder="请输入验证码">
-                            <template slot="button">
-                                <van-button size="small" plain hairline type="info" on-click={ this.getCode }>
-                                    发送验证码
-                                </van-button>
-                            </template>
-                        </van-field>
-                    </van-cell-group>
+                <div class="content common-form">
+                    <van-field v-model={ this.form.name } class="form-item" label="手机号" placeholder="请输入手机号" />
+                    <van-field v-model={ this.form.name } class="form-item" label="验证码" placeholder="请输入验证码">
+                        <template slot="button">
+                            <p class="code">发送验证码</p>
+                        </template>
+                    </van-field>
                 </div>
 
-                <van-button type="primary" size="large" class="fixed-bottom">确定</van-button>
             </div>
         )
     },

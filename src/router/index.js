@@ -59,6 +59,13 @@ const routes = [
    path: '/assessment',
    name: 'Assessment',
    component: () => import('../views/account/assessment.vue') 
+  },
+
+  // 任务筛选
+  {
+    path: '/screen',
+    name: 'screenList',
+    component: () => import('../blocks/task/screen.vue')
   }
 ];
 

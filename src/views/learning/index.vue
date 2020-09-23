@@ -2,148 +2,56 @@
     <div class="container learning-plan">
         <div class="header">
             <div class="nav">
-                <p>学习计划</p>
-                <van-icon name="setting-o" @click="show = !show"/>
+                <img src="../../assets/learning/xx.png" alt="" width="81">
+                <img src="../../assets/learning/sx.png" alt="" srcset="" width="20" @click="$router.push({ name: 'screenList', params: { type: currentTab }})">
             </div>
             <p class="tip">
-                Hi又是美好的一天
+                <img src="../../assets/learning/hi.png" width="146" alt="">
             </p>
             <van-row class="learn-count">
                 <van-col span="8">
-                    <p>{{ learnData.todayLearnTime }} 小时</p>
+                    <p> <b>{{ learnData.todayLearnTime }}</b> 小时</p>
                     <p>今天学习</p>
                 </van-col>
                 <van-col span="8">
-                    <p>{{ learnData.totalLearnTime }} 小时</p>
+                    <p><b>{{ learnData.totalLearnTime }} </b>小时</p>
                     <p>学习总时长</p>
                 </van-col>
                 <van-col span="8">
-                    <p>{{ learnData.score }}</p>
+                    <p><b>{{ learnData.score }}</b></p>
                     <p>获得学分</p>
                 </van-col>
             </van-row>
         </div>
-
-        <van-tabs v-model="active">
-            <van-tab title="任务">
-                <van-list
-                    v-model="loading"
-                    :finished="finished"
-                    finished-text="没有更多了"
-                    @load="onLoad"
-                    >
-                    <div v-for="item in list" :key="item.id" class="item van-hairline--bottom">
-                        <div class="task-info">
-                            <div class="img">
-                                <img :src="item.img" alt="" srcset="">
-                            </div>
-                            <div class="info">
-                                <p class="title van-ellipsis">
-                                    {{ item.name }}
-                                </p>
-                                <div class="progress">
-                                    <van-progress :percentage="50" :show-pivot="false" />
-                                    <span>2%</span>
-                                </div>
-                            </div>    
-                        </div>
-                        <div class="task-time">
-                            {{ item.trainStartTime }} - {{ item.trainEndTime }}
-                        </div>
-                    </div>
-                </van-list>
-            </van-tab>
-            <van-tab title="选学">
-                <van-list
-                    v-model="loading"
-                    :finished="finished"
-                    finished-text="没有更多了"
-                    @load="onLoad"
-                    >
-                    <div v-for="item in list" :key="item.id" class="item van-hairline--bottom">
-                        <div class="task-info">
-                            <div class="img">
-                                <img :src="item.img" alt="" srcset="">
-                            </div>
-                            <div class="info">
-                                <p class="title van-ellipsis">
-                                    {{ item.name }}
-                                </p>
-                                <div class="progress">
-                                    <van-progress :percentage="50" :show-pivot="false" /> <span>2%</span>
-                                </div>
-                            </div>    
-                        </div>
-                    </div>
-                </van-list>
-            </van-tab>
-        </van-tabs>
-
-        <!-- 任务筛选 -->
-        <van-popup v-model="show" position="right" :style="{ width: '80%', height: '100%' }">
-            
-            <div class="screen-wrap" v-if="active === 0">
-                <div class="title">任务筛选</div>
-                <div class="screen-body">
-
-                    <div class="screen-item">
-                        <p>培训状态</p>
-
-                        <van-radio-group v-model="radio">
-                            <van-radio name="1">全部</van-radio>
-                            <van-radio name="2">进行中</van-radio>
-                            <van-radio name="3">已通过</van-radio>
-                            <van-radio name="4">未通过</van-radio>
-                        </van-radio-group>
-                    </div>
-                </div>
-
-                <div class="screen-footer">
-                    <p>清空筛选</p>
-                    <van-button type="info">确定</van-button>
-                </div>
+        
+        <div class="tabs">
+            <div class="item" :class="currentTab === 0 && 'active'" @click="handleClickTab(0)">
+                <span>任务</span>
             </div>
-
-                  
-            <div class="screen-wrap" v-if="active === 1">
-                <div class="title">课程筛选</div>
-                <div class="screen-body">
-
-                    <div class="screen-item">
-                        <p>选择状态</p>
-
-                        <van-radio-group v-model="radio">
-                            <van-radio name="1">全部</van-radio>
-                            <van-radio name="2">进行中</van-radio>
-                            <van-radio name="3">已完成</van-radio>
-                        </van-radio-group>
-                    </div>
-                    <div class="screen-item">
-                        <p>内容类型</p>
-
-                        <van-radio-group v-model="radio">
-                            <van-radio name="1">全部</van-radio>
-                            <van-radio name="2">视频</van-radio>
-                            <van-radio name="3">音频</van-radio>
-                            <van-radio name="4">文档</van-radio>
-                        </van-radio-group>
-                    </div>
-                </div>
-
-                <div class="screen-footer">
-                    <p>清空筛选</p>
-                    <van-button type="info">确定</van-button>
-                </div>
+            <div class="item" :class="currentTab === 1 && 'active'" @click="handleClickTab(1)">
+                <span>选学</span>
             </div>
-        </van-popup>
+        </div>
+
+        <div class="tab-content">
+            <task-list v-if="currentTab === 0 " :params="{ status: params.status }"></task-list>
+            <learning-list :params="params" v-else/>
+        </div>
     </div>
 </template>
 
 <script>
 import api from '@/api/learning';
+import TaskList from '@/blocks/task/list.vue';
+import LearningList from '@/blocks/task/learning.vue';
 
 export default {
     name: 'LearningPlan',
+
+    components: {
+        TaskList,
+        LearningList,
+    },
 
     data() {
         return {
@@ -164,44 +72,32 @@ export default {
             radio: '1',
             learnData: '',
             params: {
-                pageNum: 1,
-                pageSize: 10,
-                status: 1,
-            }
+                status: 0,
+                contentType: 0,
+            },
+            currentTab: this.$route.params.currentTab || 0,
         }
     },
     
     created() {
+        const { status = 0, contentType = 0 } = this.$route.params;
+        
+        this.params = { status, contentType };    
         this.getStatisticsOfLearn();
-        this.getTaskList();
     },
 
     methods: {
-        onLoad() {
-            // 异步更新数据
-            // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-            // setTimeout(() => {
-            //     for (let i = 0; i < 10; i++) {
-            //     this.list.push(this.list.length + 1);
-            //     }
-
-            //     // 加载状态结束
-            //     this.loading = false;
-
-            //     // 数据全部加载完成
-            //     if (this.list.length >= 40) {
-            //     this.finished = true;
-            //     }
-            // }, 1000);
-        },
-
-        async getTaskList() {
-            const res = await api.getTaskList(this.params);
-            console.log(res);
-        },
-
         async getStatisticsOfLearn() {
             this.learnData = await api.getStatisticsOfLearn();
+        },
+
+        handleClickTab(index) {
+            this.currentTab = index;
+            
+            this.params = {
+                status: 0,
+                contentType: 0,
+            };
         }
     }
 }
@@ -209,84 +105,89 @@ export default {
 
 <style lang="less">
 .learning-plan {
+    padding: 0 32px;
+    background: white!important;
+    box-sizing: border-box;
+    
     .header {
-        height: 300px;
-        padding: 0 30px;
-        background: #1989fa;
+        padding-top: 54px;
     }
 
     .nav {
         display: flex;
         flex-flow: row;
         height: 80px;
+        margin-bottom: 10px;
         align-items: center;
         font-size: 28px;
-        color: white;
+        color: black;
         justify-content: space-between;
     }
 
     .tip {
+        font-size: 32px;
+        color: #737386;
         text-align: left;
-        color: white;
-        margin: 0;
     }
 
     .learn-count {
-        margin-top: 20px;
-        color: white;
-        p {
-            margin: 10px 0;
-        }
-    }
+        margin-top: 24px;
+        height: 160px;
+        color: white;                
+        background: linear-gradient(135deg, #FF8555 0%, #FA5A30 39%, #F74118 100%);
+        box-shadow: 8px 8px 20px 0px rgba(232, 90, 58, 0.15);
+        border-radius: 24px;
 
-    .task-info {
-        display: flex;
-        flex-flow: row;
-        align-items: center;
-        .img {
-            margin-right: 20px;
-
-            img {
-                width: 200px;
-                height: 100px;
-            }
-        }
-
-        .info {
-            flex: 1;
+        .van-col {
             display: flex;
             flex-flow: column;
-            height: 100px;
-            justify-content: space-between;
-            p {
-                align-self: flex-start;
-                margin: 0;
+            justify-content: center;
+            height: 100%;
+
+            b {
+                font-size: 20px;
             }
+
+            p {
+                font-size: 12px;
+            }
+            
+            p:first-child {
+                margin-bottom: 8px;
+            }
+            
         }
     }
 
-    .task-time {
-        margin-top: 10px;
-        text-align: left;
-    }
-
-    .van-list {
-        padding: 0 30px;
-        background: white;
-        .item {
-            padding: 20px 0;
-        }
-    }
-
-    .progress {
+    .tabs {
         display: flex;
         flex-flow: row;
-        align-items: center;
-        justify-content: space-between;
+        margin-top: 64px;
+        height: 60px;
 
-        .van-progress {
-            flex-grow: 1;
-            margin-right: 10px;
+        .item {
+            flex: 1;
+            height: 100%;
+            font-size: 32px;
+            color: #A7ADBB;
+        } 
+
+        .active {
+            position: relative;
+            color: #272F55;
+        }
+
+        .active::after {
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            margin-left: -24px;
+            content: '';
+            width: 48px;
+            height: 4px;
+            background: #272F55;
+            border-radius: 2px;
+
         }
     }
 

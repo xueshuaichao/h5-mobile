@@ -3,9 +3,12 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import Vant from 'vant';
+
+// import './plugins';
+
 import './variables.less';
-import './assets/iconfont/iconfont.css';
 import './libs/rem.js';
+
 Vue.use(Vant);
 
 Vue.config.productionTip = false;

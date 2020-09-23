@@ -1,0 +1,59 @@
+.setting {
+    .button--default {
+        width: 690px;
+        height: 88px;
+        margin: 0 auto;
+        font-size: 28px;
+        line-height: 88px;
+        color: white;
+        background: linear-gradient(135deg, rgba(255, 149, 106, 0.5) 0%, rgba(247, 65, 24, 0.5) 100%);
+        border-radius: 16px;
+    }
+    
+    .button--active {
+        background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
+    }
+
+    &-name {
+        .button--default {
+            margin-top: 200px;
+        }
+    }
+
+    &-photo {
+       background-color: black!important;
+
+       .content {
+           display: flex;
+           flex-flow: row;
+           justify-content: center;
+           align-items: center;
+           text-align: center;
+           height: 80%;
+            img {
+               max-width: 750px;
+               max-height: 100%;
+               vertical-align: middle;
+            }
+       }
+    }
+    
+    &-password {
+        .margin-b-16 {
+            margin-bottom: 32px;
+        }
+
+        .tip {
+            padding: 20px 0 32px 32px;
+            font-size: 28px;
+            color: #A7ADBB;
+            text-align: left;
+        }
+    }
+
+    &-phone {
+        .code {
+            color: #E85A3A;
+        }
+    }
+}

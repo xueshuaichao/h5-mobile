@@ -4,48 +4,44 @@
         <van-tabbar
             v-model="tabbar.active"
             v-show="tabbar.show"
-            active-color="#00B288"
-            inactive-color="#686670"
+            active-color="#E85A3A"
+            inactive-color="#A7ADBB"
         >
             <van-tabbar-item name="home" :to="{ name: 'home' }">
-                <!-- icon="wap-home-o" -->
                 <img
-                    src="./assets/images/ic_shouye_xz@2x.png"
+                    src="./assets/app/home-active.png"
                     class="nav-icon"
                     v-if="$route.name == 'home'"
                 />
-                <img src="./assets/images/ic_shouye_wxz@2x.png" class="nav-icon" v-else />
+                <img src="./assets/app/home.png" class="nav-icon" v-else />
 
                 <br />首页
             </van-tabbar-item>
             <van-tabbar-item name="course" :to="{ name: 'course' }">
-                <!-- icon="notes-o" -->
                 <img
-                    src="./assets/images/ic_kecheng_xz@2x.png"
+                    src="./assets/app/course-active.png"
                     class="nav-icon"
                     v-if="$route.name == 'course'"
                 />
-                <img src="./assets/images/ic_kecheng_wxz@2x.png" class="nav-icon" v-else />
+                <img src="./assets/app/course.png" class="nav-icon" v-else />
                 <br />课程中心
             </van-tabbar-item>
             <van-tabbar-item name="learning" :to="{ name: 'learning' }">
-                <!-- icon="records" -->
                 <img
-                    src="./assets/images/ic_faxian_xz@2x.png"
+                    src="./assets/app/learning-active.png"
                     class="nav-icon"
                     v-if="$route.name == 'learning'"
                 />
-                <img src="./assets/images/ic_faxian_wxz@2x.png" class="nav-icon" v-else />
+                <img src="./assets/app/learning.png" class="nav-icon" v-else />
                 <br />学习计划
             </van-tabbar-item>
             <van-tabbar-item name="account" :to="{ name: 'account' }">
-                <!-- icon="contact" -->
                 <img
-                    src="./assets/images/ic_geren_xz@2x.png"
+                    src="./assets/app/account-active.png"
                     class="nav-icon"
                     v-if="$route.name == 'account'"
                 />
-                <img src="./assets/images/ic_geren_wxz@2x.png" class="nav-icon" v-else />
+                <img src="./assets/app/account.png" class="nav-icon" v-else />
                 <br />我的
             </van-tabbar-item>
         </van-tabbar>
@@ -65,7 +61,6 @@ export default {
 @import "./global.less";
 
 #app {
-    // height: 100%;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -84,17 +79,17 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-    color: #42b983;
+    color: @active;
 }
 
 .mohrss-app .van-nav-bar .van-nav-bar__arrow {
-    color: #000;
+    color: #272F55;
 }
 
 .has-bottom-tabbar {
     padding-bottom: 100px;
 }
 .nav-icon {
-    width: 48px;
+    width: 44px;
 }
 </style>
