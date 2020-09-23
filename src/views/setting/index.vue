@@ -70,12 +70,21 @@ export default {
     },
 
     methods: {
-       onClickLeft() {
+        onClickLeft() {
            this.$router.go(-1);
-       },
+        },
        
-       handleSignOut() {
-           // todo
+        handleSignOut() {
+            this.$dialog.confirm({
+                message: '确定退出登录？',
+                beforeClose: (action, done) => {
+                    done()
+                    
+                    if (action === 'confirm') {
+                        // todo clear login status
+                    }
+                }
+            })
        }
     },
 }   

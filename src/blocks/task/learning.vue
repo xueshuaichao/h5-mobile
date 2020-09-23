@@ -7,7 +7,7 @@
             @load="getLearnList"
             :error.sync="error"
             finished-text="没有更多了">
-            <div class="item van-hairline--bottom" v-for="item in list" :key="item.id">
+            <div class="item van-hairline--bottom" v-for="item in list" :key="item.id" @click="handleClickItem(item)">
                 <div class="top">
                     <img class="img" :src="item.coverUrl" alt="">
                     <div class="info">
@@ -68,7 +68,8 @@ export default {
     methods: {
         async getLearnList() {
             try {
-                const { list } = await api.getLearnList(this.pageSize, this.pageNum, this.params);
+                const { status, contentType } = this.params;
+                const { list } = await api.getLearnList(this.pageSize, this.pageNum, { status: status || '', contentType: contentType || '' });
                 
                 this.loading = false;
                 this.list.push(...list);
@@ -87,6 +88,11 @@ export default {
             }
     
         },
+
+        handleClickItem(item) {
+            // todo router
+            console.log(item)
+        }
 
     },
 };

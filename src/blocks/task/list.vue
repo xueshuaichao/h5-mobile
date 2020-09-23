@@ -7,7 +7,7 @@
             @load="getTaskList"
             :error.sync="error"
             finished-text="没有更多了">
-            <div class="item" v-for="item in list" :key="item.id">
+            <div class="item" v-for="item in list" :key="item.id" @click="handleClickItem(item)">
                 <div class="top">
                     <img class="img" :src="item.coverUrl" alt="">
                     <div class="info">
@@ -92,6 +92,11 @@ export default {
             }
     
         },
+
+        handleClickItem(item) {
+            // todo router
+            console.log(item)
+        }
 
     },
 };

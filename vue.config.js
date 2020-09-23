@@ -6,7 +6,7 @@ module.exports = {
     https: false,
     proxy: {
       '/api': {
-        target: 'http://mz-resource-server.testing1.svc.k8s.bjo.wdcloud.cc',
+        target: 'http://mz-gateway-server.testing1.svc.k8s.bjo.wdcloud.cc',
         changeOrigin: true,
         pathRewrite: { '^/api': '' },
       }
