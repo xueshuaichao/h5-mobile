@@ -96,6 +96,20 @@ export class HttpRequest {
         return instance(options);
     }
 
+    patch(url, params) {
+        const data = params && JSON.parse(JSON.stringify(params));
+        const instance = create();
+        if (data) {
+            Object.keys(data).forEach(
+                key => data[key] !== 0 && !data[key] && delete data[key],
+            );
+        }
+        const options = { url, data, method: 'patch' };
+        interceptors(instance, options.url);
+        this.queue[options.url] = instance;
+        return instance(options);
+    }
+
     get(url, params) {
         const data = params && JSON.parse(JSON.stringify(params));
         const instance = create();

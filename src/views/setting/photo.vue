@@ -1,5 +1,5 @@
 <script>
-import api from '@/api/account';
+import api from '@/api/ucenter';
 import './index.less';
 
 export default {
@@ -8,7 +8,7 @@ export default {
     data() {
         return {
             form: {
-                name: '',
+                avatar: '',
             }
         }
     },
@@ -38,9 +38,7 @@ export default {
     },
 
     methods: {
-
         onClickLeft() {
-            console.log(1)
             this.$router.go(-1);
         },
 
@@ -57,6 +55,16 @@ export default {
             // console.log(e)
 
             api.upload({ file: files[0] })
+        },
+
+        async updateUserInfo() {
+            const res = await api.updateUserInfo(1000118612570985, this.form)
+            
+            if (res) {
+                this.$toast.clear();
+                this.$toast('修改成功');
+                this.$router.go(-1);
+            }
         }
     }
 }

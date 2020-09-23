@@ -6,8 +6,8 @@
             </div>
 
             <div class="user-info">
-                <img :src="require('../../assets/account/photo2x.png') || userInfo.portrait"  width="48" alt="" class="photo">
-                <p class="name"> {{ userInfo.name }} </p>
+                <img :src="userInfo.avatar"  width="48" alt="" class="photo">
+                <p class="name"> {{ userInfo.username }} </p>
             </div>
 
             <div class="record">
@@ -35,7 +35,7 @@
     </div>
 </template>
 <script>
-import api from '@/api/account';
+import api from '@/api/ucenter';
 
 export default {
     data() {
@@ -79,12 +79,12 @@ export default {
     
     created() {
         this.getUserInfo();
-        this.getLearnCount();
+        // this.getLearnCount();
     },
 
     methods: {
         async getUserInfo() {
-            const res = await api.getUserInfo();
+            const res = await api.getUserInfo({ "userId":"1000118612570985" });
             this.userInfo = res;
             this.$store.commit('setUserInfo', res);
         },
@@ -132,6 +132,7 @@ export default {
     .photo {
         width: 86px;
         height: 86px;
+        border-radius: 50%;
     }
 
     .record {

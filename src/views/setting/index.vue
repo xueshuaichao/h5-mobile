@@ -11,7 +11,7 @@
                     <p class="title">姓名</p>
                     <div class="value">
                         <span>
-                            完善信息
+                           {{ userInfo.username || '完善信息' }}
                         </span>
                         <van-icon name="arrow" />
                     </div>
@@ -19,8 +19,8 @@
                 <div class="item van-hairline--bottom" @click="$router.push('/setting/photo')">
                     <p class="title">修改头像</p>
                     <div class="value">
-                        <div class="photo" v-if="userInfo.portrait">
-                            <img :src="userInfo.portrait" alt="" width="56">
+                        <div class="photo" v-if="userInfo.avatar">
+                            <img :src="userInfo.avatar" alt="" width="56">
                         </div>
                         <van-icon name="arrow" />
                     </div>
@@ -41,7 +41,7 @@
 
             <!-- 区域单位 -->
             <div class="list">
-                <div class="item van-hairline--bottom">
+                <div class="item" @click="$router.push('/company')">
                     <p class="title">区域单位</p>
                     <div class="value">
                         <span>

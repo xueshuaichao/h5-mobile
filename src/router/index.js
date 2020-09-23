@@ -66,7 +66,14 @@ const routes = [
     path: '/screen',
     name: 'screenList',
     component: () => import('../blocks/task/screen.vue')
-  }
+  },
+
+  // 区域单位
+  {
+    path: '/company',
+    name: 'company',
+    component: () => import('../views/setting/company.vue')
+  },
 ];
 
 const router = new VueRouter({
