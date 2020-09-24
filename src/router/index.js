@@ -74,6 +74,11 @@ const routes = [
     name: 'company',
     component: () => import('../views/setting/company.vue')
   },
+  {
+    path: '/instructions',
+    name: 'instructions',
+    component: () => import('../views/exam/instructions.vue')
+  }
 ];
 
 const router = new VueRouter({
