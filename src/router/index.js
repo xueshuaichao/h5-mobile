@@ -78,7 +78,13 @@ const routes = [
     path: '/instructions',
     name: 'instructions',
     component: () => import('../views/exam/instructions.vue')
-  }
+  },
+  {
+    path: '/answer',
+    name: 'answer',
+    component: () => import('../views/exam/answer.vue')
+  },
+  
 ];
 
 const router = new VueRouter({
