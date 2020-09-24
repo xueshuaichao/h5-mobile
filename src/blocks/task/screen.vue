@@ -12,12 +12,12 @@
                     <p :key="item.id">{{ item.name }}</p>
                     <div class="list" :key="index">
                         <div class="item" 
-                            :class="[el.length <= 2 && 'mini', type === 0 && i === 0 && 'block', activeList[index] === i ? 'active' : '']" 
+                            :class="[el.name.length <= 2 && 'mini', type === 0 && i === 0 && 'block', activeList[index] === i ? 'active' : '']" 
                             v-for="(el, i) in item.btn" 
-                            :key="i"
+                            :key="el.id"
                             @click="handleClickItem(index, i)"    
                             >
-                           {{ el }}
+                           {{ el.name }}
                         </div>
                     </div>
                 </template>
@@ -26,6 +26,7 @@
 
         <div class="footer">
             <div @click="handleClearActiveList">
+                <img src="../../assets/learning/clear.png" alt="" width="18" srcset="">
                 <p>清空筛选</p>
             </div>
             <div class="button" @click="handleClickSave">
@@ -42,28 +43,84 @@ export default {
         return {
             taskList: [
                 {
-                   name: '培训状态',
-                   id: 1,
-                   btn: ['全部', '进行中', '已通过', '未通过'], 
+                    name: '培训状态',
+                    id: 11,
+                    btn: [ 
+                        {
+                            id: 111,
+                            name: '全部',
+                            value: '',
+                        }, 
+                        {
+                            id: 112,
+                            name: '进行中',
+                            value: 1,
+                        }, 
+                        { 
+                            id: 113, 
+                            name: '已通过', 
+                            value: 2 
+                        }, 
+                        { 
+                            id: 114, 
+                            name: '未通过', 
+                            value: 3
+                        }
+                    ], 
                 }
             ],
-
             courseList: [
                 {
-                   id: 1,
-                   name: '课程状态',
-                   btn: ['全部', '进行中', '已完成'], 
+                    id: 12,
+                    name: '课程状态',
+                    btn: [
+                        {
+                            id: 121,
+                            name: '全部',
+                            value: '',
+                        }, 
+                        {
+                            id: 122,
+                            name: '进行中',
+                            value: 1,
+                        }, 
+                        { 
+                            id: 123, 
+                            name: '已完成', 
+                            value: 2 
+                        },
+                    ]
                 },
                 {
-                    id: 2,
+                    id: 22,
                     name: '内容类型',
-                    btn: ['全部', '视频', '音频', '文档'],
+                    btn: [
+                        {
+                            id: 221,
+                            name: '全部',
+                            value: '',
+                        }, 
+                        {
+                            id: 222,
+                            name: '视频',
+                            value: 0,
+                        }, 
+                        { 
+                            id: 223, 
+                            name: '音频', 
+                            value: 1 
+                        },
+                        { 
+                            id: 224, 
+                            name: '文档', 
+                            value: 2 
+                        },
+                    ],
                 }
             ],
-
             type: 0,
-
             activeList: [0, 0],
+            params: [],
         }
     },
     
@@ -79,10 +136,13 @@ export default {
     },
 
     methods: {
-        onClickLeft() {},
+        onClickLeft() {
+            this.$router.go(-1);
+        },
 
         handleClickItem(index, i) {
-            this.$set(this.activeList, index, i)
+            this.$set(this.activeList, index, i);
+            this.params[index] = this.list[index].btn[i].value;
         },
 
         handleClearActiveList() {
@@ -90,12 +150,14 @@ export default {
         },
 
         handleClickSave() {
+            const [status = '', contentType = ''] = this.params;
+            
             this.$router.push({
                 name: 'learning',
                 params: {
                     currentTab: this.type,
-                    status: this.activeList[0],
-                    contentType: this.activeList[1],
+                    status,
+                    contentType,
                 },
             });
         }

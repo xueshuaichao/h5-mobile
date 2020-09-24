@@ -107,7 +107,7 @@ router.beforeEach((to, from, next) => {
                   NEED_LOGIN_PAGE.indexOf(to.name) > -1
               ) {
                   console.log('needlogin');
-                  window.location.replace(`http://192.168.15.46/login/login?returnUrl=${encodeURIComponent(location.href)}`);
+                  // window.location.replace(`http://192.168.15.46/login/login?returnUrl=${encodeURIComponent(location.href)}`);
                   next();
                   // next({ name: 'passportLogin' });
               } else {

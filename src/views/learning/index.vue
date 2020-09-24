@@ -25,17 +25,19 @@
         </div>
         
         <div class="tabs">
-            <div class="item" :class="currentTab === 0 && 'active'" @click="handleClickTab(0)">
-                <span>任务</span>
-            </div>
-            <div class="item" :class="currentTab === 1 && 'active'" @click="handleClickTab(1)">
-                <span>选学</span>
+            <div 
+                :class="['item', currentTab === i ? 'active' : '' ]" 
+                v-for="(item, i) in tabs" 
+                @click="handleClickTab(i)"
+                :key="item"
+            >
+                <span>{{ item }}</span>
             </div>
         </div>
 
         <div class="tab-content">
-            <task-list v-if="currentTab === 0 " :params="{ status: params.status }"></task-list>
-            <learning-list :params="params" v-else/>
+            <task-list v-if="currentTab === 0 " ></task-list>
+            <learning-list v-else/>
         </div>
     </div>
 </template>
@@ -55,34 +57,14 @@ export default {
 
     data() {
         return {
-            active: 0,
-            loading: false,
-            show: false,
-            list: [
-                {
-                    id: 1,
-                    img: 'https://img.yzcdn.cn/vant/cat.jpeg',
-                    name: '任务一',
-                    progress: 96,
-                    trainStartTime: 2020,
-                    trainEndTime: 2021,
-                }
-            ],
-            finished: true,
-            radio: '1',
+            list: [],
+            tabs: ['任务', '选学'],
             learnData: '',
-            params: {
-                status: 0,
-                contentType: 0,
-            },
             currentTab: this.$route.params.currentTab || 0,
         }
     },
     
-    created() {
-        const { status = 0, contentType = 0 } = this.$route.params;
-        
-        this.params = { status, contentType };    
+    created() { 
         this.getStatisticsOfLearn();
     },
 
@@ -93,11 +75,6 @@ export default {
 
         handleClickTab(index) {
             this.currentTab = index;
-            
-            this.params = {
-                status: 0,
-                contentType: 0,
-            };
         }
     }
 }
@@ -174,7 +151,7 @@ export default {
 
         .active {
             position: relative;
-            color: #272F55;
+            color: #E85A3A;
         }
 
         .active::after {
@@ -185,7 +162,7 @@ export default {
             content: '';
             width: 48px;
             height: 4px;
-            background: #272F55;
+            background: #E85A3A;
             border-radius: 2px;
 
         }
