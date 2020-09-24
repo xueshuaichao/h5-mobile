@@ -46,7 +46,7 @@
                     <p class="title">区域单位</p>
                     <div class="value">
                         <span>
-                            完善信息
+                            {{ userInfo.selectedLabels[1] || '完善信息' }}
                         </span>
                         <van-icon name="arrow" />
                     </div>

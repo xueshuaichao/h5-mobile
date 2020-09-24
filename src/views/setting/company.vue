@@ -96,25 +96,25 @@ export default {
             this.columns = [];
             let data = this.items;
             const self = this;
-
+            console.log(data) 
             this.userInfo.selectedList.forEach((v, i) => {
                 setColumn(data, v, i)
             })
 
             function setColumn(child, v, i) {
 
-                let item = child.find(item => item.value === v);              
+                let item = child.find(item => item.value === v);  
+                console.log(item)            
                 if (item.children) {
                     self.activeList.push(item.children);
-                    self.columns.push({
-                        id: i + 1,
-                        title: '区域',
-                        value: item.label,
-                        data: item
-                    });
-
                     data = item.children;
                 }
+                self.columns.push({
+                    id: i + 1,
+                    title: '区域',
+                    value: item.label,
+                    data: item
+                });
             }
         },
 
@@ -144,7 +144,7 @@ export default {
         handleChangeCompanyName() {
             const selectedList = this.columns.map(v => v.data.value);
 
-            this.updateUserInfo(selectedList);
+            this.updateUserInfo({ selectedList });
         }
     },
 }   
