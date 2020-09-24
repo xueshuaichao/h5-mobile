@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import api from '../api/ucenter';
 
 Vue.use(Vuex);
 
@@ -9,8 +10,7 @@ export default new Vuex.Store({
       show: true,
       active: 'home',
     },
-
-    userInfo: {},
+    userInfo: null,
   },
   getters: {
     getConfigByPage(state) {
@@ -36,4 +36,13 @@ export default new Vuex.Store({
   },
 
   modules: {},
+  actions: {
+      getUserInfo({ state }) {
+        return api.getUserInfo().then(({ data }) => {
+            const info = data.user_info;
+            state.userInfo = data.user_info;
+            return info;
+        });
+    },
+  },
 });

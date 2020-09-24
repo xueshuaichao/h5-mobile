@@ -3,7 +3,7 @@ import { axios } from '../libs/axios';
 export default {
     
     getUserInfo(params) {
-        return axios.post('/ucenter/userInfo', params);
+        return axios.get('/ucenter/sso/checkCookie', params);
     },
 
     updateUserInfo(userId, params) {

@@ -4,7 +4,7 @@ import Home from '../views/home/Home.vue';
 import store from '../store/index';
 
 Vue.use(VueRouter);
-
+const NEED_LOGIN_PAGE = ['home'];
 const routes = [
   {
     path: '/',
@@ -92,6 +92,28 @@ router.beforeEach((to, from, next) => {
     });
   } else {
     store.commit('setTabbar', { show: false });
+  }
+  if (store.state.userInfo) {
+      next();
+  } else {
+      store
+          .dispatch('getUserInfo')
+          .then(() => {
+              next();
+          })
+          .catch(() => {
+              if (
+                  // CONFIG.STATUS_CODE.NO_LOGIN === data.status &&
+                  NEED_LOGIN_PAGE.indexOf(to.name) > -1
+              ) {
+                  console.log('needlogin');
+                  window.location.replace(`http://192.168.15.46/login/login?returnUrl=${encodeURIComponent(location.href)}`);
+                  next();
+                  // next({ name: 'passportLogin' });
+              } else {
+                  next();
+              }
+          });
   }
   next();
 });
