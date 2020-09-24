@@ -40,19 +40,7 @@ import api from '@/api/learning';
 
 export default {
     name: 'LearningList',
-    
-    props: {
-        params: {
-            type: Object,
-            default() {
-                return {
-                    status: 0,
-                    contentType: 0,
-                }
-            }
-        }
-    },
-    
+        
     data() {
         return {
             list: [],
@@ -68,22 +56,28 @@ export default {
     methods: {
         async getLearnList() {
             try {
-                const { status, contentType } = this.params;
-                const { list } = await api.getLearnList(this.pageSize, this.pageNum, { status: status || '', contentType: contentType - 1 < 0 ? '' : contentType - 1 });
+                const { status, contentType, currentTab } = this.$route.params;
+                const params = currentTab === 1 ? { status, contentType } : '';
+                const { list, total } = await api.getLearnList(this.pageSize, this.pageNum, params);
                 
                 this.loading = false;
-                if (!list) {
+                
+                if (!total) { // no data
                     this.isNone = true;
+                    return;
                 }
-                this.list.push(...list);
+                
+                if (!list) { // list is null
+                    this.finished = true;
+                } else {
+                    this.list.push(...list);
+                }
 
-                if (!list || list.length < 10) {
+                if (this.list.length >= total) { // finished
                     this.finished = true;
                 }
 
                 this.pageNum++;
-
-                this.isNone = !this.list.length;
                 this.error = false;
             } catch(e) {
                 console.log(e)

@@ -42,17 +42,6 @@ import api from '@/api/learning';
 
 export default {
     name: 'TaskList',
-    
-    props: {
-        params: {
-            type: Object,
-            default() {
-                return {
-                    status: 0,
-                }
-            }
-        }
-    },
 
     data() {
         return {
@@ -69,21 +58,28 @@ export default {
     methods: {
         async getTaskList() {
             try {
-                const { list } = await api.getTaskList(this.pageSize, this.pageNum, this.params);
+                const { status, currentTab } = this.$route.params;
+                const params = currentTab === 0 ? { status }: '';
+                const { list, total } = await api.getTaskList(this.pageSize, this.pageNum, params);
                 
                 this.loading = false;
-                
-                if (list) {
-                    this.list.push(...list);
+
+                if (!total) {
+                    this.isNone = true;
+                    return;
                 }
 
-                if (Array.isArray(list) && list.length < 10) {
+                if (list) {
+                    this.list.push(...list);
+                } else {
+                    this.finished = true;
+                }
+
+                if (this.list.length >= total) {
                     this.finished = true; 
                 }
 
                 this.pageNum++;
-
-                this.isNone = !this.list.length;
                 this.error = false;
             } catch(e) {
                 console.log(e)
