@@ -26,8 +26,8 @@ export default {
                 />
                 <div class="content common-form">
                     <van-field v-model={ this.form.oldPassword } type="password" class="form-item margin-b-16" clearable label="原密码" placeholder="请输入原密码" />
-                    <van-field v-model={ this.form.password } maxlength="20" class="form-item" label="新密码" clearable placeholder="请输入新密码6-20位英文+数字" />
-                    <van-field v-model={ this.form.secondPassword} maxlength="20" class="form-item" label="确认" clearable placeholder="请再次输入新密码" />
+                    <van-field v-model={ this.form.password } maxlength="20" type="password" class="form-item" label="新密码" clearable placeholder="请输入新密码6-20位英文+数字" />
+                    <van-field v-model={ this.form.secondPassword} type="password"  maxlength="20" class="form-item" label="确认" clearable placeholder="请再次输入新密码" />
                     
                     <p class="tip">密码必须为6-20位数字加字母组合</p>
                 </div>
@@ -74,10 +74,16 @@ export default {
         },
         
         async uodatePassword(oldPassword, password) {
-            const res = await api.updateUserPassword({ oldPassword, newPassword: password });
+            this.$loading();
 
-            if (res) {
-                console.log(res)
+            try {
+                const res = await api.updateUserPassword({ oldPassword, newPassword: password });
+                if (res) {
+                    this.$toast('修改成功');
+                }
+                this.$router.go(-1);
+            } finally {
+                this.$toast.clear();
             }
         }
     }

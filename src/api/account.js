@@ -23,5 +23,9 @@ export default {
 
     updateUserPassword(params) {
         return axios.post('/learnCenter/user/updatePassword', params)
-    }
+    },
+
+    updateUserPhone(params) {
+        return axios.post('/learnCenter/user/updatePhone', params);
+    },
 }

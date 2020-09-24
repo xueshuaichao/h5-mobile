@@ -1,27 +1,22 @@
 <script>
-import api from '@/api/ucenter';
+import mixins from './mixins';
+import api from '@/api/account';
 import './index.less';
 
 export default {
     name: "Name",
+    
+    mixins: [mixins],
 
     data() {
         return {
             form: {
-                userMobile: '',
-                isBtnActive: '',
-            }
+                phone: '18818881888',
+                verifyCode: '',
+            },
+            time: 60 * 1000,
+            codeText: '获取验证码',
         }
-    },
-    
-    computed: {
-        userInfo() {
-            return this.$store.state.userInfo;
-        }
-    },
-
-    created() {
-        this.form.userMobile = this.userInfo.userMobile;
     },
 
     render() {
@@ -33,19 +28,25 @@ export default {
                     on-click-left={ this.onClickLeft }
                 />
                 <div class="content common-form">
-                    <van-field v-model={ this.form.userMobile } class="form-item" label="手机号" placeholder="请输入手机号" />
-                    <van-field v-model={ this.form.code } class="form-item" label="验证码" placeholder="请输入验证码">
+                    <van-field v-model={ this.form.phone } maxlength="11" class="form-item" label="手机号" placeholder="请输入手机号" />
+                    <van-field v-model={ this.form.verifyCode } class="form-item" label="验证码" placeholder="请输入验证码">
                         <template slot="button">
-                            <p class="code">发送验证码</p>
+                            <p class="code" on-click={ this.handleGetCode }> { this.codeText } </p>
                         </template>
                     </van-field>
                 </div>
 
-                <div class={ ['button--default', this.isBtnActive ? 'button--active' : ''] } on-click={ this.handleChangePhone }>
+                <div class={ ['button--default', 'button--active' ] } on-click={ this.handleChangePhone }>
                     确认
                 </div>
             </div>
         )
+    },
+    
+    created() {
+        this.$once('hook:beforeDestroy', () => {
+            clearInterval(this.codeTimer);
+        });
     },
 
     methods: {
@@ -54,40 +55,51 @@ export default {
             this.$router.go(-1);
         },
 
-        getCode() {
-            console.log('发送验证码');
+        handleGetCode() {
+            if (!this.form.phone) {
+                return this.$toast('请输入手机号');
+            }
+
+            this.timer();
         },
 
         handleChangePhone() {
-            const { userMobile, code } = this.form;
-
-            if (!userMobile) {
-                this.$toast('请输入手机号');
-                return;
+            if (!this.form.verifyCode) {
+                return this.$toast('请输入验证码');
             }
-            if (!code) {
-                this.$toast('请输入验证码');
-            }
-
             this.updatePhone();
         },
-
+        
         async updatePhone() {
-            try {
-                const res = await api.updateUserInfo('1000118612570985', {
-                    password: this.form.userMobile,
-                });
+            this.$loading();
 
+            try {
+                const res = await api.updateUserPhone(this.form);
                 if (res) {
                     this.$toast.clear();
                     this.$toast('修改成功');
-                    this.$router.go(-1)
+                    this.$router.go(-1);
                 }
-            } catch(e) {
+            }catch(e) {
                 console.log(e)
-                this.$toast.clear();
             }
-        }
+        },
+
+        
+        timer() {
+            if (this.codeTimer) return;
+
+            let time = 60;
+            this.codeTimer = setInterval(() => {
+                this.codeText = `${(time -= 1)}s`;
+
+                if (time === 1) {
+                    clearInterval(this.codeTimer);
+                    this.codeText = '获取验证码';
+                    this.codeTimer = null;
+                }
+            }, 1000);
+        },
     }
 }
 </script>
