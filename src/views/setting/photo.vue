@@ -1,24 +1,19 @@
 <script>
-import api from '@/api/ucenter';
+import mixins from './mixins';
+import api from '@/api/account';
 import './index.less';
 
 export default {
     name: "Name",
-
+    mixins: [mixins],
     data() {
         return {
             form: {
-                avatar: '',
+                portrait: this.$store.state.userInfo.portrait || '',
             }
         }
     },
     
-    computed: {
-        userInfo() {
-            return this.$store.state.userInfo;
-        }
-    },
-
     render() {
         return (
             <div class="container setting-photo">
@@ -29,7 +24,7 @@ export default {
                 />
                 <div class="content">
                     {
-                        <img on-click={ this.handleClick } src='https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1830914723,3154965800&fm=26&gp=0.jpg' />
+                        <img on-click={ this.handleClick } src={ this.form.portrait } />
                     }
                     <input type="file" ref="file" style="display: none" on-change={ this.handleChange }/>
                 </div>
@@ -48,24 +43,15 @@ export default {
 
         handleChange(e) {
             const files = e.target.files;
-            // this.$toast.loading({  
-            //     message: '上传中',
-            //     forbidClick: true,
-            // })
-            // console.log(e)
-
-            api.upload({ file: files[0] })
-        },
-
-        async updateUserInfo() {
-            const res = await api.updateUserInfo(1000118612570985, this.form)
-            
-            if (res) {
+            this.$loading('上传中');
+            api.upload({ file: files[0] }).then((data) => {
+                this.form.portrait = data;
                 this.$toast.clear();
-                this.$toast('修改成功');
-                this.$router.go(-1);
-            }
-        }
+                this.$toast.success('上传成功');
+
+                this.updateUserInfo(this.form);
+            });
+        },
     }
 }
 </script>

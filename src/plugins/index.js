@@ -1,4 +1,9 @@
 import { Toast } from 'vant';
-import Vue from 'vue';
 
-Vue.prototype.$toast = Toast;
+export default {
+    install(Vue) {
+        Vue.prototype.$loading = (message = '') => {
+            Toast.loading({ forbidClick: true, message, duration: 0 })
+        }
+    }
+}
