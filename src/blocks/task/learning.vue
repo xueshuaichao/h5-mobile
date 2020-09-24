@@ -69,9 +69,12 @@ export default {
         async getLearnList() {
             try {
                 const { status, contentType } = this.params;
-                const { list } = await api.getLearnList(this.pageSize, this.pageNum, { status: status || '', contentType: contentType || '' });
+                const { list } = await api.getLearnList(this.pageSize, this.pageNum, { status: status || '', contentType: contentType - 1 < 0 ? '' : contentType - 1 });
                 
                 this.loading = false;
+                if (!list) {
+                    this.isNone = true;
+                }
                 this.list.push(...list);
 
                 if (!list || list.length < 10) {
@@ -83,6 +86,7 @@ export default {
                 this.isNone = !this.list.length;
                 this.error = false;
             } catch(e) {
+                console.log(e)
                 this.error = true;
                 this.loading = false;
             }
