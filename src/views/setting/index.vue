@@ -11,16 +11,17 @@
                     <p class="title">姓名</p>
                     <div class="value">
                         <span>
-                           {{ userInfo.username || '完善信息' }}
+                           {{ userInfo.name || '完善信息' }}
                         </span>
+                        <span></span>
                         <van-icon name="arrow" />
                     </div>
                 </div>
                 <div class="item van-hairline--bottom" @click="$router.push('/setting/photo')">
                     <p class="title">修改头像</p>
                     <div class="value">
-                        <div class="photo" v-if="userInfo.avatar">
-                            <img :src="userInfo.avatar" alt="" width="56">
+                        <div class="photo" v-if="userInfo.portrait">
+                            <img :src="userInfo.portrait" alt="" width="56">
                         </div>
                         <van-icon name="arrow" />
                     </div>
@@ -45,7 +46,7 @@
                     <p class="title">区域单位</p>
                     <div class="value">
                         <span>
-                            完善信息
+                            {{ userInfo.selectedLabels[1] || '完善信息' }}
                         </span>
                         <van-icon name="arrow" />
                     </div>
@@ -58,8 +59,6 @@
     </div>
 </template>
 <script>
-// import api from '../../api/account';
-
 export default {
     name: 'Setting',
     

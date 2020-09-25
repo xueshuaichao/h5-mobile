@@ -6,8 +6,8 @@
             </div>
 
             <div class="user-info">
-                <img :src="userInfo.avatar"  width="48" alt="" class="photo">
-                <p class="name"> {{ userInfo.username }} </p>
+                <img :src="userInfo.portrait"  width="48" alt="" class="photo">
+                <p class="name"> {{ userInfo.name }} </p>
             </div>
 
             <div class="record">
@@ -35,7 +35,7 @@
     </div>
 </template>
 <script>
-import api from '@/api/ucenter';
+import api from '@/api/account';
 
 export default {
     data() {
@@ -78,8 +78,8 @@ export default {
     },
     
     created() {
-       // this.getUserInfo();
-        // this.getLearnCount();
+        this.getUserInfo();
+        this.getLearnCount();
     },
 
     methods: {

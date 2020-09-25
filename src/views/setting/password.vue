@@ -1,12 +1,6 @@
 <script>
-import api from '@/api/ucenter';
+import api from '@/api/account';
 import './index.less';
-
-const MAP = {
-    oldPassword: '请输入原密码',
-    password: '请输入新密码',
-    secondPassword: '请再一次输入确认密码',
-};
 
 export default {
     name: "Name",
@@ -31,14 +25,14 @@ export default {
                     on-click-left={ this.onClickLeft }
                 />
                 <div class="content common-form">
-                    <van-field v-model={ this.form.oldPassword } class="form-item margin-b-16" label="原密码" placeholder="请输入原密码" />
-                    <van-field v-model={ this.form.password } class="form-item" label="新密码" placeholder="请输入新密码6-20位英文+数字" />
-                    <van-field v-model={ this.form.secondPassword} class="form-item" label="确认" placeholder="请再次输入新密码" />
+                    <van-field v-model={ this.form.oldPassword } type="password" class="form-item margin-b-16" clearable label="原密码" placeholder="请输入原密码" />
+                    <van-field v-model={ this.form.password } maxlength="20" type="password" class="form-item" label="新密码" clearable placeholder="请输入新密码6-20位英文+数字" />
+                    <van-field v-model={ this.form.secondPassword} type="password"  maxlength="20" class="form-item" label="确认" clearable placeholder="请再次输入新密码" />
                     
                     <p class="tip">密码必须为6-20位数字加字母组合</p>
                 </div>
                 
-                <div class={ ['button--default', this.isBtnActive ? 'button--active' : ''] } on-click={ this.handleChangePassword }>
+                <div class={ ['button--default', 'button--active'] } on-click={ this.handleChangePassword }>
                     确认
                 </div>
             </div>
@@ -52,34 +46,43 @@ export default {
         },
         
         handleChangePassword() {
-            const res = Object.keys(MAP).find(v => this.form[v] === '');
-            
-            if (res) {
-                this.$toast(MAP[res]);
+            const reg =/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/
+            const { oldPassword, password, secondPassword } = this.form;
+
+            if (!oldPassword) {
+                this.$toast('请输入原密码');
                 return;
             }
 
-            this.uodatePassword();
-            
-            this.$toast.loading({
-                forbidClick: true,
-                duration: 0,
-            });
+            if (!password) {
+                this.$toast('请输入新密码');
+                return;
+            } else if(!reg.test(password)){
+                this.$toast('密码格式不正确');
+                return;
+            }
+
+            if (!secondPassword) {
+                this.$toast('请再次输入新密码');
+                return;
+            } else if( secondPassword !== password) {
+                this.$toast('两次密码不一致');
+                return;
+            }
+
+            this.uodatePassword(oldPassword, password);
         },
         
-        async uodatePassword() {
-            try {
-                const res = await api.updatePassword( { 
-                    userId: '1000118612570985',
-                    password: this.form.password,
-                });
+        async uodatePassword(oldPassword, password) {
+            this.$loading();
 
+            try {
+                const res = await api.updateUserPassword({ oldPassword, newPassword: password });
                 if (res) {
-                    this.$toast.clear();
-                    this.$toast('修改成功')
+                    this.$toast('修改成功');
                 }
-            } catch(e) {
-                console.log(e)
+                this.$router.go(-1);
+            } finally {
                 this.$toast.clear();
             }
         }

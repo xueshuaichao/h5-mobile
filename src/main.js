@@ -3,13 +3,13 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import Vant from 'vant';
-
-// import './plugins';
+import customPlugins from'./plugins';
 
 import './variables.less';
 import './libs/rem.js';
 
 Vue.use(Vant);
+Vue.use(customPlugins);
 
 Vue.config.productionTip = false;
 
@@ -18,7 +18,6 @@ Vue.config.productionTip = false;
 //   store,
 //   render: h => h(App)
 // }).$mount('#app');
-
 const getPageConfigs = Promise.resolve([
   {
       uri: '/',
