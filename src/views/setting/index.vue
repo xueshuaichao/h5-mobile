@@ -45,7 +45,7 @@
                 <div class="item" @click="$router.push('/company')">
                     <p class="title">区域单位</p>
                     <div class="value">
-                        <span>
+                        <span v-if="userInfo.selectedLabels">
                             {{ userInfo.selectedLabels[1] || '完善信息' }}
                         </span>
                         <van-icon name="arrow" />
@@ -59,14 +59,12 @@
     </div>
 </template>
 <script>
+import mixins from './mixins';
+
 export default {
     name: 'Setting',
     
-    computed: {
-        userInfo() {
-            return this.$store.state.userInfo;
-        },
-    },
+    mixins: [mixins],
 
     methods: {
         onClickLeft() {

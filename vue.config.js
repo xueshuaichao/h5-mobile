@@ -4,7 +4,12 @@
 module.exports = {
   devServer: {
     https: false,
-    proxy: {    
+    proxy: { 
+      '/api/resource': {
+        target: 'http://mz-resource-server.testing1.svc.k8s.bjo.wdcloud.cc',
+        changeOrigin: true,
+        pathRewrite: { '^/api': '' },
+      },   
       '/api/ucenter': {
         target: 'http://user-center.testing1.svc.k8s.bjo.wdcloud.cc',
         changeOrigin: true,

@@ -14,7 +14,7 @@ export default {
     },
 
     upload(params) {
-        return axios.file('/resource/file/upload', params)
+        return axios.file('/resource/uploadImage', params)
     },
 
     updateUserInfo(params) {
@@ -28,4 +28,9 @@ export default {
     updateUserPhone(params) {
         return axios.post('/learnCenter/user/updatePhone', params);
     },
+
+    getCode(params) {
+        return axios.get('/learnCenter/user/sendSms', params)
+    }
+
 }

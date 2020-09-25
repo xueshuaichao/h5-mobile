@@ -11,7 +11,7 @@ export default {
     data() {
         return {
             form: {
-                phone: '18818881888',
+                phone: '',
                 verifyCode: '',
             },
             time: 60 * 1000,
@@ -55,12 +55,23 @@ export default {
             this.$router.go(-1);
         },
 
-        handleGetCode() {
-            if (!this.form.phone) {
+        async handleGetCode() {
+            const { phone } = this.form;
+
+            if (!phone) {
                 return this.$toast('请输入手机号');
             }
-
-            this.timer();
+            
+            this.$loading();
+            try {
+                await api.getCode({ phone });
+                this.$toast.clear();
+                this.$toast.success('发送成功');
+                this.timer();
+            }catch(e) {
+                this.$toast.clear();
+                this.$toast('获取失败请重试！');
+            }
         },
 
         handleChangePhone() {

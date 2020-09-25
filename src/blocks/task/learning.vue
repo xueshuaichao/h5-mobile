@@ -62,15 +62,15 @@ export default {
                 
                 this.loading = false;
                 
-                if (!total) { // no data
+                if (!total || (list && !list.length && !this.list.length)) { // no data
                     this.isNone = true;
                     return;
                 }
                 
-                if (!list) { // list is null
-                    this.finished = true;
-                } else {
+                if (list && list.length) {
                     this.list.push(...list);
+                } else {
+                    this.finished = true;
                 }
 
                 if (this.list.length >= total) { // finished

@@ -64,12 +64,12 @@ export default {
                 
                 this.loading = false;
 
-                if (!total) {
+                if (!total || (list && !list.length && !this.list.length)) {
                     this.isNone = true;
                     return;
                 }
 
-                if (list) {
+                if (list && list.length) {
                     this.list.push(...list);
                 } else {
                     this.finished = true;
