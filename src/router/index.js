@@ -85,6 +85,11 @@ const routes = [
     component: () => import('../views/exam/answer.vue')
   },
   {
+    path: '/showpaper',
+    name: 'showpaper',
+    component: () => import('../views/exam/showpaper.vue')
+  },
+  {
     path: '/result',
     name: 'result',
     component: () => import('../views/exam/result.vue')
