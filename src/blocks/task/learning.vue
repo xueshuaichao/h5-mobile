@@ -73,7 +73,7 @@ export default {
                     this.finished = true;
                 }
 
-                if (this.list.length >= total) { // finished
+                if (this.list.length >= total || total < 10) { // finished
                     this.finished = true;
                 }
 

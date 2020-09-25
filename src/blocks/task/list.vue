@@ -13,7 +13,7 @@
                     <div class="info">
                         <p class="title van-multi-ellipsis--l2"> 
                             {{ item.name }}
-                            <img src="../../assets/learning/new@2x.png" width="32" alt="">
+                            <img src="../../assets/learning/new@2x.png" v-if="item.isNew" width="32" alt="">
                         </p>
                         <div class="progress">
                             <div class="slider">
@@ -75,7 +75,7 @@ export default {
                     this.finished = true;
                 }
 
-                if (this.list.length >= total) {
+                if (this.list.length >= total || total < 10) {
                     this.finished = true; 
                 }
 
