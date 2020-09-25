@@ -57,7 +57,6 @@
     </div>
 </template>
 <script>
-// ui切图应该是两侧为透明，用底色填充，需要重新切图。2020/09/24
 
 export default {
     data() {
@@ -76,7 +75,7 @@ export default {
 .instructions-page {
     font-size: 0.746rem;
     height: 100%;
-    background: linear-gradient(180deg,#fff 0% ,#FFB782 84%, #FF9142 100%);
+    background: linear-gradient(180deg,#fff 0% ,#FE6A44 10.4rem, #FE774A 12.4rem, #FFB782 66%, #FF9142 100%);
     .page-top {
         background: linear-gradient(180deg,#FE9F5A 0%, #FB884C 100%);
         .top-img {
@@ -87,7 +86,7 @@ export default {
     .main {
         width: 100%;
         background-image: url(../../assets/exam/instructions-bg.png);
-        background-size: 100% 20rem;
+        background-size: 100% 20.4rem;
         background-repeat: no-repeat;
         .ready {
             width: 11.68rem;
@@ -141,7 +140,7 @@ export default {
             margin: 1.7rem auto 0;
             color: #fff;
             font-weight: 500;
-            background: linear-gradient(111deg, #F5936C 0%, #F74118 100%);
+            background: linear-gradient(111deg, #FE774A 0%, #F74118 100%);
         }
     }
     
