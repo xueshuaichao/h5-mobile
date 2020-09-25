@@ -15,6 +15,7 @@
                             {{ item.name }}
                             <img src="../../assets/learning/new@2x.png" v-if="item.isNew" width="32" alt="">
                         </p>
+                        <p class="status">{{ item.statusName }}</p>
                         <div class="progress">
                             <div class="slider">
                                 <div class="slider--progress" :style="{ width: item.progress + '%' }">
@@ -139,6 +140,11 @@ export default {
             img {
                 vertical-align: middle;
                 margin-left: 10px;
+            }
+
+            .status {
+                color: #A7ADBB;
+                font-size: 24px;
             }
         }
     }

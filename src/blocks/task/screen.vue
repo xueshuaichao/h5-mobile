@@ -12,7 +12,7 @@
                     <p :key="item.id">{{ item.name }}</p>
                     <div class="list" :key="index">
                         <div class="item" 
-                            :class="[el.name.length <= 2 && 'mini', type === 0 && i === 0 && 'block', activeList[index] === i ? 'active' : '']" 
+                            :class="[el.name.length <= 2 && 'mini', activeList[index] === i ? 'active' : '']" 
                             v-for="(el, i) in item.btn" 
                             :key="el.id"
                             @click="handleClickItem(index, i)"    
@@ -50,21 +50,26 @@ export default {
                             id: 111,
                             name: '全部',
                             value: '',
-                        }, 
+                        },
+                        {
+                            id: 117,
+                            name: '未开始',
+                            value: 0,
+                        },
                         {
                             id: 112,
                             name: '进行中',
                             value: 1,
+                        },
+                        { 
+                            id: 114, 
+                            name: '未通过', 
+                            value: 2
                         }, 
                         { 
                             id: 113, 
                             name: '已通过', 
-                            value: 2 
-                        }, 
-                        { 
-                            id: 114, 
-                            name: '未通过', 
-                            value: 3
+                            value: 3 
                         }
                     ], 
                 }
@@ -147,11 +152,12 @@ export default {
 
         handleClearActiveList() {
             this.activeList = [0, 0]
+            this.params = ['', ''];
         },
 
         handleClickSave() {
             const [status = '', contentType = ''] = this.params;
-            
+ 
             this.$router.push({
                 name: 'learning',
                 params: {
