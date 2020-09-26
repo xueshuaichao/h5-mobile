@@ -1,0 +1,293 @@
+.course-list {
+  padding-bottom: 100px;
+  padding: 40px 32px;
+}
+.course-list-header {
+  height: 64px;
+  line-height: 64px;
+  vertical-align: middle;
+}
+.course-list-header .header-left {
+  display: inline-block;
+  width: 72px;
+  height: 36px;
+  vertical-align: middle;
+  margin-top: 12px;
+  margin-right: 10px;
+}
+.course-list-header .header-middle {
+  margin: 0px 20px;
+  width: 75%;
+  height: 64px;
+  background-color: #F5F5FA;
+  border-radius: 32px;
+  padding: 0px 40px;
+  border: none;
+}
+.course-list-header .header-right {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  margin-top: 12px;
+}
+.course-list .item {
+  padding: 32px 0px;
+  height: 246px;
+  margin: 32px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6E6EB;
+  box-sizing: border-box;
+  text-align: left;
+}
+.course-list .top {
+  display: flex;
+  flex-flow: row;
+}
+.course-list .top .img {
+  width: 240px;
+  height: 136px;
+  margin-right: 32px;
+  border-radius: 16px;
+}
+.course-list .top .info {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  flex: 1;
+}
+.course-list .top .info .title {
+  font-size: 28px;
+}
+.course-list .top .info p {
+  font-size: 28px;
+  color: #272F55;
+  word-break: break-all;
+}
+.course-list .top .info img {
+  vertical-align: middle;
+  margin-left: 10px;
+}
+.course-list .top .info .status {
+  color: #A7ADBB;
+  font-size: 22px;
+}
+.course-list .top .info .tongji {
+  width: 100%;
+  position: absolute;
+  bottom: -60px;
+}
+.course-list .top .info .tongji .start {
+  display: inline-block;
+  width: 102px;
+  height: 32px;
+  background: #FFF1ED;
+  border-radius: 2px;
+  font-size: 22px;
+  color: #E85A3A;
+}
+.course-list .top .info .tongji .start img {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+.course-list .top .info .tongji .selected {
+  font-size: 22px;
+  color: #A7ADBB;
+}
+.course-list .bottom {
+  margin-top: 32px;
+  font-size: 24px;
+  color: #737386;
+}
+.course-list .progress {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.course-list .progress .text {
+  font-size: 24px;
+  color: #E85A3A;
+}
+.course-list .progress .slider {
+  width: 280px;
+  height: 8px;
+  background: #E6E6EB;
+  border-radius: 4px;
+}
+.course-list .progress .slider--progress {
+  width: 160px;
+  height: 8px;
+  background: linear-gradient(90deg, #F74118 0%, #FF956A 100%);
+  border-radius: 4px;
+}
+.course-list .none {
+  padding-top: 100px;
+  text-align: center;
+  font-size: 24px;
+  color: #A7ADBB;
+}
+.course-list .none img {
+  width: 160px;
+}
+.filterpage-header {
+  width: 100%;
+  position: relative;
+}
+.filterpage-header h3 {
+  color: #272F55;
+  font-size: 34px;
+  font-weight: 600;
+}
+.filterpage-header img {
+  position: absolute;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  right: 40px;
+  top: 0px;
+}
+.filterpage .classify {
+  width: 100%;
+}
+.filterpage .classify .classify-left {
+  width: 33%;
+  height: 100%;
+  background-color: #F5F5FA;
+}
+.filterpage .classify .classify-left ul {
+  font-size: 26px;
+}
+.filterpage .classify .classify-left ul li {
+  padding: 26px 32px;
+  color: #737386;
+  text-align: left;
+  position: relative;
+}
+.filterpage .classify .classify-left ul li .line {
+  position: absolute;
+  top: 50%;
+  margin-top: -18px;
+  left: 0px;
+  display: none;
+  width: 6px;
+  height: 36px;
+  background: #E85A3A;
+  border-radius: 0px 4px 4px 0px;
+}
+.filterpage .classify .classify-left ul li .yuan {
+  display: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  background-color: #F5F5FA;
+  position: absolute;
+}
+.filterpage .classify .classify-left ul li .top-yuan {
+  right: 0px;
+  top: 0px;
+}
+.filterpage .classify .classify-left ul li .bottom-yuan {
+  right: 0px;
+  bottom: 0px;
+}
+.filterpage .classify .classify-left ul li:hover {
+  background: #fff;
+  color: #272F55;
+}
+.filterpage .classify .classify-left ul li:hover .line {
+  display: inline-block;
+}
+.filterpage .classify .classify-right {
+  width: 67%;
+  padding: 0px 0px;
+}
+.filterpage .classify .classify-right span {
+  display: inline-block;
+  padding: 10px 24px;
+  margin: 32px;
+  border-radius: 12px;
+  border: 2px solid #E6E6EB;
+  color: #737386;
+}
+.filterpage .classify .classify-right span:hover {
+  background: #E85A3A;
+  color: #FFFFFF;
+  border-radius: 12px;
+  border: 0px;
+}
+.filterpage .filters {
+  text-align: left;
+  padding: 32px;
+}
+.filterpage .filters-type {
+  border-bottom: 2px solid #E6E6EB;
+}
+.filterpage .filters-type .filters-status {
+  margin-bottom: 48px;
+}
+.filterpage .filters-type .filters-status p {
+  font-size: 24px;
+  color: #A7ADBB;
+}
+.filterpage .filters-type .filters-status span {
+  padding: 14px 46px;
+  color: #272F55;
+  background: #F5F5FA;
+  display: inline-block;
+  margin-right: 32px;
+  margin-top: 30px;
+  font-size: 26px;
+  border-radius: 12px;
+}
+.filterpage .filters-type .filters-status span:last-child {
+  margin-right: 0px;
+}
+.filterpage .filters-type .filters-status span:hover {
+  color: #E85A3A;
+  border: 2px solid #E85A3A;
+  background: rgba(232, 90, 58, 0.04);
+}
+.filterpage .filters .footer {
+  width: 100%;
+  margin-top: 32px;
+}
+.filterpage .filters .footer .footer-left {
+  width: 15%;
+  text-align: center;
+}
+.filterpage .filters .footer .footer-left p {
+  font-size: 24px;
+  color: #272F55;
+}
+.filterpage .filters .footer .button {
+  width: 80%;
+  height: 88px;
+  font-size: 28px;
+  color: white;
+  text-align: center;
+  line-height: 88px;
+  background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
+  border-radius: 16px;
+}
+.filterpage .sortStatus {
+  text-align: left;
+  padding: 48px 32px;
+}
+.filterpage .sortStatus span {
+  padding: 14px 46px;
+  color: #272F55;
+  background: #F5F5FA;
+  display: inline-block;
+  margin-right: 32px;
+  margin-top: 30px;
+  font-size: 26px;
+  border-radius: 12px;
+}
+.filterpage .sortStatus span:hover {
+  color: #E85A3A;
+  border: 2px solid #E85A3A;
+  background: rgba(232, 90, 58, 0.04);
+}

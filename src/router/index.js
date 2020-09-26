@@ -17,6 +17,11 @@ const routes = [
     component: () => import('../views/course/index.vue')
   },
   {
+    path: '/course/filter',
+    name: 'courseFilter',
+    component: () => import('../views/course/filter.vue')
+  },
+  {
     path: '/learning',
     name: 'learning',
     component: () => import('../views/learning/index.vue')
