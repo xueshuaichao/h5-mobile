@@ -2,6 +2,7 @@ import Axios from 'axios';
 import { Toast } from 'vant';
 import URL from '../config/url';
 import CONF from '../config';
+import { contractUrl } from './utils';
 // import store from '../store/module/user';
 
 const { STATUS_CODE } = CONF;
@@ -95,7 +96,17 @@ export class HttpRequest {
         this.queue[options.url] = instance;
         return instance(options);
     }
-
+    request(url, params = {}) {
+        const data = JSON.parse(JSON.stringify(params));
+        if (Object.prototype.hasOwnProperty.call(data, 'queryString')) {
+            // eslint-disable-next-line no-param-reassign
+            url = contractUrl(url, data.queryString);
+            // eslint-disable-next-line no-param-reassign
+            delete data.queryString;
+        }
+        return this.post(url, data);
+    }
+    
     patch(url, params) {
         const data = params && JSON.parse(JSON.stringify(params));
         const instance = create();
