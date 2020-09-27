@@ -93,6 +93,9 @@ export default {
         handleClickItem(item) {
             // todo router
             console.log(item)
+            this.$router.push({
+                path:'/course/detail',
+            })
         }
 
     },

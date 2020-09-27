@@ -317,3 +317,143 @@
         }
     }
 }
+.courseDetail{
+    text-align: left;
+    &-header{
+        h3{
+            color: #272F55;
+            font-size: 34px;
+            text-align: center;
+        }
+        padding-bottom: 20px;
+    }
+    &-player{
+        width: 100%;
+        height: 422px;
+        position: relative;
+        background: lightcoral;
+        span{
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            padding: 8px 12px;
+            font-size: 24px;
+            color: #FFFFFF;
+            background: rgba(39, 47, 85, 0.3);
+            border-radius: 4px;
+        }
+    }
+    &-content{
+        .content-header{
+            border-bottom: 1px solid #E6E6EB;
+            span{
+                display: inline-block;
+                margin: 0px 92px;
+                padding: 26px 0px;
+                font-size: 30px;
+                color: #737386;
+                &:hover{
+                    color: #E85A3A;
+                    border-bottom: 4px solid #E85A3A;
+                }
+            }
+        }
+        .content-info{
+            padding: 48px 32px;
+            p{
+                font-size: 30px;
+                color: #272F55;
+            }
+        }
+        .content-catalog{
+            .catalog-title{
+                position: relative;
+                // vertical-align: top;
+                .catalog-index{
+                    width: 44px;
+                    height: 44px;
+                    line-height: 44px;
+                    border-radius: 44px;
+                    background: #FFF1ED;
+                    color: #E85A3A;
+                    text-align: center;
+                    font-size: 32px;
+                    display: inline-block;
+                    margin-right: 16px;
+                }
+                .catalog-futitle{
+                    position: absolute;
+                    top: -4px;
+                }
+                .catalog-hours{
+                    position: absolute;
+                    left: 60px;
+                    bottom: -34px;
+                    color: #737386;
+                    font-size: 24px;
+                }
+            }
+            .catalog-level{
+                background-color: #F5F5FA;
+                padding-left: 92px;
+                .firstlevel{
+                    color: #272F55;
+                    .pstyle{
+                        padding: 26px 0px;
+                        font-size: 32px;
+                    }
+                    .pstyle1{
+                        font-size: 24px;
+                        padding-bottom: 24px;
+                    }
+                    .listyle1{
+                        padding-left: 28px;
+                    }
+                    &-li{
+                        // &-p{
+                        //     padding: 26px 0px;
+                        //     font-size: 32px;
+                        // }
+                    }
+                    .secLevel{
+                        &-li{
+                            // padding-left: 28px;
+                            // padding-bottom: 24px;
+                            // font-size: 24px;
+                            // &-p{
+                            //     padding-bottom: 24px;
+                            // }
+                        }
+                        .triLevel{
+                            &-li{
+                                // padding-left: 28px;
+                                // font-size: 24px;
+                                // &-p{
+                                //     padding-bottom: 24px;
+                                // }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-btn{
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 92%;
+        padding: 24px 32px;
+        border-top: 1px solid #E6E6EB;
+        .button {
+            width: 100%;
+            height: 88px;
+            font-size: 28px;
+            color: white;
+            text-align: center;
+            line-height: 88px;
+            background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
+            border-radius: 16px;
+        }
+    }
+}
