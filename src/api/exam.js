@@ -9,4 +9,11 @@ export default {
     getScenePaper(param) {
         return axios.get('/exam/v1/scene/getScenePaper', param);
     },
+    getResult(param) {
+        return axios.get('/exam/v1/paper/getExamResultOverview', param);
+        
+    },
+    getNote(param) {
+        return axios.get('/exam/v1/scene/getExamNote', param);
+    },
 }

@@ -16,35 +16,35 @@
                         注意：
                     </span>
                     进入考试后必须在
-                    <b>60</b>
+                    <b>{{detail.duration}}</b>
                     分钟内提交试卷，时间截止后系统将自动交卷，中途意外退出也会计时，若异常退出，请
                     <b>
                         尽快再次回到考试
                     </b>
                 </p>
-                <p>
+                <!-- <p>
                     <span>
                         考核记录最高成绩：
                     </span>
                     60分
-                </p>
+                </p> -->
                 <p>
                     <span>
                         考试标准：
                     </span>
-                    20道题60分钟
+                    {{detail.totalCount}}道题{{detail.duration}}分钟
                 </p>
                 <p>
                     <span>
                         合格标准：
                     </span>
-                    33分及格、满分55分
+                    {{detail.passingScore}}分及格、满分{{detail.totalScore}}分
                 </p>
                 <p>
                     <span>
                         考试题型：
                     </span>
-                    单选、多选、判断
+                    {{detail.types}}
                 </p>
             </div>
             <div 
@@ -57,14 +57,39 @@
     </div>
 </template>
 <script>
-
+import api from '../../api/exam';
 export default {
     data() {
         return {
-
+            detail: {
+                questionType: [],
+                duration: 0,
+                totalScore: 0,
+                passingScore: 0,
+                totalCount: 0,
+                types: ''
+            },
+            sceneId: 51,
         }
     },
+    created() {
+        if (this.$route.query.id !== undefined) {
+            this.sceneId = Number(this.$route.query.id);
+        }
+        
+        api.getNote({id: this.sceneId}).then((res) => {
+            let types = '';
+            if (res.questionType && res.questionType.length) {
+               types = res.questionType.join('、');
+            }
+            this.detail = {...this.detail, ...res, duration: this.transferTime(res.duration),types }
+        })
+    },
     methods: {
+        transferTime(time) {
+            console.log(time)
+            return Math.round(time / 60);
+        },
         jumpToExam() {
 
         }
@@ -86,7 +111,7 @@ export default {
     .main {
         width: 100%;
         background-image: url(../../assets/exam/instructions-bg.png);
-        background-size: 100% 20.4rem;
+        background-size: 100% 18.4rem;
         background-repeat: no-repeat;
         .ready {
             width: 11.68rem;
