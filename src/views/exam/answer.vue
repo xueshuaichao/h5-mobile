@@ -23,7 +23,7 @@
                 class="type-img"
                         src="@/assets/exam/tx.png"
                     />
-                    <p>{{testlist[testindex].type===1?'单选题':''}}</p>
+                    <p>{{testlist[testindex].type===1?'单选题':testlist[testindex].type===2?'多选题':'判断题'}}</p>
                 </div>
                 <div class="answer-test">
                     <div class="test-title">
@@ -33,7 +33,7 @@
                        <ul>
                             <li v-for="(opt,index) in testlist[testindex].contentItems" :key="index"
                                 :class="[testlist[testindex].answerList.indexOf(opt.code)!==-1?'active':'']"
-                                @click="activebtn(testlist[index],opt)">
+                                @click="activebtn(testlist[testindex],opt)">
                                 <span>{{opt.code}}</span> <span>{{opt.value}}</span>
                             </li>
                         </ul>
@@ -101,6 +101,7 @@ export default {
             timer:null,
             iscodetime:0,
             codetimer:null,
+            
         }
     },
     
@@ -113,7 +114,7 @@ export default {
     methods: {
         activebtn(item,opt){
             let that=this;
-            if(item.type===1){
+            if(item.type===1 || item.type===3){
                 if(this.testlist[this.testindex].answerList.indexOf(opt.code)===-1){
                     this.testlist[this.testindex].answerList=[];
                     this.testlist[this.testindex].answerList.push(opt.code)
@@ -182,7 +183,11 @@ export default {
                     }
                 } else {
                     clearInterval(this.timer);
-                    self.papersbtn();
+                       Dialog.alert({
+                        message: '考试时间已到，系统自动交卷',
+                        }).then(() => {
+                            this.papersbtn(1)
+                        });
                 }
             }, 1000);
         },
@@ -203,7 +208,7 @@ export default {
            this.issheet = true;
        },
        codehandleConfirm(){
-           
+           clearInterval(this.codetimer);
            Dialog.alert({
             message: '验证码输入错误，系统将终止考试',
             }).then(() => {
@@ -211,26 +216,60 @@ export default {
             });
        },
        //交卷
-       papersbtn(){
-           Dialog.alert({
-            message: '考试时间已到，系统自动交卷',
-            }).then(() => {
-            // on close
+       papersbtn(tag){
+           let formItem={
+                paperId:this.$route.query.id,
+                commitTime:(new Date()).getTime(),
+                answerList:[],
+            }
+            this.testlist.forEach(val=>{
+               if(val.answerList.length>0){
+                   let params={
+                        answer: val.answerList.join(","),
+                        mark: 0,
+                        questionId: val.id,
+                        questionType: val.type,
+                    }
+                    formItem.answerList.push(params);
+               }
+           })
+           if(tag!==1 && formItem.answerList.length<this.testform.totalCount){
+               let count= this.testform.totalCount- formItem.answerList.length;
+                    Dialog.confirm({
+                    message: "剩余 <span style='color:red'>"+ count +"</span> 题未做",
+                    confirmButtonText:'提交答案',
+                    cancelButtonText:'继续答题',
+                    })
+                    .then(() => {
+                        this.commitPaper(formItem);
+                        // on confirm
+                    })
+                    .catch(() => {
+                        // on cancel
+                    });
+           }else{
+               this.commitPaper(formItem);
+           }
+        //    return;
+            // 
+
+        //    Dialog.alert({
+        //     message: '考试时间已到，系统自动交卷',
+        //     }).then(() => {
+        //     // on close
+        //     });
+       },
+       commitPaper(formItem){
+           exam.commitPaper(formItem).then((res) => {
+               this.$router.push({
+                    path: '/result',
+                    query: {
+                        id: this.$route.query.id,
+                    },
+                });
             });
        },
-       isontopic(){
-           Dialog.confirm({
-            message: "剩余 <span style='color:red'>"+ 5 +"</span> 题未做",
-            confirmButtonText:'提交答案',
-            cancelButtonText:'继续答题',
-            })
-            .then(() => {
-                // on confirm
-            })
-            .catch(() => {
-                // on cancel
-            });
-       },
+       
       
     }
     

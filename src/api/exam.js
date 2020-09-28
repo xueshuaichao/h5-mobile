@@ -11,7 +11,7 @@ export default {
         return axios.get('/exam/v1/scene/getScenePaper', param);
     },
     commitPaper(param) {
-        return axios.get('/exam/v1/paper/commitPaper', param);
+        return axios.post('/exam/v1/paper/commitPaper', param);
     },
     
 }
