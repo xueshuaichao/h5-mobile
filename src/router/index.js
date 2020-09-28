@@ -17,6 +17,16 @@ const routes = [
     component: () => import('../views/course/index.vue')
   },
   {
+    path: '/course/filter',
+    name: 'courseFilter',
+    component: () => import('../views/course/filter.vue')
+  },
+  {
+    path: '/course/detail',
+    name: 'courseDetail',
+    component: () => import('../views/course/detail.vue')
+  },
+  {
     path: '/learning',
     name: 'learning',
     component: () => import('../views/learning/index.vue')
@@ -78,6 +88,11 @@ const routes = [
     path: '/instructions',
     name: 'instructions',
     component: () => import('../views/exam/instructions.vue')
+  },
+  {
+    path: '/paperlist',
+    name: 'paperlist',
+    component: () => import('../views/exam/paperlist.vue')
   },
   {
     path: '/answer',

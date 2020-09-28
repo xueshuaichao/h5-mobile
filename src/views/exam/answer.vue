@@ -82,9 +82,11 @@
 </template>
 <script>
 import { Dialog } from 'vant';
+import exam from '../../api/exam';
 export default {
     data(){
         return{
+            testlist:[],
             digit:'',
             iscode:false,
             issheet:false,
@@ -94,9 +96,18 @@ export default {
     
 
     created() {
+        this.getScenePaper(this.$route.query.id)
     },
 
     methods: {
+        getScenePaper(id){
+            exam.getScenePaper({sceneId:id}).then((res) => {
+                
+                this.testlist = res.itemList[0].questionList;
+                this.total = res.totalCount;
+                console.log(this.testlist)
+            });
+        },
         //答题卡
        issheetbtn(){
            this.issheet = true;

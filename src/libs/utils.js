@@ -9,7 +9,16 @@ export function indexToString(index){
         return String.fromCharCode(charcode)
     }).join("").toUpperCase();
 }
+// 拼接url
+export const contractUrl = (url, data) => {
+  let queryString = '';
 
+  Object.keys(data).forEach((key) => {
+      const value = data[key];
+      queryString += `&${key}=${value}`;
+  });
+  return `${url}?${queryString.substr(1)}`;
+};
 export function formatDate(date, fmt) {
     var o = {
       'M+': date.getMonth() + 1,
