@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Vue from 'vue';
 import Vuex from 'vuex';
 
@@ -35,6 +36,9 @@ export default new Vuex.Store({
           (page) => page.moduleId === module && page.name === pageName
         );
     },
+    getUserInfo(state) {
+      return state.userInfo;
+    }
   },
 
   mutations: {
@@ -53,12 +57,12 @@ export default new Vuex.Store({
 
   modules: {},
   actions: {
-      getUserInfo({ state }) {
-        return api.getUserInfo().then(({ data }) => {
-            const info = data.user_info;
-            state.userInfo = data.user_info;
-            return info;
-        });
-    },
+    //   getUserInfo({ state }) {
+    //     return api.getUserInfo().then(({ data }) => {
+    //         const info = data.user_info;
+    //         state.userInfo = data.user_info;
+    //         return info;
+    //     });
+    // },
   },
 });

@@ -7,11 +7,19 @@ import customPlugins from'./plugins';
 
 import './variables.less';
 import './libs/rem.js';
+window.centerPlatInfo = {
+    platformId: 100001,
+    userType: 0,
+}
+import { Passport } from './libs/passport/passport.js';
+
 
 Vue.use(Vant);
 Vue.use(customPlugins);
+console.log('main.js')
 
 Vue.config.productionTip = false;
+Vue.prototype.$passport = new Passport();
 
 // new Vue({
 //   router,
@@ -67,35 +75,92 @@ const getPageConfigs = Promise.resolve([
       ],
   },
 ]);
+Vue.prototype.$passport.checkCookie().then(res => {
+    if (res) {
+        console.log(res);
+        buildApp(res);
+    }
+}, () => {
+    // if ()
+    const Token = Vue.prototype.$passport.getToken();
+    if (Token) {
+        Vue.prototype.$passport.setToken(Token).then(res => {
+            if (res) {
+                buildApp(res);
+            }
+        }, () => {
+            buildApp();
+        });
+    } else {
+        buildApp();
+    }
+})
 
-getPageConfigs.then((data) => {
-  // todo
-  data.forEach((v) => {
-      // eslint-disable-next-line no-param-reassign
-      v.layout = JSON.stringify(v.layout);
-  });
+function buildApp (userInfo) {
+    if (userInfo) {
+        store.commit('setUserInfo', userInfo);
+    }
+    
+    getPageConfigs.then((data) => {
+        // todo
+        data.forEach((v) => {
+            // eslint-disable-next-line no-param-reassign
+            v.layout = JSON.stringify(v.layout);
+        });
+      
+        store.commit('setPageConfigs', data);
+        // 根据后端pages定义路由
+        const routes = data
+            .filter(page => !!page.uri && page.uri[0] === '/')
+            .map((page) => {
+                const route = {
+                    path: page.uri,
+                    name: page.name,
+                    component: () => import('./views/common_page.vue'),
+                    meta: {
+                        moduleId: page.moduleId,
+                        name: page.name,
+                    },
+                };
+                return route;
+            });
+        router.addRoutes(routes);
+      
+        new Vue({
+            router,
+            store,
+            render: h => h(App),
+        }).$mount('#app');
+      }); 
+}
+// getPageConfigs.then((data) => {
+//   // todo
+//   data.forEach((v) => {
+//       // eslint-disable-next-line no-param-reassign
+//       v.layout = JSON.stringify(v.layout);
+//   });
 
-  store.commit('setPageConfigs', data);
-  // 根据后端pages定义路由
-  const routes = data
-      .filter(page => !!page.uri && page.uri[0] === '/')
-      .map((page) => {
-          const route = {
-              path: page.uri,
-              name: page.name,
-              component: () => import('./views/common_page.vue'),
-              meta: {
-                  moduleId: page.moduleId,
-                  name: page.name,
-              },
-          };
-          return route;
-      });
-  router.addRoutes(routes);
+//   store.commit('setPageConfigs', data);
+//   // 根据后端pages定义路由
+//   const routes = data
+//       .filter(page => !!page.uri && page.uri[0] === '/')
+//       .map((page) => {
+//           const route = {
+//               path: page.uri,
+//               name: page.name,
+//               component: () => import('./views/common_page.vue'),
+//               meta: {
+//                   moduleId: page.moduleId,
+//                   name: page.name,
+//               },
+//           };
+//           return route;
+//       });
+//   router.addRoutes(routes);
 
-  new Vue({
-      router,
-      store,
-      render: h => h(App),
-  }).$mount('#app');
-});
+//   new Vue({
+//       router,
+//       store,
+//       render: h => h(App),
+//   }).$mount('#app');
+// });
