@@ -4,45 +4,46 @@
             养老护理员初级理论考试
             <p @click="papersbtn">交卷</p>
         </div>
-        <div class="answer-content">
+        <div class="answer-content" v-if="istest">
             <img
                 class="img"
                 src="@/assets/exam/bg.png"
             />
             <div class="answer-number">
-                1 / 20
+                {{testindex+1}} / {{testform.totalCount}}
             </div>
             <div class="answer-main">
                 <div class="answer-title">
-                    <span>00:30:23</span>
-                    <span>总分：100分</span>
-                    <span>及格分：60分</span>
+                    <span>{{duration}}</span>
+                    <span>总分：{{testform.totalScore}}分</span>
+                    <span>及格分：{{testform.itemList[0].perMark}}分</span>
                 </div>
                 <div class="answer-type">
                 <img
                 class="type-img"
                         src="@/assets/exam/tx.png"
                     />
-                    <p>单选题</p>
+                    <p>{{testlist[testindex].type===1?'单选题':''}}</p>
                 </div>
                 <div class="answer-test">
                     <div class="test-title">
-                        <span>2分</span> 这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目？
+                        <span>2分</span> {{testlist[testindex].title}}
                     </div>
                     <div class="test-questions">
                        <ul>
-                            <li><span>A</span> <span>这是第一个选项这是第一个选项这是 第一个选项</span></li>
-                            <li><span>B</span> <span>这是第二个选项</span></li>
-                            <li><span>C</span> <span>这是第三个选项</span></li>
-                            <li><span>D</span> <span>这是第四个选项</span></li>
+                            <li v-for="(opt,index) in testlist[testindex].contentItems" :key="index"
+                                :class="[testlist[testindex].answerList.indexOf(opt.code)!==-1?'active':'']"
+                                @click="activebtn(testlist[index],opt)">
+                                <span>{{opt.code}}</span> <span>{{opt.value}}</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="answer-footer">
                 <van-button type="default" size="large" class="answer-button" @click="issheet = true">答题卡</van-button>
-                <van-button type="default" size="large" class="answer-button" @click="isontopic">上一题</van-button>
-                <van-button type="default" size="large" class="answer-button" @click="iscode=true">下一题</van-button>
+                <van-button type="default" size="large" class="answer-button" @click="onquestion">上一题</van-button>
+                <van-button type="default" size="large" class="answer-button" @click="nextquestion">下一题</van-button>
             </div>
         </div>
         <van-action-sheet v-model="issheet">
@@ -63,7 +64,7 @@
                     
                 </div>
                 <div class="sheet-list">
-                    <p v-for="(item, index) in actions" :key="index" :class="(index+1)==1?'sheetactive':''">
+                    <p v-for="(item, index) in testlist" :key="index" :class="item.answerList.length>0?'sheetactive':''">
                         {{index+1}}
                     </p>
                 </div>
@@ -74,7 +75,7 @@
                 <div class="code-title">为保证本人考试，系统已往12345678手机上发送了验证码，验证码正确后可继续考试，验证码错误终止考试</div> 
                 <div class="code-input">
                     <van-field v-model="digit" type="digit" placeholder="输入短信验证码"/>
-                    <div class="code-time">120s</div>
+                    <div class="code-time">{{codetime}}s</div>
                 </div>
             </div>
         </van-dialog>
@@ -86,33 +87,123 @@ import exam from '../../api/exam';
 export default {
     data(){
         return{
+            codetime:120,
+            testindex:0,
             testlist:[],
+            testform:{},
+            istest:false,
             digit:'',
             iscode:false,
             issheet:false,
-            actions: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+            maxtime: 0,
+            duration:'00:00:00',
+            time: null,
+            timer:null,
+            iscodetime:0,
+            codetimer:null,
         }
     },
     
 
     created() {
         this.getScenePaper(this.$route.query.id)
+        
     },
 
     methods: {
-        getScenePaper(id){
+        activebtn(item,opt){
+            let that=this;
+            if(item.type===1){
+                if(this.testlist[this.testindex].answerList.indexOf(opt.code)===-1){
+                    this.testlist[this.testindex].answerList=[];
+                    this.testlist[this.testindex].answerList.push(opt.code)
+                }
+            }else if(item.type===2){
+               if(this.testlist[this.testindex].answerList.indexOf(opt.code)===-1){
+                    this.testlist[this.testindex].answerList.push(opt.code)
+                }else{
+                    this.testlist[this.testindex].answerList.forEach((val,index)=>{
+                        if(val===opt.code){
+                            that.testlist[this.testindex].answerList.splice(index, 1);
+                        }
+                    })
+                }
+            }
+            this.$forceUpdate();
+        },
+        onquestion(){
+            if(this.testindex!==0){
+                this.testindex--;
+            }
+        },
+        nextquestion(){
+            if(this.testindex+1 < this.testform.totalCount){
+                this.testindex++;
+            }
+            
+        },
+        async getScenePaper(id){
+            let that=this;
             exam.getScenePaper({sceneId:id}).then((res) => {
-                
-                this.testlist = res.itemList[0].questionList;
-                this.total = res.totalCount;
-                console.log(this.testlist)
+                res.itemList.forEach(val=>{
+                    if(val.questionList){
+                        val.questionList.forEach(opt=>{
+                            opt.answerList=[];
+                            that.testlist.push(opt)
+                        })
+                    }
+                })
+                this.testform = res;
+                this.istest=true;
+                this.maxtime=this.testform.duration;
+                this.countDown();
             });
+        },
+        // 倒计时
+        countDown() {
+            // 定义函数 此函数名必须与触发事件的函数名一致
+            const self = this;
+            self.maxtime *= 60;
+
+            this.timer = setInterval(() => {
+                if (self.maxtime > 0) {
+                    const hours = Math.floor(self.maxtime / 60/60);
+                    const minutes = Math.floor(self.maxtime /60 %60);
+                    const seconds = Math.floor(self.maxtime % 60);
+                    var hours1 = hours< 10 ?'0'+hours:hours;
+                    var minutes1 = minutes< 10 ?'0'+minutes:minutes;
+                    var seconds1 = seconds< 10 ?'0'+seconds:seconds;
+                    this.duration=hours1+':'+minutes1+':'+seconds1
+                    self.maxtime -= 1;
+                    self.iscodetime+=1;
+                    if(self.iscodetime===300){
+                        this.iscode=true;
+                        this.codetimebtn();
+                    }
+                } else {
+                    clearInterval(this.timer);
+                    self.papersbtn();
+                }
+            }, 1000);
+        },
+        codetimebtn(){
+            const self = this;
+            this.codetimer = setInterval(() => {
+                if (self.codetime > 0) {
+                   self.codetime -= 1;
+                    this.$forceUpdate();
+                } else {
+                    clearInterval(this.codetimer);
+                    self.codehandleConfirm()
+                }
+            }, 1000);
         },
         //答题卡
        issheetbtn(){
            this.issheet = true;
        },
        codehandleConfirm(){
+           
            Dialog.alert({
             message: '验证码输入错误，系统将终止考试',
             }).then(() => {
@@ -126,7 +217,6 @@ export default {
             }).then(() => {
             // on close
             });
-           
        },
        isontopic(){
            Dialog.confirm({
@@ -274,6 +364,11 @@ export default {
                         &:first-child{
                             margin-top:64px;
                         }
+                        &.active{
+                            background: rgba(0, 178, 136, 0.1);
+                            color: #00B288;
+                            border: 2px solid rgba(0, 178, 136, 0.1);
+                        }
                     }
                 }
             }
@@ -375,6 +470,7 @@ export default {
             }
         }
         .sheet-list{
+            text-align:left;
             p{
                 width: 64px;
                 height: 64px;
@@ -386,6 +482,7 @@ export default {
                 color: #737386;
                 display:inline-block;
                 margin:0 54px 54px 0;
+                text-align:center;
                 &:nth-child(6n){
                     margin-right:0px;
                 }
