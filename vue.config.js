@@ -20,6 +20,11 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: { '^/api': '' },
       },
+      '/api/exam': {
+        target: 'http://mz-exam-server.testing1.svc.k8s.bjo.wdcloud.cc',
+        changeOrigin: true,
+        pathRewrite: { '^/api/exam': '/exam' },
+      },
     }
 
   }

@@ -1,10 +1,10 @@
 const URL = {
     development: {
-        API: '/api',
+        API: 'http://mz-exam-server.testing1.svc.k8s.bjo.wdcloud.cc',
     },
 
     production: {
-        API: '/api',
+        API: 'http://mz-exam-server.testing1.svc.k8s.bjo.wdcloud.cc',
     },
 };
 
