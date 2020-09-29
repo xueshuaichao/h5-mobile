@@ -57,7 +57,7 @@
                     
                 </div>
                 <div class="sheet-list">
-                    <p v-for="(item, index) in testlist" :key="index" :class="[index==testindex && testlist[testindex].userAnswer===testlist[testindex].rightAnswer?'sheetactive1':index==testindex &&testlist[testindex].userAnswer!==nul && testlist[testindex].userAnswer!==testlist[testindex].rightAnswer?'sheetactive2':'']">
+                    <p v-for="(item, index) in testlist" :key="index" :class="[item.userAnswer===item.rightAnswer?'sheetactive1':item.userAnswer!==null && item.userAnswer!==item.rightAnswer?'sheetactive2':'']">
                         {{index+1}}
                     </p>
                 </div>
@@ -388,14 +388,14 @@ export default {
                     margin-right:0px;
                 }
                 &.sheetactive1{
-                    color: #00B288;
+                    color: #fff;
                     background: #00B288;
                     border: 2px solid #00B288;
                 }
                 &.sheetactive2{
-                    color: #E85A3A;
-                    background: rgba(232, 90, 58, 0.1);
-                    border: 2px solid rgba(232, 90, 58, 0.2);
+                    color: #fff;
+                    background: #E85A3A;
+                    border: 2px solid #E85A3A;
                 }
             }
         }

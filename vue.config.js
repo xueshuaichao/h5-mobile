@@ -6,7 +6,7 @@ module.exports = {
     https: false,
     proxy: { 
       '/api': {
-        target: 'http://mapi.testing1.wdeduc.com',
+        target: 'http://mh5.testing1.wdeduc.com',
         changeOrigin: true,
         pathRewrite: { '^/api': '' },
       },
