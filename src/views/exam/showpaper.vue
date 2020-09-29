@@ -88,14 +88,14 @@ export default {
                 res.sceneQuestionInfoList.forEach(val=>{
                     
                     val.questionList.forEach(opt=>{
-                        opt.answerList.forEach(opt1=>{
-                            if(opt1.questionId===opt.id){
+                        // opt.answerList.forEach(opt1=>{
+                            // if(opt1.questionId===opt.id){
                                 // let param={
                                 //     rightAnswer:opt1.rightAnswer,
                                 // }
-                            }
+                            // }
                             
-                        })
+                        // })
                         opt.perMark=val.perMark;
                         opt.answerList=val.answerList;
                         that.testlist.push(opt);
