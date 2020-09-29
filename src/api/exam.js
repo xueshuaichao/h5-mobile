@@ -2,6 +2,13 @@
 import { axios } from '../libs/axios';
 
 export default {
+    // 一级分类列表
+    getCategoryList() {
+        return axios.get('/resourceCenter/v1/category/getTree');
+    },
+    getChildren(categoryId) {
+        return axios.get(`/resourceCenter/v1/category/getChildren?categoryId=${categoryId}`);
+    },
     // 获取课程列表
     findByCondition(param) {
         return axios.request('/exam/v1/scene/findByCondition', param);

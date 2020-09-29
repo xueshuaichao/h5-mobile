@@ -48,11 +48,11 @@
   right: 0px;
   bottom: 0px;
 }
-.paperlist .classify .classify-left ul li:hover {
+.paperlist .classify .classify-left ul li.active {
   background: #fff;
   color: #272F55;
 }
-.paperlist .classify .classify-left ul li:hover .line {
+.paperlist .classify .classify-left ul li.active .line {
   display: inline-block;
 }
 .paperlist .classify .classify-right {
@@ -73,7 +73,7 @@
   margin-bottom: 32px;
   margin-right: 32px;
 }
-.paperlist .classify .classify-right span:hover {
+.paperlist .classify .classify-right span.sceactive {
   background: #E85A3A;
   color: #FFFFFF;
   border-radius: 12px;
@@ -101,7 +101,7 @@
 .paperlist .filters-type .filters-status span:last-child {
   margin-right: 0px;
 }
-.paperlist .filters-type .filters-status span:hover {
+.paperlist .filters-type .filters-status span.statusactive {
   color: #E85A3A;
   border: 1px solid #E85A3A;
   background: rgba(232, 90, 58, 0.04);

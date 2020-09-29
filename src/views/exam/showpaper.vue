@@ -75,15 +75,18 @@ export default {
           istest:false,
           issheet:false,
           testlist:[],
-          testform:{}
+          testform:{},
+          directionList:[],
         };
     },
     
     created() {
+        
         this.getExamResultDetail(this.$route.query.paperId)
     },
 
     methods: {
+        
         async getExamResultDetail(id){
             let that=this;
             exam.getExamResultDetail({paperId:id}).then((res) => {
