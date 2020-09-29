@@ -102,7 +102,7 @@ export default {
         ],
         form:{
             "categoryId": 1,
-            "difficulty": 1,
+            "difficulty": '',
             "isPublic": 1,
             "status": 2,
             queryString: {
@@ -128,15 +128,12 @@ export default {
         },
 
         handleClickItem(item) {
-            api.joinScene({sceneId:item.id}).then((res) => {
                 this.$router.push({
                     path: '/answer',
                     query: {
-                        sceneId:item.id,
-                        paperId: res,
+                        sceneId:item.id
                     },
                 });
-            })
             
             
         }

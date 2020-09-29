@@ -101,12 +101,13 @@ export default {
             timer:null,
             iscodetime:0,
             codetimer:null,
-            
+            paperId:'',
         }
     },
     
 
     created() {
+        this.joinScene(this.$route.query.sceneId)
         this.getScenePaper(this.$route.query.sceneId)
         
     },
@@ -137,6 +138,12 @@ export default {
                 this.testindex--;
             }
         },
+        joinScene(id){
+            exam.joinScene({sceneId:id,businessId:1,businessType:3}).then((res) => {
+                this.paperId=res;
+            })
+        },
+        
         nextquestion(){
             if(this.testindex+1 < this.testform.totalCount){
                 this.testindex++;
@@ -218,7 +225,7 @@ export default {
        //交卷
        papersbtn(tag){
            let formItem={
-                paperId:this.$route.query.paperId,
+                paperId:this.paperId,
                 commitTime:(new Date()).getTime(),
                 answerList:[],
             }
@@ -256,7 +263,7 @@ export default {
                this.$router.push({
                     path: '/result',
                     query: {
-                        id: this.$route.query.paperId,
+                        id: this.paperId,
                     },
                 });
             });

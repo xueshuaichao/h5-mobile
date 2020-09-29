@@ -1,7 +1,6 @@
 <template>
     <div class="showpaperBox"  v-if="istest==true">
        <div class="showpaper-title clearfix">
-           {{testlist[testindex].type}}
            <p>{{testlist[testindex].type===1?'单选题':testlist[testindex].type===2?'多选题':'判断题'}}</p>
            <span>总分：{{testform.totalScore}}分</span>
            <span>及格分：{{testform.passingScore}}分</span>
@@ -15,6 +14,7 @@
                 <div class="test-questions">
                     <ul>
                         <li v-for="(opt,index) in testlist[testindex].contentItems" :key="index"
+                            :class="testlist[testindex].userAnswer.indexOf(opt.code)!==-1?'active':''"
                             >
                             <span>{{opt.code}}</span> <span>{{opt.value}}</span>
                         </li>
@@ -23,7 +23,7 @@
             </div>
             <div class="showpaper-bottom">
                 <p>试题解析</p>
-                <p>正确答案：{{testlist[testindex].answerList[0].rightAnswer}}</p>
+                <p>正确答案：{{testlist[testindex].rightAnswer}}</p>
                 <p>{{testlist[testindex].remark}}</p>
             </div>
        </div>
@@ -53,7 +53,7 @@
                     
                 </div>
                 <div class="sheet-list">
-                    <p v-for="(item, index) in actions" :key="index" :class="(index+1)==1?'sheetactive':''">
+                    <p v-for="(item, index) in testlist" :key="index" :class="[index==testindex && testlist[testindex].userAnswer===testlist[testindex].rightAnswer?'sheetactive1':index==testindex &&testlist[testindex].userAnswer!==nul && testlist[testindex].userAnswer!==testlist[testindex].rightAnswer?'sheetactive2':'']">
                         {{index+1}}
                     </p>
                 </div>
@@ -78,7 +78,7 @@ export default {
     },
     
     created() {
-        this.getExamResultDetail(5)
+        this.getExamResultDetail(13)
     },
 
     methods: {
@@ -88,14 +88,16 @@ export default {
                 res.sceneQuestionInfoList.forEach(val=>{
                     
                     val.questionList.forEach(opt=>{
-                        // opt.answerList.forEach(opt1=>{
-                            // if(opt1.questionId===opt.id){
-                                // let param={
-                                //     rightAnswer:opt1.rightAnswer,
-                                // }
-                            // }
+                        val.answerList.forEach(opt1=>{
+                            if(opt1.questionId===opt.id){
+                                let param={
+                                    rightAnswer:opt1.rightAnswer,
+                                    userAnswer:opt1.userAnswer
+                                }
+                                Object.assign(opt, param);
+                            }
                             
-                        // })
+                        })
                         opt.perMark=val.perMark;
                         opt.answerList=val.answerList;
                         that.testlist.push(opt);
@@ -213,9 +215,7 @@ export default {
                             margin-top:64px;
                         }
                         &.active{
-                            background: rgba(0, 178, 136, 0.1);
-                            color: #00B288;
-                            border: 2px solid rgba(0, 178, 136, 0.1);
+                            color: #E85D3E;
                         }
                     }
                 }
@@ -362,6 +362,7 @@ export default {
             }
         }
         .sheet-list{
+            text-align:left;
             p{
                 width: 64px;
                 height: 64px;
@@ -373,10 +374,16 @@ export default {
                 color: #737386;
                 display:inline-block;
                 margin:0 54px 54px 0;
+                text-align:center;
                 &:nth-child(6n){
                     margin-right:0px;
                 }
-                &.sheetactive{
+                &.sheetactive1{
+                    color: #00B288;
+                    background: #00B288;
+                    border: 2px solid #00B288;
+                }
+                &.sheetactive2{
                     color: #E85A3A;
                     background: rgba(232, 90, 58, 0.1);
                     border: 2px solid rgba(232, 90, 58, 0.2);
