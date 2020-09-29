@@ -1,10 +1,10 @@
 const URL = {
     development: {
-        API: 'http://mh5.testing1.wdeduc.com/',
+        API: 'http://mapi.testing1.wdeduc.com',
     },
 
     production: {
-        API: 'http://mh5.testing1.wdeduc.com',
+        API: 'http://mapi.testing1.wdeduc.com',
     },
 };
 
