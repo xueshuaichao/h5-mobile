@@ -65,7 +65,8 @@ const create = () => {
             'Content-Type': 'application/json; charset=utf-8',
             token: '',
         },
-        withCredentials: true,
+        crossDomain: true,
+        withCredentials: false,
     };
     return Axios.create(conf);
 };
