@@ -59,11 +59,17 @@
                 </p>
             </div>
         </div>
-        <button class="btn">
-            申请重考
+        <button
+            class="btn"
+            @click="btnJump1"
+        >
+            {{ examtype&&status===2 ? '查看答题': '申请重考' }}
         </button>
-        <p class="tip">
-            任务结束之后，才能查看试卷详情
+        <p 
+            class="tip"
+            @click="btnJump2"
+        >
+            {{ examtype&&status===1?'任务结束之后，才能查看试卷详情':'查看试卷详情' }}
         </p>
     </div>
 </template>
@@ -77,6 +83,7 @@ export default {
     data() {
         return {
             paperId: 1,
+            sceneId: 51,
             detail: {
                 totalScore: 100,
                 totalCount: 0,
@@ -88,6 +95,8 @@ export default {
                 isPass: 0,
                 rate: 0,
             },
+            status: 1, // 任务： 1正在进行中 2 已经结束，
+            examtype: 0 // 0随堂考试 1终极考试
         }
     },
     created() {
@@ -98,6 +107,29 @@ export default {
         this.getResult();
     },
     methods: {
+        btnJump1() {
+            if (this.examtype&&this.status===2) {
+                this.$router.push({
+                    path: '/showpaper',
+                    query: {
+                        paperId:  this.paperId,
+                    }
+                })
+            } else {
+                window.history.back() // 返回答题。
+            }
+        },
+        btnJump2() {
+            if (this.examtype&&this.status===1) {
+                return false
+            }
+            return this.$router.push({
+                    path: '/showpaper',
+                    query: {
+                        paperId:  this.paperId,
+                    }
+                })
+        },
         getResult() {
             api.getResult({paperId: 1}).then((res) => {
                 this.detail = {...res, rate: (res.score / res.totalScore)};
