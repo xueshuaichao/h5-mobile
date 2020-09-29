@@ -33,4 +33,13 @@ export default {
     getNote(param) {
         return axios.get('/exam/v1/scene/getExamNote', param);
     },
+    // 验证码
+    verify(param) {
+        return axios.post('/ucenter/smsCode/verify', param);
+    },
+    check(param) {
+        return axios.post('/ucenter/vcode/check', param);
+    },
+    
+    
 }

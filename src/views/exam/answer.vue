@@ -70,13 +70,14 @@
                 </div>
             </div>
         </van-action-sheet>
-        <van-dialog v-model="iscode" @confirm="codehandleConfirm">
+        <van-dialog v-model="iscode" :before-close="onBeforeClose"  @confirm="codehandleConfirm">
             <div class="code-main">
-                <div class="code-title">为保证本人考试，系统已往12345678手机上发送了验证码，验证码正确后可继续考试，验证码错误终止考试</div> 
+                <div class="code-title">为保证本人考试，系统已往{{userMobile}}手机上发送了验证码，验证码正确后可继续考试，验证码错误终止考试</div> 
                 <div class="code-input">
-                    <van-field v-model="digit" type="digit" placeholder="输入短信验证码"/>
+                    <van-field v-model="vcode" type="digit" placeholder="输入短信验证码"/>
                     <div class="code-time">{{codetime}}s</div>
                 </div>
+                <p v-if="isvcode" class="vcodesize">验证码不能为空</p>
             </div>
         </van-dialog>
     </div>
@@ -87,12 +88,14 @@ import exam from '../../api/exam';
 export default {
     data(){
         return{
+            isvcode:false,
+            userMobile:'13716883538',
             codetime:120,
             testindex:0,
             testlist:[],
             testform:{},
             istest:false,
-            digit:'',
+            vcode:null,
             iscode:false,
             issheet:false,
             maxtime: 0,
@@ -186,7 +189,8 @@ export default {
                     self.iscodetime+=1;
                     if(self.iscodetime===300){
                         this.iscode=true;
-                        this.codetimebtn();
+                        this.verify();
+                        // this.codetimebtn();
                     }
                 } else {
                     clearInterval(this.timer);
@@ -198,29 +202,54 @@ export default {
                 }
             }, 1000);
         },
-        codetimebtn(){
-            const self = this;
-            this.codetimer = setInterval(() => {
-                if (self.codetime > 0) {
-                   self.codetime -= 1;
-                    this.$forceUpdate();
-                } else {
-                    clearInterval(this.codetimer);
-                    self.codehandleConfirm()
-                }
-            }, 1000);
+        onBeforeClose(action, done) {
+            if (action === "confirm") {
+                return done(false);
+            } else {
+                return done(false);
+            }
         },
+        verify(){
+            exam.verify({userMobile:this.userMobile,platformId:10001}).then(() => {
+                const self = this;
+                this.codetimer = setInterval(() => {
+                    if (self.codetime > 0) {
+                    self.codetime -= 1;
+                        this.$forceUpdate();
+                    } else {
+                        clearInterval(this.codetimer);
+                        self.codehandleConfirm()
+                    }
+                }, 1000);
+            });
+        },
+        // codetimebtn(){
+            
+        // },
         //答题卡
        issheetbtn(){
            this.issheet = true;
        },
        codehandleConfirm(){
+           this.isvcode=false;
+           if(this.vcode===null || this.vcode==''){
+               this.isvcode=true;
+               return;
+           }
            clearInterval(this.codetimer);
-           Dialog.alert({
-            message: '验证码输入错误，系统将终止考试',
-            }).then(() => {
-            // on close
+           exam.check({userMobile:this.userMobile,vcode:this.vcode}).then((res) => {
+                if(res){
+                    this.iscode=false;
+                }else{
+                    this.iscode=false;
+                       Dialog.alert({
+                        message: '验证码输入错误，系统将终止考试',
+                        }).then(() => {
+                            this.$router.go(-1);
+                        });
+                }
             });
+        
        },
        //交卷
        papersbtn(tag){
@@ -563,6 +592,12 @@ export default {
                 width:60px;
                 margin-left:100px;
             }
+        }
+        .vcodesize{
+            color:red;
+            font-size:26px;
+            text-align: left;
+            margin-top:10px;
         }
     }
     
