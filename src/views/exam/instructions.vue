@@ -91,7 +91,12 @@ export default {
             return Math.round(time / 60);
         },
         jumpToExam() {
-
+            this.$router.push({
+                path: '/answer',
+                query: {
+                    sceneId: this.sceneId,
+                }
+            })
         }
     }
 }

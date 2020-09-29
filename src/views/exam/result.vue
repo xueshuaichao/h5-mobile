@@ -83,7 +83,6 @@ export default {
     data() {
         return {
             paperId: 1,
-            sceneId: 51,
             detail: {
                 totalScore: 100,
                 totalCount: 0,
