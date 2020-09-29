@@ -128,12 +128,17 @@ export default {
         },
 
         handleClickItem(item) {
-            this.$router.push({
-                path: '/answer',
-                query: {
-                    id: item.id,
-                },
-            });
+            api.joinScene({sceneId:item.id}).then((res) => {
+                this.$router.push({
+                    path: '/answer',
+                    query: {
+                        sceneId:item.id,
+                        paperId: res,
+                    },
+                });
+            })
+            
+            
         }
   },
   mounted() {

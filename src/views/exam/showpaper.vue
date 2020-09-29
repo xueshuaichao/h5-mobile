@@ -1,29 +1,30 @@
 <template>
-    <div class="showpaperBox">
+    <div class="showpaperBox"  v-if="istest==true">
        <div class="showpaper-title clearfix">
-           <p>单选题</p>
-           <span>总分：100分</span>
-           <span>及格分：60分</span>
-           <span><strong>1</strong> / 20</span>
+           {{testlist[testindex].type}}
+           <p>{{testlist[testindex].type===1?'单选题':testlist[testindex].type===2?'多选题':'判断题'}}</p>
+           <span>总分：{{testform.totalScore}}分</span>
+           <span>及格分：{{testform.passingScore}}分</span>
+           <span><strong>{{testindex+1}}</strong> / {{testform.totalCount}}</span>
        </div>
        <div class="showpaper-content">
            <div class="showpaper-test">
                 <div class="test-title">
-                    <span>2分</span> 这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目？
+                    <span>{{testlist[testindex].perMark}}分</span> {{testlist[testindex].title}}
                 </div>
                 <div class="test-questions">
                     <ul>
-                        <li><span>A</span> <span>这是第一个选项这是第一个选项这是 第一个选项</span></li>
-                        <li><span>B</span> <span>这是第二个选项</span></li>
-                        <li><span>C</span> <span>这是第三个选项</span></li>
-                        <li><span>D</span> <span>这是第四个选项</span></li>
+                        <li v-for="(opt,index) in testlist[testindex].contentItems" :key="index"
+                            >
+                            <span>{{opt.code}}</span> <span>{{opt.value}}</span>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class="showpaper-bottom">
                 <p>试题解析</p>
-                <p>正确答案：C</p>
-                <p>因为是这样，所以我们要选这个，因为是这样，所以我们要选这个因为是这样，所以我们要。</p>
+                <p>正确答案：{{testlist[testindex].answerList[0].rightAnswer}}</p>
+                <p>{{testlist[testindex].remark}}</p>
             </div>
        </div>
        <div class="showpaper-footer">
@@ -62,21 +63,50 @@
 </template>
 <script>
 // import api from '@/api/account';
-
+import exam from '../../api/exam';
 export default {
     data() {
         return {
+          testindex:0,
+          istest:false,
           issheet:false,
           iscode:false,
           actions: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+          testlist:[],
+          testform:{}
         };
     },
     
     created() {
-       
+        this.getExamResultDetail(5)
     },
 
     methods: {
+        async getExamResultDetail(id){
+            let that=this;
+            exam.getExamResultDetail({paperId:id}).then((res) => {
+                res.sceneQuestionInfoList.forEach(val=>{
+                    
+                    val.questionList.forEach(opt=>{
+                        opt.answerList.forEach(opt1=>{
+                            if(opt1.questionId===opt.id){
+                                // let param={
+                                //     rightAnswer:opt1.rightAnswer,
+                                // }
+                            }
+                            
+                        })
+                        opt.perMark=val.perMark;
+                        opt.answerList=val.answerList;
+                        that.testlist.push(opt);
+                    })
+                })
+                console.log(that.testlist)
+                this.testform = res;
+                this.istest=true;
+                
+            });
+        },
         isontopic(){
 
         },
@@ -181,6 +211,11 @@ export default {
                         }
                         &:first-child{
                             margin-top:64px;
+                        }
+                        &.active{
+                            background: rgba(0, 178, 136, 0.1);
+                            color: #00B288;
+                            border: 2px solid rgba(0, 178, 136, 0.1);
                         }
                     }
                 }

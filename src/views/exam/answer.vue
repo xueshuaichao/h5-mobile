@@ -1,10 +1,10 @@
 <template>
-    <div class="answer-page">
+    <div class="answer-page" v-if="istest">
         <div class="answer-top clearfix">
             养老护理员初级理论考试
             <p @click="papersbtn">交卷</p>
         </div>
-        <div class="answer-content" v-if="istest">
+        <div class="answer-content" >
             <img
                 class="img"
                 src="@/assets/exam/bg.png"
@@ -107,7 +107,7 @@ export default {
     
 
     created() {
-        this.getScenePaper(this.$route.query.id)
+        this.getScenePaper(this.$route.query.sceneId)
         
     },
 
@@ -218,7 +218,7 @@ export default {
        //交卷
        papersbtn(tag){
            let formItem={
-                paperId:this.$route.query.id,
+                paperId:this.$route.query.paperId,
                 commitTime:(new Date()).getTime(),
                 answerList:[],
             }
@@ -250,21 +250,13 @@ export default {
            }else{
                this.commitPaper(formItem);
            }
-        //    return;
-            // 
-
-        //    Dialog.alert({
-        //     message: '考试时间已到，系统自动交卷',
-        //     }).then(() => {
-        //     // on close
-        //     });
        },
        commitPaper(formItem){
-           exam.commitPaper(formItem).then((res) => {
+           exam.commitPaper(formItem).then(() => {
                this.$router.push({
                     path: '/result',
                     query: {
-                        id: this.$route.query.id,
+                        id: this.$route.query.paperId,
                     },
                 });
             });

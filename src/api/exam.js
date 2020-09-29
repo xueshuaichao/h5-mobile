@@ -13,5 +13,14 @@ export default {
     commitPaper(param) {
         return axios.post('/exam/v1/paper/commitPaper', param);
     },
+    getExamResultDetail(param) {
+        return axios.get('/exam/v1/paper/getExamResultDetail', param);
+    },
+    joinScene(param) {
+        return axios.get('/exam/v1/scene/joinScene', param);
+    },
+    
+
+    
     
 }
