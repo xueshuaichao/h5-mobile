@@ -29,8 +29,8 @@
        </div>
        <div class="showpaper-footer">
             <van-button type="default" size="large" class="showpaper-button" @click="issheet = true">答题卡</van-button>
-            <van-button type="default" size="large" class="showpaper-button" @click="isontopic">上一题</van-button>
-            <van-button type="default" size="large" class="showpaper-button" @click="iscode=true">下一题</van-button>
+            <van-button type="default" size="large" class="showpaper-button" @click="onquestion">上一题</van-button>
+            <van-button type="default" size="large" class="showpaper-button" @click="nextquestion">下一题</van-button>
         </div>
         <van-action-sheet v-model="issheet">
             <div class="sheet-content">
@@ -39,6 +39,10 @@
                     <p>
                         答题卡
                     </p>
+
+
+
+
                     <div class="sheet-condition">
                         <span>
                             答对
@@ -47,7 +51,7 @@
                             答错
                         </span>
                         <span>
-                            未答1
+                            未答
                         </span>
                     </div>
                     
@@ -70,8 +74,6 @@ export default {
           testindex:0,
           istest:false,
           issheet:false,
-          iscode:false,
-          actions: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
           testlist:[],
           testform:{}
         };
@@ -109,8 +111,15 @@ export default {
                 
             });
         },
-        isontopic(){
-
+        onquestion(){
+            if(this.testindex!==0){
+                this.testindex--;
+            }
+        },
+        nextquestion(){
+            if(this.testindex+1 < this.testform.totalCount){
+                this.testindex++;
+            }
         },
     }
 };
