@@ -4,7 +4,8 @@ import router from './router';
 import store from './store';
 import Vant from 'vant';
 import customPlugins from'./plugins';
-
+// eslint-disable-next-line no-unused-vars
+import $ from 'jquery';
 import './variables.less';
 import './libs/rem.js';
 
