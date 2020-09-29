@@ -25,7 +25,7 @@
                         <p class="title van-multi-ellipsis--l2"> 
                             {{ item.name }}
                         </p>
-                        <p class="status">{{ item.categoryName }}</p>
+                        <p class="status">{{ item.lastCategoryName }}</p>
                         <div class="tongji clearfix">
                             <span class="start fl">
                                 <img src="../../assets/course/seach.png" alt="">

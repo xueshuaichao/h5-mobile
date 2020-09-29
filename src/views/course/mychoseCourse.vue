@@ -1,15 +1,15 @@
 <template>
-    <div class="course-list">
-        <div class="course-list-header clearfix">
-            <!-- <img class="header-left fl" src="../../assets/course/course@2x.png" alt="">
-            <van-search
-                class="header-middle fl"
-                v-model="listparam.name"
-                shape="round"
-                placeholder="输入课程关键字"
-                @search="getcourseList('seach')"
-            /> 
-            <img @click="gofilter" class="header-right fr" src="../../assets/course/filter@2x.png" alt="">            -->
+    <div class="mychose-list">
+        <div class="mychose-list-header clearfix">
+            <h3>我的选学</h3>
+            <span 
+                :class="tabnum === item.id ? 'activeTab' : ''"
+                class="tabname"
+                @click="changeTab(item.id)" 
+                v-for="(item, index) in coursetype" :key="index">
+                {{item.name}}
+                <span :class="tabnum === item.id ? 'line' : ''"></span>
+            </span>
         </div>
         <van-list
             v-if="!isNone" 
@@ -22,13 +22,13 @@
                 <div class="top">
                     <img class="img" :src="item.picUrl" alt="">
                     <div class="info">
-                        <p class="title van-multi-ellipsis--l2"> 
-                            {{ item.name }}
+                        <p class="title"> 
+                            {{ item.name }}{{ item.name }}{{ item.name }}{{ item.name }}
                         </p>
-                        <p class="status">{{ item.categoryName }}</p>
+                        <p class="status">{{ item.lastCategoryName }}</p>
                         <div class="tongji clearfix">
-                            <van-progress :percentage="item.taskProgress" stroke-width="8" :show-pivot="false" />
-                            <span class="text">{{ item.taskProgress }}%</span>
+                            <van-progress :percentage="item.learningRate" stroke-width="4" :show-pivot="false" />
+                            <span class="text">{{ item.learningRate }}%</span>
                         </div>
                     </div>
                     
@@ -47,10 +47,17 @@
 import api from '@/api/course';
 
 export default {
-    name: 'courseList',
+    name: 'mychoseList',
 
     data() {
         return {
+            tabnum: '',
+            coursetype: [
+                {id: '', name: '全部选学'},
+                {id: 1, name: '进行中'},
+                {id: 2, name: '已完成'},
+                
+            ],
             seachtext: '',
             list: [],
             listparam: {
@@ -67,12 +74,19 @@ export default {
     mounted() {
     },
     methods: {
+        changeTab(num) {
+            console.log(num);
+            this.tabnum = num;
+            this.listparam.studyStatus = num;
+            this.listparam.pageNum = 1;
+            this.myChoseCourse();
+        },
         onCancel() {},
-        async myChoseCourse(type) {
-            if(type){
-                this.listparam.pageNum = 1;
-                this.list = [];
-            }
+        async myChoseCourse() {
+            // if(type){
+            //     this.listparam.pageNum = 1;
+            this.list = [];
+            // }
             const { list, total } = await api.myChoseCourse(this.listparam);
                 
             this.loading = false;
@@ -83,7 +97,11 @@ export default {
             }
             
             if (list && list.length) {
-                this.list.push(...list);
+                this.$nextTick(() => {
+                    this.list.push(...list);
+                })
+                this.isNone = false;
+                console.log(this.list)
             } else {
                 this.finished = true;
             }

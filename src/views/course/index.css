@@ -466,3 +466,81 @@
   background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
   border-radius: 16px;
 }
+.mychose-list-header h3 {
+  text-align: center;
+  font-size: 34px;
+  color: #272F55;
+  padding: 20px 0px;
+  margin: 0px;
+}
+.mychose-list-header .tabname {
+  position: relative;
+  display: inline-block;
+  color: #A7ADBB;
+  font-size: 30px;
+  padding: 24px 68px;
+}
+.mychose-list-header .tabname .line {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  margin-left: -24px;
+  display: inline-block;
+  text-align: center;
+  width: 48px;
+  height: 4px;
+  background-color: #E85A3A;
+}
+.mychose-list .item {
+  padding: 32px 0px 0px;
+  height: 242px;
+  margin: 32px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6E6EB;
+  box-sizing: border-box;
+  text-align: left;
+}
+.mychose-list .top {
+  display: flex;
+  flex-flow: row;
+}
+.mychose-list .top .img {
+  width: 242px;
+  height: 135px;
+  margin-right: 32px;
+  border-radius: 16px;
+}
+.mychose-list .top .info {
+  display: flex;
+  flex-flow: column;
+  flex: 1;
+}
+.mychose-list .top .info .title {
+  font-size: 28px;
+}
+.mychose-list .top .info p {
+  font-size: 28px;
+  color: #272F55;
+  word-break: break-all;
+}
+.mychose-list .top .info .status {
+  color: #A7ADBB;
+  font-size: 22px;
+  padding-top: 16px;
+}
+.mychose-list .top .info .tongji {
+  width: 70%;
+  margin-top: 28px;
+  position: relative;
+}
+.mychose-list .top .info .tongji .text {
+  position: absolute;
+  bottom: -10px;
+  left: 113%;
+  font-size: 22px;
+  color: #E85A3A;
+}
+.mychose-list .top .info .tongji .selected {
+  font-size: 22px;
+  color: #A7ADBB;
+}
