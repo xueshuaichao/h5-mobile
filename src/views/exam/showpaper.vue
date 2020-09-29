@@ -14,7 +14,7 @@
                 <div class="test-questions">
                     <ul>
                         <li v-for="(opt,index) in testlist[testindex].contentItems" :key="index"
-                            :class="testlist[testindex].userAnswer.indexOf(opt.code)!==-1?'active':''"
+                            :class="testlist[testindex].userAnswer && testlist[testindex].userAnswer.indexOf(opt.code)!==-1?'active':''"
                             >
                             <span>{{opt.code}}</span> <span>{{opt.value}}</span>
                         </li>
@@ -57,7 +57,7 @@
                     
                 </div>
                 <div class="sheet-list">
-                    <p v-for="(item, index) in testlist" :key="index" :class="[item.userAnswer===item.rightAnswer?'sheetactive1':item.userAnswer!==null && item.userAnswer!==item.rightAnswer?'sheetactive2':'']">
+                    <p v-for="(item, index) in testlist" :key="index" :class="[item.userAnswer===item.rightAnswer?'sheetactive1':item.userAnswer && item.userAnswer!==null && item.userAnswer!==item.rightAnswer?'sheetactive2':'']">
                         {{index+1}}
                     </p>
                 </div>
@@ -80,7 +80,7 @@ export default {
     },
     
     created() {
-        this.getExamResultDetail(13)
+        this.getExamResultDetail(this.$route.query.paperId)
     },
 
     methods: {
