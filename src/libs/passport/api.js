@@ -4,7 +4,7 @@ function ajax(type, url, data, headers) {
     return new Promise(function(resolve, reject){
         var xhr = new XMLHttpRequest();
         xhr.open(type.toUpperCase(), url, true);
-        xhr.withCredentials = true;
+        xhr.withCredentials = false;
         if (headers) {
             for (var key in headers) {
                 // eslint-disable-next-line no-prototype-builtins
