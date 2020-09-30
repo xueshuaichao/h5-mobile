@@ -8,6 +8,9 @@ import customPlugins from'./plugins';
 import './variables.less';
 import './libs/rem.js';
 
+import URL from './config/url';
+
+
 import { Passport } from './libs/passport/passport.js';
 
 
@@ -16,7 +19,7 @@ Vue.use(customPlugins);
 
 
 Vue.config.productionTip = false;
-Vue.prototype.$passport = new Passport(null, {header: window.centerPlatInfo});
+Vue.prototype.$passport = new Passport(URL.API, {header: {webhost: URL.API}});
 
 // new Vue({
 //   router,

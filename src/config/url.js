@@ -3,10 +3,10 @@ const URL = {
         API: '/api',
     },
     test: {
-        API: '/api',
+        API: 'http://mapi.testing1.wdeduc.com',
     },
     production: {
-        API: '/api',
+        API: 'http://mapi.testing1.wdeduc.com',
     },
 };
 

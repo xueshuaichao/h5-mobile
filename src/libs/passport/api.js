@@ -84,11 +84,10 @@ export default {
         $header = header;
     },
     checkCookie(data) {
-        return get($host + '/api/ucenter/sso/checkCookie', data, $header);
+        return get($host + '/ucenter/sso/checkCookie', data, $header);
     },
     checkToken(data, token) {
         console.log($header)
-        $header = {platformId: 10001, userType: 0}
-       return get($host + '/api/ucenter/sso/checkToken', data, Object.assign({Token: token},$header));
+       return get($host + '/ucenter/sso/checkToken', data, Object.assign({Token: token},$header));
     },
 }
