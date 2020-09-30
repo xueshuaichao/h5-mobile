@@ -113,7 +113,17 @@ const routes = [
     path: '/result',
     name: 'result',
     component: () => import('../views/exam/result.vue')
-  }
+  },
+  {
+    path: '/myitem',
+    name: 'myitem',
+    component: () => import('../views/task/index.vue')
+  },
+  {
+    path: '/mydetail',
+    name: 'mydetail',
+    component: () => import('../views/task/detail.vue')
+  },
   
 ];
 
