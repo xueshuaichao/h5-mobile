@@ -196,7 +196,7 @@ export default {
             position: absolute;
             top: 125px;
             left: 0;
-            width: 100%;
+            width: 400px;
             .level {
                 color: #737386;
                 font-size: 28px;
