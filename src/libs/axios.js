@@ -65,7 +65,7 @@ const create = () => {
             'Content-Type': 'application/json; charset=utf-8',
             token: 'fffffffffffffff',
         },
-        withCredentials: true,
+        withCredentials: false,
     };
     return Axios.create(conf);
 };
