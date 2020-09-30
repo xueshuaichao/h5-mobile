@@ -193,11 +193,11 @@
   right: 0px;
   bottom: 0px;
 }
-.filterpage .classify .classify-left ul li:hover {
+.filterpage .classify .classify-left ul .activeCalss {
   background: #fff;
   color: #272F55;
 }
-.filterpage .classify .classify-left ul li:hover .line {
+.filterpage .classify .classify-left ul .activeCalss .line {
   display: inline-block;
 }
 .filterpage .classify .classify-right {
@@ -245,7 +245,7 @@
 .filterpage .filters-type .filters-status span:last-child {
   margin-right: 0px;
 }
-.filterpage .filters-type .filters-status span:hover {
+.filterpage .filters-type .filters-status .activespan {
   color: #E85A3A;
   border: 2px solid #E85A3A;
   background: rgba(232, 90, 58, 0.04);
@@ -291,6 +291,11 @@
   border: 2px solid #E85A3A;
   background: rgba(232, 90, 58, 0.04);
 }
+.filterpage .sortStatus .activesort {
+  color: #E85A3A;
+  border: 2px solid #E85A3A;
+  background: rgba(232, 90, 58, 0.04);
+}
 .courseDetail {
   text-align: left;
 }
@@ -307,6 +312,10 @@
   height: 422px;
   position: relative;
   background: lightcoral;
+}
+.courseDetail-player img {
+  width: 100%;
+  height: 422px;
 }
 .courseDetail-player span {
   position: absolute;
@@ -383,6 +392,62 @@
 .courseDetail-content .content-catalog .catalog-level .firstlevel .listyle1 {
   padding-left: 28px;
 }
+.courseDetail-content .content-judge {
+  width: 100%;
+  padding-top: 48px;
+  text-align: center;
+}
+.courseDetail-content .content-judge .showjudge {
+  padding: 0px 48px;
+}
+.courseDetail-content .content-judge .showjudge-left-top {
+  font-size: 32px;
+  color: #272F55;
+  font-weight: 600;
+  margin-bottom: 34px;
+  text-align: left;
+}
+.courseDetail-content .content-judge .showjudge-left-top span {
+  padding-left: 12px;
+  color: #E85A3A;
+}
+.courseDetail-content .content-judge .showjudge-left-bottom {
+  color: #737386;
+  font-size: 24px;
+  padding-top: 18px;
+  text-align: left;
+}
+.courseDetail-content .content-judge .showjudge-right-btn {
+  width: 176px;
+  height: 72px;
+  font-size: 28px;
+  color: white;
+  text-align: center;
+  line-height: 72px;
+  background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
+  border-radius: 20px;
+}
+.courseDetail-content .content-judge .myjudge-text {
+  font-size: 24px;
+  color: #737386;
+  padding-bottom: 36px;
+}
+.courseDetail-content .content-judge .myjudge-level {
+  color: #272F55;
+  font-size: 24px;
+  padding: 30px 48px;
+}
+.courseDetail-content .content-judge .myjudge-button {
+  width: 92%;
+  margin: 0px auto;
+  height: 72px;
+  font-size: 28px;
+  color: white;
+  text-align: center;
+  line-height: 72px;
+  background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
+  border-radius: 16px;
+}
 .courseDetail-btn {
   position: fixed;
   bottom: 0px;
@@ -400,4 +465,82 @@
   line-height: 88px;
   background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
   border-radius: 16px;
+}
+.mychose-list-header h3 {
+  text-align: center;
+  font-size: 34px;
+  color: #272F55;
+  padding: 20px 0px;
+  margin: 0px;
+}
+.mychose-list-header .tabname {
+  position: relative;
+  display: inline-block;
+  color: #A7ADBB;
+  font-size: 30px;
+  padding: 24px 68px;
+}
+.mychose-list-header .tabname .line {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  margin-left: -24px;
+  display: inline-block;
+  text-align: center;
+  width: 48px;
+  height: 4px;
+  background-color: #E85A3A;
+}
+.mychose-list .item {
+  padding: 32px 0px 0px;
+  height: 242px;
+  margin: 32px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6E6EB;
+  box-sizing: border-box;
+  text-align: left;
+}
+.mychose-list .top {
+  display: flex;
+  flex-flow: row;
+}
+.mychose-list .top .img {
+  width: 242px;
+  height: 135px;
+  margin-right: 32px;
+  border-radius: 16px;
+}
+.mychose-list .top .info {
+  display: flex;
+  flex-flow: column;
+  flex: 1;
+}
+.mychose-list .top .info .title {
+  font-size: 28px;
+}
+.mychose-list .top .info p {
+  font-size: 28px;
+  color: #272F55;
+  word-break: break-all;
+}
+.mychose-list .top .info .status {
+  color: #A7ADBB;
+  font-size: 22px;
+  padding-top: 16px;
+}
+.mychose-list .top .info .tongji {
+  width: 70%;
+  margin-top: 28px;
+  position: relative;
+}
+.mychose-list .top .info .tongji .text {
+  position: absolute;
+  bottom: -10px;
+  left: 113%;
+  font-size: 22px;
+  color: #E85A3A;
+}
+.mychose-list .top .info .tongji .selected {
+  font-size: 22px;
+  color: #A7ADBB;
 }

@@ -1,30 +1,30 @@
 <template>
     <div class="paperlist">
        <van-dropdown-menu>
-        <van-dropdown-item title="分类">
+        <van-dropdown-item title="分类" ref="item">
             <div class="classify clearfix">
-            <div class="classify-left fl">
-                <ul>
-                    <li v-for="(item, index) in classifyparam" :key="index">
-                        <span class="line"></span>
+                <div class="classify-left fl">
+                    <ul>
+                        <li v-for="(item, index) in directionList" :class="activeId==item.id?'active':''" @click="classifybtn(item)" :key="index">
+                            <span class="line"></span>
+                            {{item.name}}
+                            <span class="top-yuan yuan"></span>
+                            <span class="bottom-yuan yuan"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="classify-right fl">
+                    <span v-for="(item, index) in classifyList" :key="index" :class="sceactiveId==item.id?'sceactive':''" @click="sceclassifybtn(item)"> 
                         {{item.name}}
-                        <span class="top-yuan yuan"></span>
-                        <span class="bottom-yuan yuan"></span>
-                    </li>
-                </ul>
+                    </span>
+                </div>
             </div>
-            <div class="classify-right fl">
-                <span v-for="(item, index) in classifyparam" :key="index">
-                    {{item.name}}
-                </span>
-            </div>
-        </div>
         </van-dropdown-item>
-        <van-dropdown-item title="筛选" ref="item">
+        <van-dropdown-item title="筛选" ref="item1">
            <div class="filters">
             <div class="filters-type">
                 <div class="filters-status">
-                    <span class="contentlist" v-for="(item, index) in statuslist" :key="index">
+                    <span class="contentlist" v-for="(item, index) in statuslist" :class="statusId==item.type?'statusactive':''" :key="index" @click="statusbtn(item)">
                         {{item.name}}
                     </span>
                 </div>
@@ -62,6 +62,9 @@ import api from '../../api/exam';
 export default {
   data() {
     return {
+        activeId:null,
+        sceactiveId:null,
+        directionList:[],
         paperlist:[],
         seachtext: '',
         list: [{name: '暂无内容暂无内容暂无内容暂无内容暂无内容',
@@ -82,44 +85,88 @@ export default {
         pageNum: 1,
         error: false,
         statuslist: [
-            {name: '全部', type: '0'},
-            {name: '简单', type: '1'},
-            {name: '一般', type: '2'},
-            {name: '困难', type: '3'},
+            {name: '全部', type: 0},
+            {name: '简单', type: 1},
+            {name: '一般', type: 2},
+            {name: '困难', type: 3},
         ],
-        classifyparam: [
-            {name: '全部'},
-            {name: '电子信息大类'},
-            {name: '人文与社会'},
-            {name: '数理类'},
-            {name: '电子信息大类电子信息大类电子信息大类电子信息大类'},
-            {name: '电子信息大类'},
-            {name: '电子信息大类'},
-            {name: '电子信息大类'},
-            {name: '电子信息大类'},
-            {name: '电子信息大类'},
-            {name: '电子信息大类'},
-        ],
+        classifyList: [],
         form:{
-            "categoryId": 1,
-            "difficulty": 1,
-            "isPublic": 1,
-            "status": 2,
+            categoryId: null,
+            difficulty: '',
+            isPublic: 1,
+            status: 2,
             queryString: {
                 pageNum: 1,
                 pageSize: 10,
             },
-        }
+        },
+        statusId:null,
     }
   },
   components: {
 
   },
   methods: {
+      statusbtn(item){
+          this.statusId=item.type;
+          if(this.statusId===0){
+              this.form.difficulty=null;
+          }else{
+              this.form.difficulty=this.statusId;
+          }
+          this.$refs.item1.toggle();
+          this.findByCondition();
+      },
+      classifybtn(item){
+          if(item.id!==0){
+                this.activeId=item.id;
+                this.getChildren(this.activeId);
+          }
+          
+      },
+      sceclassifybtn(item){
+          this.sceactiveId=item.id;
+          if(this.sceactiveId===0){
+            //   if(this.activeId==0){
+                  this.form.categoryId=this.activeId;
+            //   }
+              
+          }else{
+              this.form.categoryId=this.sceactiveId;
+          }
+          
+          this.$refs.item.toggle();
+          this.findByCondition();
+      },
+      getChildren(id) {
+            api.getChildren(id).then((res) => {
+                this.classifyList = res;
+                    let params={
+                        name:'全部',
+                        id:0
+                    }
+                    this.classifyList.unshift(params);
+            });
+        },
+      getCategoryList() {
+          
+            api.getCategoryList().then((res) => {
+                
+                this.directionList=res;
+                let params={
+                    name:'全部',
+                    id:0
+                }
+                this.directionList.unshift(params);
+                if(this.directionList.length>2){
+                    this.activeId=this.directionList[1].id;
+                    this.getChildren(this.activeId);
+                }
+            });
+        },
       findByCondition() {
           api.findByCondition(this.form).then((res) => {
-              console.log(res)
-              res.list[0].name="广东省少时诵诗书所所付多所过发的方法付付付付付所付三四十个"
                 this.paperlist=res.list;
                 this.loading=true;
                 this.finished=true;
@@ -128,15 +175,18 @@ export default {
         },
 
         handleClickItem(item) {
-            this.$router.push({
-                path: '/answer',
-                query: {
-                    id: item.id,
-                },
-            });
+                this.$router.push({
+                    path: '/answer',
+                    query: {
+                        sceneId:item.id
+                    },
+                });
+            
+            
         }
   },
   mounted() {
+        this.getCategoryList();
         this.findByCondition();
   }
 }

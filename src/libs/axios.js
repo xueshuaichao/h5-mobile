@@ -63,8 +63,9 @@ const create = () => {
         timeout: 10000,
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
-            token: 'fffffffffffffff',
+            token: '',
         },
+        crossDomain: true,
         withCredentials: false,
     };
     return Axios.create(conf);

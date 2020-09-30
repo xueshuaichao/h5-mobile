@@ -1,35 +1,36 @@
 <template>
-    <div class="showpaperBox">
+    <div class="showpaperBox"  v-if="istest==true">
        <div class="showpaper-title clearfix">
-           <p>单选题</p>
-           <span>总分：100分</span>
-           <span>及格分：60分</span>
-           <span><strong>1</strong> / 20</span>
+           <p>{{testlist[testindex].type===1?'单选题':testlist[testindex].type===2?'多选题':'判断题'}}</p>
+           <span>总分：{{testform.totalScore}}分</span>
+           <span>及格分：{{testform.passingScore}}分</span>
+           <span><strong>{{testindex+1}}</strong> / {{testform.totalCount}}</span>
        </div>
        <div class="showpaper-content">
            <div class="showpaper-test">
                 <div class="test-title">
-                    <span>2分</span> 这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目？
+                    <span>{{testlist[testindex].perMark}}分</span> {{testlist[testindex].title}}
                 </div>
                 <div class="test-questions">
                     <ul>
-                        <li><span>A</span> <span>这是第一个选项这是第一个选项这是 第一个选项</span></li>
-                        <li><span>B</span> <span>这是第二个选项</span></li>
-                        <li><span>C</span> <span>这是第三个选项</span></li>
-                        <li><span>D</span> <span>这是第四个选项</span></li>
+                        <li v-for="(opt,index) in testlist[testindex].contentItems" :key="index"
+                            :class="testlist[testindex].userAnswer && testlist[testindex].userAnswer.indexOf(opt.code)!==-1?'active':''"
+                            >
+                            <span>{{opt.code}}</span> <span>{{opt.value}}</span>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class="showpaper-bottom">
                 <p>试题解析</p>
-                <p>正确答案：C</p>
-                <p>因为是这样，所以我们要选这个，因为是这样，所以我们要选这个因为是这样，所以我们要。</p>
+                <p>正确答案：{{testlist[testindex].rightAnswer}}</p>
+                <p>{{testlist[testindex].remark}}</p>
             </div>
        </div>
        <div class="showpaper-footer">
             <van-button type="default" size="large" class="showpaper-button" @click="issheet = true">答题卡</van-button>
-            <van-button type="default" size="large" class="showpaper-button" @click="isontopic">上一题</van-button>
-            <van-button type="default" size="large" class="showpaper-button" @click="iscode=true">下一题</van-button>
+            <van-button type="default" size="large" class="showpaper-button" @click="onquestion">上一题</van-button>
+            <van-button type="default" size="large" class="showpaper-button" @click="nextquestion">下一题</van-button>
         </div>
         <van-action-sheet v-model="issheet">
             <div class="sheet-content">
@@ -38,6 +39,10 @@
                     <p>
                         答题卡
                     </p>
+
+
+
+
                     <div class="sheet-condition">
                         <span>
                             答对
@@ -52,7 +57,7 @@
                     
                 </div>
                 <div class="sheet-list">
-                    <p v-for="(item, index) in actions" :key="index" :class="(index+1)==1?'sheetactive':''">
+                    <p v-for="(item, index) in testlist" :key="index" :class="[item.userAnswer===item.rightAnswer?'sheetactive1':item.userAnswer && item.userAnswer!==null && item.userAnswer!==item.rightAnswer?'sheetactive2':'']">
                         {{index+1}}
                     </p>
                 </div>
@@ -62,23 +67,62 @@
 </template>
 <script>
 // import api from '@/api/account';
-
+import exam from '../../api/exam';
 export default {
     data() {
         return {
+          testindex:0,
+          istest:false,
           issheet:false,
-          iscode:false,
-          actions: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+          testlist:[],
+          testform:{},
+          directionList:[],
         };
     },
     
     created() {
-       
+        
+        this.getExamResultDetail(this.$route.query.paperId)
     },
 
     methods: {
-        isontopic(){
-
+        
+        async getExamResultDetail(id){
+            let that=this;
+            exam.getExamResultDetail({paperId:id}).then((res) => {
+                res.sceneQuestionInfoList.forEach(val=>{
+                    
+                    val.questionList.forEach(opt=>{
+                        val.answerList.forEach(opt1=>{
+                            if(opt1.questionId===opt.id){
+                                let param={
+                                    rightAnswer:opt1.rightAnswer,
+                                    userAnswer:opt1.userAnswer
+                                }
+                                Object.assign(opt, param);
+                            }
+                            
+                        })
+                        opt.perMark=val.perMark;
+                        opt.answerList=val.answerList;
+                        that.testlist.push(opt);
+                    })
+                })
+                console.log(that.testlist)
+                this.testform = res;
+                this.istest=true;
+                
+            });
+        },
+        onquestion(){
+            if(this.testindex!==0){
+                this.testindex--;
+            }
+        },
+        nextquestion(){
+            if(this.testindex+1 < this.testform.totalCount){
+                this.testindex++;
+            }
         },
     }
 };
@@ -181,6 +225,9 @@ export default {
                         }
                         &:first-child{
                             margin-top:64px;
+                        }
+                        &.active{
+                            color: #E85D3E;
                         }
                     }
                 }
@@ -327,6 +374,7 @@ export default {
             }
         }
         .sheet-list{
+            text-align:left;
             p{
                 width: 64px;
                 height: 64px;
@@ -338,13 +386,19 @@ export default {
                 color: #737386;
                 display:inline-block;
                 margin:0 54px 54px 0;
+                text-align:center;
                 &:nth-child(6n){
                     margin-right:0px;
                 }
-                &.sheetactive{
-                    color: #E85A3A;
-                    background: rgba(232, 90, 58, 0.1);
-                    border: 2px solid rgba(232, 90, 58, 0.2);
+                &.sheetactive1{
+                    color: #fff;
+                    background: #00B288;
+                    border: 2px solid #00B288;
+                }
+                &.sheetactive2{
+                    color: #fff;
+                    background: #E85A3A;
+                    border: 2px solid #E85A3A;
                 }
             }
         }
