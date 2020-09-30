@@ -19,7 +19,7 @@ Vue.use(customPlugins);
 
 
 Vue.config.productionTip = false;
-Vue.prototype.$passport = new Passport(URL.API, {header: {webhost: URL.API}});
+Vue.prototype.$passport = new Passport(URL.API, {header: {webhost: location.origin}});
 
 // new Vue({
 //   router,
