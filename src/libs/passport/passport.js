@@ -48,6 +48,19 @@ export class Passport {
             }
         })
     }
+    signOut() {
+        return new Promise(function(resolve, reject){
+            api.signOut().then(function(res) {
+                if(res.data && res.code === 0) {
+                    resolve(res.data);
+                } else {
+                    reject(res);
+                }
+            }, function(err) {
+                reject(err);
+            });
+        })
+    }
     getToken() {
         return getQueryByName(location.search, 'Token');
     }
@@ -57,6 +70,8 @@ export class Passport {
     goH5Login() {
         window.location.replace(`${CONF.PassportHost}/h5/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
     }
+
+
 }
 
 

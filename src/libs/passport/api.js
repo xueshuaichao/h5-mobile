@@ -90,4 +90,7 @@ export default {
         console.log($header)
        return get($host + '/ucenter/sso/checkToken', data, Object.assign({Token: token},$header));
     },
+    signOut() {
+        return get($host + '/ucenter/sso/loginOut');
+    }
 }
