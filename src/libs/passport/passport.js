@@ -3,14 +3,18 @@ import { Promise } from  'es6-promise-polyfill';
 import api from './api';
 import { getQueryByName } from './utils';
 
+var platInfo = window.centerPlatInfo || {};
+var host = window.passPortHost || window.location.origin;
 export class Passport {
     constructor (host, options) {
         host && api.setHost(host);
         console.log(window.centerPlatInfo)
         if (options && options.header) {
-            api.setActiveHost(options.header);
+            api.setHeader(options.header);
+            platInfo = options.header;
+            console.log(options);
         } else if (window.centerPlatInfo) {
-            api.setActiveHost(window.centerPlatInfo);
+            api.setHeader(window.centerPlatInfo);
         }
     }
     checkCookie() {
@@ -47,11 +51,15 @@ export class Passport {
     getToken() {
         return getQueryByName(location.search, 'Token');
     }
-    
+    goPcLogin() {
+        window.location.replace(`http://192.168.15.46:8081/pc/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
+    }
+    goH5Login() {
+        window.location.replace(`http://192.168.15.46:8081/h5/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
+    }
 }
 
-var platInfo = window.centerPlatInfo || {};
-var host = window.passPortHost || window.location.origin;
+
 if (host) {
     // lost protocol
     if (host.indexOf('http:') != 0 && host.indexOf('//') != 0) {
@@ -59,4 +67,4 @@ if (host) {
     }
 }
 
-export var passport = new Passport(host, {header: platInfo});
+// export var passport = new Passport(host, options);

@@ -7,19 +7,16 @@ import customPlugins from'./plugins';
 
 import './variables.less';
 import './libs/rem.js';
-window.centerPlatInfo = {
-    platformId: 100001,
-    userType: 0,
-}
+
 import { Passport } from './libs/passport/passport.js';
 
 
 Vue.use(Vant);
 Vue.use(customPlugins);
-console.log('main.js')
+
 
 Vue.config.productionTip = false;
-Vue.prototype.$passport = new Passport();
+Vue.prototype.$passport = new Passport(null, {header: window.centerPlatInfo});
 
 // new Vue({
 //   router,

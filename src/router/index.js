@@ -132,12 +132,12 @@ router.beforeEach((to, from, next) => {
   // if (store.state.userInfo) {
   //     next();
   // } else {
-    console.log(store)
     const userInfo = store.getters.getUserInfo;
     if (userInfo) {
       next();
     } else if(NEED_LOGIN_PAGE.indexOf(to.name) > -1) {
-      window.location.replace(`http://192.168.15.46:8080/login/login?returnUrl=${encodeURIComponent(location.href)}&platformId=10001&userType=0`);
+      Vue.prototype.$passport.goLogin();
+      // window.location.replace(`http://192.168.15.46:8080/login/login?returnUrl=${encodeURIComponent(location.href)}&platformId=10001&userType=0`);
     } else {
       next();
     }
