@@ -136,7 +136,7 @@ router.beforeEach((to, from, next) => {
     if (userInfo) {
       next();
     } else if(NEED_LOGIN_PAGE.indexOf(to.name) > -1) {
-      Vue.prototype.$passport.goLogin();
+      Vue.prototype.$passport.goH5Login();
       // window.location.replace(`http://192.168.15.46:8080/login/login?returnUrl=${encodeURIComponent(location.href)}&platformId=10001&userType=0`);
     } else {
       next();

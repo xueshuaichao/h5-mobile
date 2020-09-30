@@ -2,7 +2,7 @@
 import { Promise } from  'es6-promise-polyfill';
 import api from './api';
 import { getQueryByName } from './utils';
-
+import CONF from './config';
 var platInfo = window.centerPlatInfo || {};
 var host = window.passPortHost || window.location.origin;
 export class Passport {
@@ -52,10 +52,10 @@ export class Passport {
         return getQueryByName(location.search, 'Token');
     }
     goPcLogin() {
-        window.location.replace(`http://192.168.15.46:8081/pc/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
+        window.location.replace(`${CONF.PassportHost}/pc/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
     }
     goH5Login() {
-        window.location.replace(`http://192.168.15.46:8081/h5/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
+        window.location.replace(`${CONF.PassportHost}/h5/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
     }
 }
 

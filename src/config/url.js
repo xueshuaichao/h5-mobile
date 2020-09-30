@@ -2,7 +2,9 @@ const URL = {
     development: {
         API: '/api',
     },
-
+    test: {
+        API: '/api',
+    },
     production: {
         API: '/api',
     },
