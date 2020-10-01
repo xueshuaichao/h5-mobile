@@ -1,21 +1,21 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/home/Home.vue';
+// import Home from '../views/home/Home.vue';
 import store from '../store/index';
 
 Vue.use(VueRouter);
 const NEED_LOGIN_PAGE = ['home'];
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/course',
-    name: 'course',
-    component: () => import('../views/course/index.vue')
-  },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: Home
+  // },
+  // {
+  //   path: '/course',
+  //   name: 'course',
+  //   component: () => import('../views/course/index.vue')
+  // },
   {
     path: '/course/filter',
     name: 'courseFilter',

@@ -29,7 +29,7 @@ const getPageConfigs = Promise.resolve([
               block_instance_id: [111, 121],
           },
       ],
-      name: '首页',
+      name: 'home',
       templateId: 4, // templateId 对应layouts下的layout
       type: 2,
       moduleId: 1, // 系统模块 1 课程中心2 试题中心3 4 任务中心
@@ -48,7 +48,7 @@ const getPageConfigs = Promise.resolve([
   },
   {
       uri: '/course',
-      name: '课程中心',
+      name: 'course',
       layout: [
           {
               aid: 'aid_1',
@@ -67,6 +67,27 @@ const getPageConfigs = Promise.resolve([
           },
       ],
   },
+  {
+    uri: '/test',
+    name: 'test',
+    layout: [
+        {
+            aid: 'aid_1',
+            block_id: [15],
+            block_instance_id: [151],
+        },
+    ],
+    templateId: 4,
+    type: 2,
+    moduleId: 2,
+    setting: [
+        {
+            bid: 231,
+            block_id: 23,
+            setting: null,
+        },
+    ],
+},
 ]);
 
 getPageConfigs.then((data) => {
@@ -75,7 +96,7 @@ getPageConfigs.then((data) => {
       // eslint-disable-next-line no-param-reassign
       v.layout = JSON.stringify(v.layout);
   });
-
+  console.log(router, 'before---')
   store.commit('setPageConfigs', data);
   // 根据后端pages定义路由
   const routes = data
@@ -92,6 +113,7 @@ getPageConfigs.then((data) => {
           };
           return route;
       });
+    console.log(routes, 'add router')
   router.addRoutes(routes);
 
   new Vue({
