@@ -27,6 +27,11 @@ const routes = [
     component: () => import('../views/course/detail.vue')
   },
   {
+    path: '/jingpin',
+    name: 'jingpin',
+    component: () => import('../blocks/course/list.vue')
+  },
+  {
     path: '/mychosecourse',
     name: 'mychosecourse',
     component: () => import('../views/course/mychoseCourse.vue')

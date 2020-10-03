@@ -6,10 +6,11 @@
         <div class="courseDetail-player">
             <img v-if="!hasresourceURl" :src="courseInfo.picUrl" alt="" />
             <div
-                v-else
+                v-if="hasvideo"
                 id="player-con"
-                style="height: 373px"
+                style="height: 233px"
             />
+            <iframe v-if="ispdf" :src="pdfurl" style="width: 100%;height: 233px;position: absolute; left: 0px"/>
             <span class="detail-fenlei">
                 {{courseInfo.categoryName}}
             </span>
@@ -38,7 +39,7 @@
                                     {{index+1}}
                                 </span>
                                 <span class="catalog-futitle" @click="showvideo(item)">
-                                    {{item.title}}{{item.menuFlag}}
+                                    {{item.title}}
                                 </span>
                                 <span class="catalog-hours">3 课时</span>
                             </div>
@@ -47,12 +48,12 @@
                             <ul class="firstlevel">
                                 <li class="firstlevel-li" v-for="(item1, index) in item.childrenList" :key="index">
                                     <p class="firstlevel-li-p pstyle" @click="showvideo(item1)">
-                                        {{item1.title}}222{{item1.menuFlag}}
+                                        {{item1.detailName}}
                                     </p>
                                     <ul class="secLevel">
                                         <li class="secLevel-li listyle1" v-for="(item2, index) in item1.childrenList" :key="index">
                                             <p class="secLevel-li-p pstyle1" @click="showvideo(item2)">
-                                                {{item2.title}}333{{item2.menuFlag}}
+                                                {{item2.detailName}}
                                             </p>
                                             <ul class="triLevel">
                                                 <li
@@ -63,7 +64,7 @@
                                                         class="triLevel-li-p pstyle1"
                                                         @click="showvideo(item3)"
                                                     >
-                                                        {{item3.title}}444{{item3.menuFlag}}
+                                                        {{item3.detailName}}
                                                     </p>
                                                 </li>
                                             </ul>
@@ -79,7 +80,7 @@
                 </van-collapse>
             </div>
             <div v-if="changetype === '2'" class="content-judge">
-                <div class="showjudge clearfix">
+                <div v-if="gojudge" class="showjudge clearfix">
                     <div class="showjudge-left fl">
                         <p class="showjudge-left-top">综合评分 <span>4.6</span></p>
                         <van-rate
@@ -93,12 +94,12 @@
                         <p class="showjudge-left-bottom">12个评价</p>
                     </div>
                     <div class="fr showjudge-right">
-                        <div class="showjudge-right-btn" @click="startStudy(courseInfo.id)">
+                        <div class="showjudge-right-btn" @click="gojudge = false">
                             我要评价
                         </div>
                     </div>
                 </div>
-                <!-- <div class="myjudge">
+                <div v-else class="myjudge">
                     <p class="myjudge-text">点击星星可以评价哦</p>
                     <van-rate
                         v-model="judge"
@@ -110,7 +111,7 @@
                         />
                     <p class="myjudge-level">较差</p>
                     <van-button class="myjudge-button" :disabled="!isjudge"  @click="onChangeJudge">确定</van-button>
-                </div> -->
+                </div>
             </div>
         </div>
         <div v-if="!isjoin" class="courseDetail-btn">
@@ -126,6 +127,10 @@ import api from '@/api/course';
 export default {
     data() {
         return {
+            gojudge: true,
+            pdfurl: '',
+            hasvideo: false,
+            ispdf: false,
             isjudge: false,
             hasresourceURl: false,
             judge: 0,
@@ -139,6 +144,7 @@ export default {
                 stars: 0,
                 remark: '',
             },
+            player: null,
             contentType: [
                 { name: "简介", id: "0" },
                 { name: "目录", id: "1" },
@@ -155,12 +161,46 @@ export default {
     },
     components: {},
     methods: {
-        getaliPlay(courseUrl, seekTime, iscomplate) {
+        getPDFandYinpin(val) {
+            api.getAudioOrDocUrl({ id: val.detailId }).then((res) => {
+                // if (res.success) {
+                    const  data  = res;
+                    if(val.detailType === '2'){
+                        this.resourceUrl = data;
+                        this.ispdf = false;
+                        this.hasresourceURl = this.resourceUrl.length > 0;
+                        this.hasvideo = true;
+                        console.log(this.resourceUrl)
+                        this.getaliPlay(this.resourceUrl, '2');
+                    }else if(val.detailType === '3'){
+                        this.pdfurl = data;
+                        this.ispdf =true;
+                        this.hasresourceURl = false;
+                        this.hasvideo = false;
+                        console.log(this.pdfurl);
+                    }
+                // }
+            });
+        },
+        getVideo(val) {
+            api.getVideoPlayURLById({ id: val }).then((res) => {
+                const data = res;
+                [this.resourceUrl] = data;
+                this.ispdf = false;
+                this.hasresourceURl = this.resourceUrl.length > 0;
+                this.hasvideo = true;
+                this.$nextTick(() => {
+                    this.getaliPlay(this.resourceUrl, '1');
+                })
+            });
+        },
+        getaliPlay(courseUrl,type ,seekTime, iscomplate) {
+            
             let contTime = seekTime;
             if (!contTime) {
                 contTime = 0;
             }
-            $('#player-con').height('373px');
+            $('#player-con').height('233px');
             if ($('#J_prismPlayer').length > 0) {
                 this.player.dispose();
                 $('#J_prismPlayer').remove();
@@ -183,6 +223,7 @@ export default {
                     isLive: false,
                     useH5Prism: true,
                 });
+                
                 this.player.on('error', () => {
                     this.clearTimeing();
                 });
@@ -191,8 +232,15 @@ export default {
                     contTime = contTime >= Math.round(this.player.getDuration())
                         ? '0'
                         : contTime;
+                        console.log(type);
                     if (!iscomplate) {
-                        const video = document.querySelector('video');
+                        let video = null;
+                        
+                        if(type === '2'){
+                            video = document.querySelector('audio');
+                        }else if(type === '1'){
+                            video = document.querySelector('video');
+                        }
                         video.currentTime = contTime;
                         let supposedCurrentTime = 0;
                         let maxtime = contTime;
@@ -258,6 +306,7 @@ export default {
             }, 15000);
         },
         saveLearningLog() {
+            this.saveLearningParams.detailId = this.courseItemDetailId;
             this.saveLearningParams.recordId = this.courseInfo.recordId;
             this.saveLearningParams.curSecond = Math.round(
                 this.player.getCurrentTime(),
@@ -271,20 +320,20 @@ export default {
             }
             return true;
         },
-        showvideo(item) {
-            if(!item.menuFlag){
-                console.log(item.detailId);
-                api.getVideoPlayURLById({ id: item.detailId }).then((res) => {
-                    // console.log(res);
-                    // if (res.success) {
-                        const data = res;
-                        [this.resourceUrl] = data;
-                        this.hasresourceURl = this.resourceUrl.length > 0;
-                        this.$nextTick(() => {
-                            this.getaliPlay(this.resourceUrl);
-                        });
-                    // }
-                });
+        showvideo(val) {
+            if(!val.menuFlag){
+                this.courseItemDetailId = val.courseItemDetailId;
+                // 视频
+                if(val.detailType === '1'){
+                    console.log(val.detailType)
+                    this.getVideo(val.detailId);
+                } else if(val.detailType === '3' || val.detailType === '2'){
+                    console.log(val.detailType);
+                    // 文档、音频
+                    this.getPDFandYinpin(val); 
+                } else if(val.detailType === '4'){
+                    // 试题
+                }
             }
         },
         // 
