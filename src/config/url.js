@@ -1,6 +1,6 @@
 const URL = {
     development: {
-        API: 'http://mapi.testing1.wdeduc.com',
+        API: '',
     },
     test: {
         API: 'http://mapi.testing1.wdeduc.com',

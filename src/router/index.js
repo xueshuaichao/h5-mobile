@@ -27,6 +27,11 @@ const routes = [
     component: () => import('../views/course/detail.vue')
   },
   {
+    path: '/jingpin',
+    name: 'jingpin',
+    component: () => import('../blocks/course/list.vue')
+  },
+  {
     path: '/mychosecourse',
     name: 'mychosecourse',
     component: () => import('../views/course/mychoseCourse.vue')
@@ -113,7 +118,17 @@ const routes = [
     path: '/result',
     name: 'result',
     component: () => import('../views/exam/result.vue')
-  }
+  },
+  {
+    path: '/myitem',
+    name: 'myitem',
+    component: () => import('../views/task/index.vue')
+  },
+  {
+    path: '/mydetail',
+    name: 'mydetail',
+    component: () => import('../views/task/detail.vue')
+  },
   
 ];
 
@@ -137,6 +152,7 @@ router.beforeEach((to, from, next) => {
   // if (store.state.userInfo) {
   //     next();
   // } else {
+
     const userInfo = store.getters.getUserInfo;
     if (userInfo) {
       next();
@@ -146,6 +162,28 @@ router.beforeEach((to, from, next) => {
     } else {
       next();
     }
+
+      // store
+      //     .dispatch('getUserInfo')
+      //     .then(() => {
+      //         next();
+      //     })
+      //     .catch(() => {
+      //         if (
+      //             // CONFIG.STATUS_CODE.NO_LOGIN === data.status &&
+      //             NEED_LOGIN_PAGE.indexOf(to.name) > -1
+      //         ) {
+      //             console.log('needlogin');
+      //             // window.location.replace(`http://192.168.15.46:8080/login/login?returnUrl=${encodeURIComponent(location.href)}`);
+      //             next();
+      //             // next({ name: 'passportLogin' });
+      //         } else {
+      //             next();
+      //         }
+      //     });
+ // }
+  // next();
+
 });
 
 export default router;
