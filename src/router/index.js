@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/home/Home.vue';
+// import Home from '../views/home/Home.vue';
 import store from '../store/index';
 
 Vue.use(VueRouter);
 const NEED_LOGIN_PAGE = ['home'];
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: Home
+  // },
   {
     path: '/course',
     name: 'course',
@@ -26,11 +26,11 @@ const routes = [
     name: 'courseDetail',
     component: () => import('../views/course/detail.vue')
   },
-  {
-    path: '/jingpin',
-    name: 'jingpin',
-    component: () => import('../blocks/course/list.vue')
-  },
+  // {
+  //   path: '/jingpin',
+  //   name: 'jingpin',
+  //   component: () => import('../blocks/course/list.vue')
+  // },
   {
     path: '/mychosecourse',
     name: 'mychosecourse',
