@@ -66,7 +66,7 @@ const create = () => {
             token: '',
         },
         crossDomain: true,
-        withCredentials: false,
+        withCredentials: true,
     };
     return Axios.create(conf);
 };
