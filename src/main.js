@@ -25,8 +25,8 @@ const getPageConfigs = Promise.resolve([
       layout: [
           {
               aid: 'aid_1',
-              block_id: [11, 12],
-              block_instance_id: [111, 121],
+              block_id: [11, 12, 13],
+              block_instance_id: [111, 121, 131],
           },
       ],
       name: 'home',
@@ -96,7 +96,6 @@ getPageConfigs.then((data) => {
       // eslint-disable-next-line no-param-reassign
       v.layout = JSON.stringify(v.layout);
   });
-  console.log(router, 'before---')
   store.commit('setPageConfigs', data);
   // 根据后端pages定义路由
   const routes = data
@@ -113,7 +112,6 @@ getPageConfigs.then((data) => {
           };
           return route;
       });
-    console.log(routes, 'add router')
   router.addRoutes(routes);
 
   new Vue({

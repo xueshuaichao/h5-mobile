@@ -34,7 +34,11 @@ export default {
     },
     // 课程视频播放 resource/getVideoPlayURLById
     getVideoPlayURLById(data) {
-        return axios.get('/resource/getVideoPlayURLById', data);
+        return axios.get('/resourceCenter/v1/resource/getVideoPlayURLById', data);
+    },
+    // 根据资源ID查询音频或文档地址
+    getAudioOrDocUrl(data) {
+        return axios.get('/resourceCenter/v1/resource/getAudioOrDocUrl', data);
     },
     // 保存课程进度 /courseLearningLog/student/saveLearningLog
     saveLearningLog(data) {
@@ -45,10 +49,15 @@ export default {
     },
     // 根据父级分类id查询子类 /category/getChildren
     getChildren(data) {
-        return axios.get('/category/getChildren', data);
+        return axios.get('/resourceCenter/v1/category/getChildren', data);
     },
     // /userCourseRecord/app/course/findSignUpCourseAppWithPage
     myChoseCourse(data) {
         return axios.post(`/courseCenter/v1/userCourseRecord/app/course/findSignUpCourseAppWithPage?pageNum=${data.pageNum}&pageSize=${data.pageSize}`, data);
     },
+    // 精品课程   /course/student/findBoutiqueCourseList
+    findBoutiqueCourseList(data) {
+        return axios.get('/courseCenter/v1/course/student/findBoutiqueCourseList', data);
+    },
+
 }

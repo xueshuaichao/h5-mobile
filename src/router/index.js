@@ -11,11 +11,11 @@ const routes = [
   //   name: 'home',
   //   component: Home
   // },
-  // {
-  //   path: '/course',
-  //   name: 'course',
-  //   component: () => import('../views/course/index.vue')
-  // },
+  {
+    path: '/course',
+    name: 'course',
+    component: () => import('../views/course/index.vue')
+  },
   {
     path: '/course/filter',
     name: 'courseFilter',
@@ -26,6 +26,11 @@ const routes = [
     name: 'courseDetail',
     component: () => import('../views/course/detail.vue')
   },
+  // {
+  //   path: '/jingpin',
+  //   name: 'jingpin',
+  //   component: () => import('../blocks/course/list.vue')
+  // },
   {
     path: '/mychosecourse',
     name: 'mychosecourse',
