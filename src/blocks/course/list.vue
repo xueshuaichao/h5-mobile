@@ -40,7 +40,7 @@ export default {
             })
         },
         getList() {
-            api.findBoutiqueCourseList({pagSize: 8}).then((res) => {
+            api.findBoutiqueCourseList({pageSize: 8}).then((res) => {
                 const data = res;
                 console.log(res);
                 this.list = data;
