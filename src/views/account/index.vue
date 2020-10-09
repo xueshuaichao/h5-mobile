@@ -58,14 +58,17 @@ export default {
                 },
                 {
                     title: "我的测试",
+                    path: '/test',
                     icon: require("../../assets/account/menu-2.png"),
                 },
                 {
                     title: "我的错题",
+                    path: '/wrong',
                     icon: require("../../assets/account/menu-3.png"),
                 },
                 {
                     title: "我的消息",
+                    path: '/message',
                     icon: require("../../assets/account/menu-4.png"),
                 },
                 {

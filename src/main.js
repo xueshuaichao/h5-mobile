@@ -33,11 +33,11 @@ const getPageConfigs = Promise.resolve([
       layout: [
           {
               aid: 'aid_1',
-              block_id: [11, 12],
-              block_instance_id: [111, 121],
+              block_id: [11, 12, 13],
+              block_instance_id: [111, 121, 131],
           },
       ],
-      name: '首页',
+      name: 'home',
       templateId: 4, // templateId 对应layouts下的layout
       type: 2,
       moduleId: 1, // 系统模块 1 课程中心2 试题中心3 4 任务中心
@@ -56,7 +56,7 @@ const getPageConfigs = Promise.resolve([
   },
   {
       uri: '/course',
-      name: '课程中心',
+      name: 'course',
       layout: [
           {
               aid: 'aid_1',
@@ -75,6 +75,27 @@ const getPageConfigs = Promise.resolve([
           },
       ],
   },
+  {
+    uri: '/test',
+    name: 'test',
+    layout: [
+        {
+            aid: 'aid_1',
+            block_id: [15],
+            block_instance_id: [151],
+        },
+    ],
+    templateId: 4,
+    type: 2,
+    moduleId: 2,
+    setting: [
+        {
+            bid: 231,
+            block_id: 23,
+            setting: null,
+        },
+    ],
+},
 ]);
 Vue.prototype.$passport.checkCookie().then(res => {
     if (res) {

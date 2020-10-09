@@ -160,6 +160,19 @@ export default {
         };
     },
     components: {},
+    watch: {
+        judge(val) {
+            console.log(val);
+            if(val>0){
+                 this.isjudge = true;
+            }
+        },
+        changetype(val) {
+            if(val === '1'){
+                this.findCourseItemByCourseId();
+            }
+        },
+    },
     methods: {
         getPDFandYinpin(val) {
             api.getAudioOrDocUrl({ id: val.detailId }).then((res) => {
@@ -340,7 +353,7 @@ export default {
         onChangeJudge() {
             console.log(this.judge);
             if(this.judge > 0){
-                this.isjudge = true;
+               
                 this.judgeparam.courseId = this.courseInfo.id;
                 this.judgeparam.recordId = this.courseInfo.recordId;
                 this.judgeparam.stars = this.judge;
@@ -366,7 +379,6 @@ export default {
                 const data = res;
                 this.courseInfo = data;
                 this.courseName = this.courseInfo.name;
-                this.findCourseItemByCourseId();
                 this.isjoin = this.courseInfo.recordId
                     ? true
                     : false;

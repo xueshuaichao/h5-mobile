@@ -1,0 +1,66 @@
+.jingpin {
+  padding: 0px 32px;
+}
+.jingpin-header {
+  padding: 32px 0px;
+}
+.jingpin-header h3 {
+  text-align: left;
+  width: 50%;
+  margin: 0px;
+  display: inline-block;
+}
+.jingpin-header span {
+  font-size: 24px;
+  color: #A7ADBB;
+  width: 50%;
+  display: inline-block;
+  text-align: right;
+}
+.jingpin-header span img {
+  width: 20px;
+  height: 20px;
+}
+.jingpin-list ul li {
+  width: 326px;
+  display: inline-block;
+  margin-right: 34px;
+  margin-bottom: 20px;
+}
+.jingpin-list ul li p {
+  text-align: left;
+  font-size: 28px;
+  color: #272F55;
+  font-weight: 550;
+}
+.jingpin-list ul li img {
+  width: 326px;
+  height: 184px;
+  display: inline-block;
+  border-radius: 12px;
+}
+.jingpin-list ul li:nth-child(2n) {
+  margin-right: 0px;
+}
+.jingpin-list ul li .list-content {
+  padding: 16px 0px;
+}
+.jingpin-list ul li .list-content span {
+  display: inline-block;
+  width: 50%;
+}
+.jingpin-list ul li .list-content .content-left {
+  text-align: left;
+  font-size: 22px;
+  color: #E85A3A;
+}
+.jingpin-list ul li .list-content .content-left .start {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+.jingpin-list ul li .list-content .content-right {
+  font-size: 22px;
+  color: #A7ADBB;
+  text-align: right;
+}

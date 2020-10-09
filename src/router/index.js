@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/home/Home.vue';
+// import Home from '../views/home/Home.vue';
 import store from '../store/index';
 
 Vue.use(VueRouter);
 const NEED_LOGIN_PAGE = ['home'];
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: Home
+  // },
   {
     path: '/course',
     name: 'course',
@@ -26,11 +26,11 @@ const routes = [
     name: 'courseDetail',
     component: () => import('../views/course/detail.vue')
   },
-  {
-    path: '/jingpin',
-    name: 'jingpin',
-    component: () => import('../blocks/course/list.vue')
-  },
+  // {
+  //   path: '/jingpin',
+  //   name: 'jingpin',
+  //   component: () => import('../blocks/course/list.vue')
+  // },
   {
     path: '/mychosecourse',
     name: 'mychosecourse',
@@ -130,6 +130,39 @@ const routes = [
     component: () => import('../views/task/detail.vue')
   },
   
+  // 我的测试
+  {
+    path: '/test',
+    name: 'myTest',
+    component: () => import('../views/account/test.vue')
+  },
+
+  // 我的错题本
+  {
+    path: '/wrong',
+    name: 'myWrong',
+    component: () => import('../views/account/wrong.vue')
+  },
+
+  // 错题本详情
+  {
+    path: '/wrong/detail/:id/',
+    name: 'wrongDetail',
+    component: () => import('../views/account/paper.vue')
+  },
+
+  // 我的消息
+  {
+    path: '/message',
+    name: 'message',
+    component: () => import('../views/account/message.vue')
+  },
+
+  {
+    path: '/message/:id',
+    name: 'messageDetail',
+    component: () => import('../views/account/message-detail.vue')
+  }
 ];
 
 const router = new VueRouter({
