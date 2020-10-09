@@ -1,6 +1,6 @@
 const URL = {
     development: {
-        PassportHost: 'http://mlogin.testing1.wdeduc.com',
+        PassportHost: 'http://mlogin.testing2.wdeduc.com',
     },
     test: {
         PassportHost: 'http://mlogin.testing1.wdeduc.com',

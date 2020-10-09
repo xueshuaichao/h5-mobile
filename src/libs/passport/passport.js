@@ -21,7 +21,7 @@ export class Passport {
         return new Promise(function(resolve, reject) {
             api.checkCookie().then(function(res) {
                 if (res.data) {
-                    resolve(res.data);
+                    resolve(res);
                 } else {
                     reject(res);
                 }
@@ -38,7 +38,7 @@ export class Passport {
             } else {
                 api.checkToken({}, Token).then(function(res) {
                     if(res.data) {
-                        resolve(res.data);
+                        resolve(res);
                     } else {
                         reject(res);
                     }
