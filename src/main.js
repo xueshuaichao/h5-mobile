@@ -99,7 +99,7 @@ const getPageConfigs = Promise.resolve([
 ]);
 Vue.prototype.$passport.checkCookie().then(res => {
     if (res) {
-        buildApp(res);
+        buildApp(res.data);
     }
 }, () => {
     // if ()

@@ -7,7 +7,7 @@
 
             <div class="user-info">
                 <img :src="userInfo.portrait"  width="48" alt="" class="photo">
-                <p class="name"> {{ userInfo.name }} </p>
+                <p class="name"> {{ userInfo.username }} </p>
             </div>
 
             <div class="record">
@@ -36,14 +36,16 @@
 </template>
 <script>
 import api from '@/api/account';
-
+import {
+    mapGetters
+} from 'vuex';
 export default {
     data() {
         return {
-            userInfo: {
-                name: '就哈哈',
-                portrait: '',
-            },
+            // userInfo: {
+            //     name: '就哈哈',
+            //     portrait: '',
+            // },
             count: {
                 finishTaskCount: 1,
                 allTaskCount: 2,
@@ -79,18 +81,21 @@ export default {
             ]
         };
     },
-    
+    computed: mapGetters({
+        userInfo: 'getUserInfo'
+    }),
     created() {
-        this.getUserInfo();
+        // this.getUserInfo();
         this.getLearnCount();
+        console.log(this.userInfo)
     },
 
     methods: {
-        async getUserInfo() {
-            const res = await api.getUserInfo({ "userId":"1000118612570985" });
-            this.userInfo = res;
-            this.$store.commit('setUserInfo', res);
-        },
+        // async getUserInfo() {
+        //     const res = await api.getUserInfo({ "userId":"1000118612570985" });
+        //     this.userInfo = res;
+        //     this.$store.commit('setUserInfo', res);
+        // },
 
         async getLearnCount() {
             const res = await api.getLearnCount();

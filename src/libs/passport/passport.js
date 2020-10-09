@@ -68,7 +68,7 @@ export class Passport {
         window.location.replace(`${CONF.PassportHost}/pc/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
     }
     goH5Login() {
-        window.location.replace(`${CONF.PassportHost}/h5/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
+        window.location.replace(`${CONF.PassportHost}/h5/login?returnUrl=${encodeURIComponent(location.href)}`);
     }
 
 
