@@ -78,7 +78,6 @@ const getPageConfigs = Promise.resolve([
 ]);
 Vue.prototype.$passport.checkCookie().then(res => {
     if (res) {
-        console.log(res);
         buildApp(res);
     }
 }, () => {
@@ -86,8 +85,16 @@ Vue.prototype.$passport.checkCookie().then(res => {
     const Token = Vue.prototype.$passport.getToken();
     if (Token) {
         Vue.prototype.$passport.setToken(Token).then(res => {
-            if (res) {
-                buildApp(res);
+            if (res.code === 0 && res.data) {
+                Vue.prototype.$passport.checkCookie().then(res => {
+                    if (res) {
+                        buildApp(res.data);
+                    } else {
+                        buildApp();
+                    }
+                })
+            } else {
+                buildApp();
             }
         }, () => {
             buildApp();
