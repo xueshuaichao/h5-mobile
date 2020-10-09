@@ -4,10 +4,10 @@ import { axios } from '../libs/axios';
 export default {
     // 一级分类列表
     getCategoryList() {
-        return axios.get('/resourceCenter/v1/category/getTree');
+        return axios.get('/resource/v1/category/getTree');
     },
     getChildren(categoryId) {
-        return axios.get(`/resourceCenter/v1/category/getChildren?categoryId=${categoryId}`);
+        return axios.get(`/resource/v1/category/getChildren?categoryId=${categoryId}`);
     },
     // 获取课程列表
     findByCondition(param) {
@@ -33,13 +33,30 @@ export default {
     getNote(param) {
         return axios.get('/exam/v1/scene/getExamNote', param);
     },
+    
     // 验证码
     verify(param) {
         return axios.post('/ucenter/smsCode/verify', param);
     },
+
     check(param) {
         return axios.post('/ucenter/vcode/check', param);
     },
+
+    // 错题本
+    getWrongQuestions(params) {
+        return axios.post('/exam/v1/errorBook/findByCondition', params)
+    },
+    
+    // 移除错题
+    removeWrongQuestion(params) {
+        return axios.post('/exam/v1/errorBook/remove', params)
+    },
+
+    // 错题
+    getAllTypesCount() {
+        return axios.get('/exam/v1/errorBook/findErrorTypeCount')
+    }
     
     
 }

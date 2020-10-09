@@ -26,6 +26,7 @@ export default new Vuex.Store({
       active: 'home',
     },
     userInfo: null,
+    message: '',
   },
 
   getters: {
@@ -48,7 +49,11 @@ export default new Vuex.Store({
 
     setUserInfo(state, payload) {
       state.userInfo = payload;
-    }
+    },
+
+    setMessage(state, payload) {
+      state.message = payload;
+    },
   },
 
   modules: {},

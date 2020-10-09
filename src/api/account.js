@@ -37,4 +37,9 @@ export default {
         return axios.get('/exam/v1/paper/getMyExam', params)
     },
 
+    // 消息
+    getMessageList(params) {
+        return axios.get('/learn/v1/message/findByCondition', params)
+    }
+
 }
