@@ -28,7 +28,7 @@
                 </van-col>
                 <van-col span="16" class="item-join">
                     <van-col span="12 t-left">
-                        <div class="item-limit">限100人</div>
+                        <!-- <div class="item-limit">限100人</div> -->
                     </van-col>
                     <van-col span="12" class="t-right count">已约{{item.applyCount}}</van-col>
                 </van-col>
