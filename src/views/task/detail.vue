@@ -2,11 +2,11 @@
     <div class="content" v-if="detObj">
         <span class="header">{{detObj.name}}</span>
         <van-notice-bar mode="link">
-            共{{courseList.length}}个阶段，(已完成12%)
+            共{{detObj.stageDtos.length}}个阶段，(已完成{{detObj.finishedPercent * 100}}%)
         </van-notice-bar>
-        <div v-if="courseList">
-            <div v-for="item in courseList" :key="item.id">
-                <span id="step_one">{{detObj.stageDtos[0] ? detObj.stageDtos[0].stageName : "学习阶段"}}</span>&nbsp;<span class="class_hour">{{item.classHour?item.classHour:"3"}}课时</span>
+        <div v-for="stage in detObj.stageDtos" :key="stage.stage">
+            <span id="step_one">{{stage.stageName}}</span>&nbsp;<span class="class_hour">{{totalClassHour(stage.taskItems)}}课时</span>
+            <div v-for="item in stage.taskItems" :key="item.id">
                 <van-cell-group>
                     <van-cell @click="goCourse(item.id)" class="study" :title="item.label" value="">
                         <template #icon>
@@ -16,27 +16,27 @@
                             <img class="courseStudy" src="../../assets/task/study.png">
                         </template>
                     </van-cell>
-                    <van-cell :title="detObj.description">
+                    <van-cell :title="item.label">
                         <template #icon>
                             <img class="courseImg" src="../../assets/task/course_one.png">
                         </template>
                     </van-cell>
-                    <van-cell @click="goTest(item.examType,item.scene)" :title="item.scene?item.scene.name:'考试名称'">
+                    <van-cell @click="goTest(item.scene)" :title="item.scene?item.scene.name:'考试名称'">
                         <template #icon>
                             <img class="courseImg" src="../../assets/task/test.png">
                         </template>
                         <template #label>
                             <div>
-                                <span>考试时间：{{item.scene?item.scene.duration:"60"}}分钟</span>
-                                <span>题数：{{item.scene?item.scene.totalCount:"100"}}题</span>
-                                <span>满分：{{item.scene?item.scene.totalScore:"100"}}分</span>
+                                <span class="testTime">考试时间：{{item.scene?item.scene.duration:"0"}}分钟</span>
+                                <span class="questionCounts">题数：{{item.scene?item.scene.totalCount:"0"}}题</span>
+                                <span class="grade">满分：{{item.scene?item.scene.totalScore:"0"}}分</span>
                             </div>
                         </template>
                     </van-cell>
                 </van-cell-group>
             </div>
         </div>
-        <span id="step_two">阶段2</span>&nbsp;<span class="class_hour">3课时</span>
+        <!-- <span id="step_two">阶段2</span>&nbsp;<span class="class_hour">3课时</span> -->
         <!-- <div class="content_two">
             <van-cell title="单元格" value="课程名称">
                 <template #icon>
@@ -52,22 +52,27 @@ export default {
     data(){
         return {
             detObj:null,
-            courseList:null,
             sceneId:null
         }
     }, 
     created(){
         const id = this.$route.query.id
         this.getDetPage(id)
-    },
+    }, 
     methods:{
+        totalClassHour(taskItems){
+            var total = 0;
+            taskItems.forEach(item =>{
+                if(item.classHour){
+                    total += item.classHour
+                }
+            });
+            return total
+        },
         getDetPage(id){
             api.getDetail(id).then(res=>{
                 console.log(res)
                 this.detObj=res
-                console.log("detObj",this.detObj)
-                this.courseList=res.stageDtos[0].taskItems
-                console.log("courseList",this.courseList)
             }).catch(err=>{
                 console.log(err)
             })  
@@ -80,9 +85,11 @@ export default {
                 },
             });
         },
-        goTest(examType,scene){
+        goTest(scene){
+            var examType =null
             if(scene){
-                this.sceneId=scene.id
+                this.sceneId=scene.id,
+                examType=scene.examType
             }
             if(examType === 0){
                 this.$router.push({
@@ -127,7 +134,6 @@ body{
     margin-top: 15px;
     margin-bottom: 15px;
     width: 343px;
-    height: 211px;
     background: #FFFFFF;
     border-radius: 6px;
     border: 1px solid white;
@@ -190,5 +196,30 @@ body{
     position: absolute;
     top:0px;
     right:0px
+}
+.testTime{
+    float:left;
+    margin-right: 42px;
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #737386;
+    line-height: 17px; 
+}
+.questionCounts{
+    float:left;
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #737386;
+    line-height: 17px;
+}
+.grade{
+    float:right;
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #737386;
+    line-height: 17px;  
 }
 </style>
