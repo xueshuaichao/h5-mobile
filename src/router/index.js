@@ -130,6 +130,12 @@ const routes = [
     component: () => import('../views/task/detail.vue')
   },
   
+  // 我的测试
+  {
+    path: '/test',
+    name: 'myTest',
+    component: () => import('../views/account/test.vue')
+  }
 ];
 
 const router = new VueRouter({

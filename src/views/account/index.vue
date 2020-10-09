@@ -58,6 +58,7 @@ export default {
                 },
                 {
                     title: "我的测试",
+                    path: '/test',
                     icon: require("../../assets/account/menu-2.png"),
                 },
                 {

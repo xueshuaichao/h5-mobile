@@ -31,6 +31,10 @@ export default {
 
     getCode(params) {
         return axios.get('/learn/v1/user/sendSms', params)
-    }
+    },
+
+    getMyExam(params) {
+        return axios.get('/exam/v1/paper/getMyExam', params)
+    },
 
 }
