@@ -37,21 +37,17 @@
 </template>
 <script>
 import api from '@/api/account';
-import {
-    mapGetters
-} from 'vuex';
+// import {
+//     mapGetters
+// } from 'vuex';
 
 export default {
     data() {
         return {
-            // userInfo: {
-            //     name: '',
-            //     portrait: '',
-            // },
-            // userInfo: {
-            //     name: '就哈哈',
-            //     portrait: '',
-            // },
+            userInfo: {
+                name: '',
+                portrait: '',
+            },
             count: {
                 finishTaskCount: 1,
                 allTaskCount: 2,
@@ -88,22 +84,22 @@ export default {
         };
     },
     computed: {
-        ...mapGetters({
-            userInfo: 'getUserInfo'
-        })
+        // ...mapGetters({
+        //     userInfo: 'getUserInfo'
+        // })
     },
     created() {
-        // this.getUserInfo();
+        this.getUserInfo();
         this.getLearnCount();
         console.log(this.$store)
     },
 
     methods: {
-        // async getUserInfo() {
-        //     const res = await api.getUserInfo({ "userId":"1000118612570985" });
-        //     this.userInfo = res;
-        //     this.$store.commit('setUserInfo', res);
-        // },
+        async getUserInfo() {
+            const res = await api.getUserInfo({ "userId":"1000118612570985" });
+            this.userInfo = res;
+            this.$store.commit('setUserInfo', res);
+        },
 
         async getLearnCount() {
             const res = await api.getLearnCount();
