@@ -1,6 +1,7 @@
 <template>
     <div class="account">
         <div class="top-wrap">
+<<<<<<< HEAD
             <!-- <div class="user-info">
                 <img :src="userInfo.portrait"  width="48" alt="" class="photo">
                 <p class="name"> {{ userInfo.name }} </p>
@@ -10,6 +11,15 @@
                     <img :src="require('../../assets/account/default-photo.png') || userInfo.portrait" alt="" width="62">
                     <p class="name">{{ userInfo.name }}</p>
                 </div>
+=======
+            <div class="title">
+                我的
+            </div>
+
+            <div class="user-info">
+                <img :src="userInfo? userInfo.portrait : ''"  width="48" alt="" class="photo">
+                <p class="name"> {{ userInfo ? userInfo.username : '未登录'}} </p>
+>>>>>>> v_passport_true
             </div>
             <div class="record">
                 <div class="record-item">
@@ -37,7 +47,9 @@
 </template>
 <script>
 import api from '@/api/account';
-
+import {
+    mapGetters
+} from 'vuex';
 export default {
     data() {
         return {
@@ -45,7 +57,16 @@ export default {
                 name: '',
                 portrait: '',
             },
-            count: { },
+            // userInfo: {
+            //     name: '就哈哈',
+            //     portrait: '',
+            // },
+            count: {
+                finishTaskCount: 1,
+                allTaskCount: 2,
+                finishCourseCount: 1,
+                allCourseCount: 2    
+            },
             list: [
                 {
                     title: "个人评估",
@@ -75,18 +96,21 @@ export default {
             ]
         };
     },
-    
+    computed: mapGetters({
+        userInfo: 'getUserInfo'
+    }),
     created() {
-        this.getUserInfo();
+        // this.getUserInfo();
         this.getLearnCount();
+        console.log(this.userInfo)
     },
 
     methods: {
-        async getUserInfo() {
-            const res = await api.getUserInfo({ "userId":"1000118612570985" });
-            this.userInfo = res;
-            this.$store.commit('setUserInfo', res);
-        },
+        // async getUserInfo() {
+        //     const res = await api.getUserInfo({ "userId":"1000118612570985" });
+        //     this.userInfo = res;
+        //     this.$store.commit('setUserInfo', res);
+        // },
 
         async getLearnCount() {
             const res = await api.getLearnCount();

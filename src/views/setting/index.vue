@@ -76,9 +76,13 @@ export default {
                 message: '确定退出登录？',
                 beforeClose: (action, done) => {
                     done()
-                    
                     if (action === 'confirm') {
                         // todo clear login status
+                        this.$passport.signOut().then((res) => {
+                            console.log(res)
+                        },() => {
+
+                        } )
                     }
                 }
             })

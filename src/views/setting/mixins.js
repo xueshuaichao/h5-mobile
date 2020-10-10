@@ -15,7 +15,7 @@ export default {
                 const res = await api.updateUserInfo({ id: this.userInfo.userId, ...params });
 
                 if (res) {
-                    this.$store.commit('setUserInfo', { ...this.userInfo, ...params });
+                    // this.$store.commit('setUserInfo', { ...this.userInfo, ...params });
                     this.$router.go(-1);
                 }
             } finally {
