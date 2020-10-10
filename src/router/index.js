@@ -120,13 +120,13 @@ const routes = [
     component: () => import('../views/exam/result.vue')
   },
   {
-    path: '/myitem',
-    name: 'myitem',
+    path: '/mytask',
+    name: 'mytask',
     component: () => import('../views/task/index.vue')
   },
   {
-    path: '/mydetail',
-    name: 'mydetail',
+    path: '/taskdetail',
+    name: 'taskdetail',
     component: () => import('../views/task/detail.vue')
   },
   
