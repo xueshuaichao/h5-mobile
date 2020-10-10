@@ -1,12 +1,12 @@
 const URL = {
     development: {
-        API: 'http://mapi.testing2.wdeduc.com',
+        API: 'http://mapi.testing1.wdeduc.com',
     },
     test: {
         API: 'http://mapi.testing1.wdeduc.com',
     },
     production: {
-        API: 'http://mapi.testing2.wdeduc.com',
+        API: 'http://mapi.testing1.wdeduc.com',
     },
 };
 
