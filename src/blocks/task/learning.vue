@@ -88,7 +88,7 @@ export default {
         },
 
         handleClickItem(item) {
-            this.$router.push(`/course/detail?id=${item.id}`)
+            this.$router.push(`/course/detail?id=${item.courseId}`)
         }
 
     },
