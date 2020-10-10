@@ -12,7 +12,7 @@ import './libs/rem.js';
 import URL from './config/url';
 
 
-import { Passport } from './libs/passport/passport.js';
+import { Passport } from './libs/passport/passport';
 
 
 Vue.use(Vant);

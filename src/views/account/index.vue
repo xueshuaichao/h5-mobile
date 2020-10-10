@@ -6,8 +6,8 @@
             </div>
 
             <div class="user-info">
-                <img :src="userInfo.portrait"  width="48" alt="" class="photo">
-                <p class="name"> {{ userInfo.username }} </p>
+                <img :src="userInfo? userInfo.portrait : ''"  width="48" alt="" class="photo">
+                <p class="name"> {{ userInfo ? userInfo.username : '未登录'}} </p>
             </div>
 
             <div class="record">

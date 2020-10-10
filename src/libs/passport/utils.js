@@ -18,15 +18,12 @@ export const getQueryString = function getQueryString(str) {
 };
 
 export const getQueryByName = function getQueryByName(url,name) {
-    var url = url || location.search;
-    var result = url.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
-    
-    if (result == null || result.length < 1) {
-
-        return "";
-
-    }
-
-    return result[1];
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 

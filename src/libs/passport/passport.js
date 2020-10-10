@@ -35,7 +35,7 @@ export class Passport {
     }
 
     setToken(Token) { // setToken in 其他平台
-        const token = Token || getQueryByName(location.search, 'Token');
+        const token = Token || getQueryByName(location.href, 'Token');
         return new Promise(((resolve, reject) => {
             if (!token) {
                 reject('no token');
@@ -68,7 +68,7 @@ export class Passport {
     }
 
     getToken() {
-        return getQueryByName(location.search, 'Token');
+        return getQueryByName(location.href, 'Token');
     }
 
     goPcLogin() {
