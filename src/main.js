@@ -145,7 +145,7 @@ function buildApp (userInfo) {
                 const route = {
                     path: page.uri,
                     name: page.name,
-                    component: () => import('./views/common_page.vue'),
+                    component: () => import('./view/common_page.vue'),
                     meta: {
                         moduleId: page.moduleId,
                         name: page.name,
