@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import store from '../store/index';
 
 Vue.use(VueRouter);
-const NEED_LOGIN_PAGE = ['home'];
+const NEED_LOGIN_PAGE = [];
 const routes = [
   // {
   //   path: '/',
