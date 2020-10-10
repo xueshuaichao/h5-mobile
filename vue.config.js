@@ -15,6 +15,7 @@ module.exports = {
 },
   devServer: {
     https: false,
+    disableHostCheck: true,
     proxy: { 
       '/api': {
         target: 'http://mapi.testing1.wdeduc.com',

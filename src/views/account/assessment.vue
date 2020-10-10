@@ -4,14 +4,13 @@
             title="个人评估"
             left-arrow
             @click-left="onClickLeft"
-            right-text="分享"
             @click-right="onClickRight"
         />
         <div class="content">
             <p class="tip">
                 <img src="../../assets/account/Hi _@2x.png" alt="39" srcset="">
                 <br/>
-                <span>{{ userInfo.name || '用户名' }}，</span>这是您的学习数据
+                <span v-if="userInfo">{{ userInfo.name || '用户名' }}，</span>这是您的学习数据
             </p>
 
             <div class="score">
@@ -119,8 +118,13 @@ export default {
 
     methods: {
         async getStatisticsOfLearn() {
-            const res = await api.getStatisticsOfLearn();
-            this.learnData = res; 
+            this.$loading();
+            try {
+                const res = await api.getStatisticsOfLearn();
+                this.learnData = res; 
+            }finally {
+                this.$toast.clear();   
+            }
         },
 
         onClickLeft() {

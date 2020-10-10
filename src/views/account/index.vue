@@ -1,25 +1,26 @@
 <template>
     <div class="account">
         <div class="top-wrap">
-            <div class="title">
-                我的
-            </div>
-
-            <div class="user-info">
+            <!-- <div class="user-info">
                 <img :src="userInfo.portrait"  width="48" alt="" class="photo">
                 <p class="name"> {{ userInfo.name }} </p>
+            </div> -->
+            <div class="user-info-wrap">
+                <div class="user-info">
+                    <img :src="require('../../assets/account/default-photo.png') || userInfo.portrait" alt="" width="62">
+                    <p class="name" v-if="userInfo">{{ userInfo.name }}</p>
+                </div>
             </div>
-
             <div class="record">
                 <div class="record-item">
                     <p class="num">
                         <span>{{ count.finishTaskCount }}</span> / {{ count.allTaskCount }}
                     </p>
-                    <p class="label">任务</p>
+                    <p class="label">我的任务</p>
                 </div>
                 <div class="record-item">
                     <p class="num">
-                        <span>{{ count.finishCourseCount }}</span> / {{ count.allTaskCount }}
+                        <span>{{ count.finishCourseCount }}</span> / {{ count.allCourseCount }}
                     </p>
                     <p class="label">选学</p>
                 </div>
@@ -28,7 +29,7 @@
 
         <div class="menu-list">
             <div class="menu-item" v-for="item in list" :key="item.title" @click="$router.push(item.path)">
-                <img :src="item.icon" width="64" alt="">
+                <img :src="item.icon" width="18" alt="">
                 <p>{{ item.title }}</p>
             </div>
         </div>
@@ -36,12 +37,15 @@
 </template>
 <script>
 import api from '@/api/account';
+// import {
+//     mapGetters
+// } from 'vuex';
 
 export default {
     data() {
         return {
             userInfo: {
-                name: '就哈哈',
+                name: '',
                 portrait: '',
             },
             count: {
@@ -79,10 +83,15 @@ export default {
             ]
         };
     },
-    
+    computed: {
+        // ...mapGetters({
+        //     userInfo: 'getUserInfo'
+        // })
+    },
     created() {
         this.getUserInfo();
         this.getLearnCount();
+        console.log(this.$store)
     },
 
     methods: {
@@ -102,22 +111,7 @@ export default {
 <style lang="less" >
 @import "../../css/variables.less";
 .account {
-
-    .top-wrap {
-        width: 100%;
-        height: 380px;
-        margin-bottom: 97px;
-        background-image: url('../../assets/account/bg@2x.png');
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-
-    .title {
-        padding-top: 60px;
-        text-align: center;
-        font-size: 34px;
-        color: white;
-    }
+    padding: 0 32px;
 
     .user-info {
         display: flex;
@@ -128,8 +122,8 @@ export default {
 
     .name {
         margin-left: 32px;
-        font-size: 32px;
-        color: white;
+        font-size: 40px;
+        color: #272F55;
     }
 
     .photo {
@@ -142,69 +136,51 @@ export default {
         display: flex;
         flex-flow: row;
         align-items: center;
-        width: 690px;
-        height: 140px;
-        margin: 0 auto;
-        background: #FFFFFF;
-        box-shadow: 0px 8px 30px 0px rgba(39, 47, 85, 0.06);
-        border-radius: 24px;
+        justify-content: space-between;
     }
 
     .record-item {
-        position: relative;
-        flex: 1;
-
+        width: 334px;
+        height: 148px;
+        padding: 30px 0 18px 26px;
+        text-align: left;
+        background-image: url('../../assets/account/task-bg.png');
+        background-repeat: no-repeat;
+        background-size: 334px 148px;
+        box-sizing: border-box;
         .num {
-            color: @font-color-1;
+            text-align: left;
+            color: white;
             font-size: @font-size-20;
 
             span {
-                color: @font-color;
+                color: white;
             }
         }
 
         .label {
             padding-top: 10px;
-            color: @font-color-2;
-            font-size: @font-size-12;
+            color: white;
+            font-size: 30px;
         }
 
-        &:first-child ::after{
-            position: absolute;
-            right: 0;
-            top: 50%;
-            content: '';
-            display: block;
-            width: 2px;
-            height: 32px;
-            margin-top: -16px;
-            background: #EEEEEE;
+        &:last-child{
+            background-image: url('../../assets/account/learning-bg.png');
         }
-    }
-
-    .menu-list {
-        display: flex;
-        flex-flow: row;
-        flex-wrap: wrap;
-        align-content: baseline;
-        width: 690px;
-        height: 728px;
-        margin: 0 auto;
-        background: #FFFFFF;
-        box-shadow: 0px 8px 30px 0px rgba(39, 47, 85, 0.06);
-        border-radius: 24px;
-        overflow: hidden;
-        font-size: 0;
     }
 
     .menu-item {
         display: flex;
-        flex-flow: column;
-        justify-content: center;
+        flex-flow: row;
         align-items: center;
-        width: 33.3333%;
-        padding-top: 64px;
+        margin-top: 74px;
+        background-image: url('../../assets/account/arrow.png');
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: 12px auto;
+
         p {
+            padding-left: 24px;
             color: @font-color;
             font-size: @font-size-14;
         }

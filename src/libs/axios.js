@@ -64,9 +64,10 @@ const create = () => {
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
             token: '',
+            webhost: location.origin
         },
         crossDomain: true,
-        withCredentials: false,
+        withCredentials: true,
     };
     return Axios.create(conf);
 };

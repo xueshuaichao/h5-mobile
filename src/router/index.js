@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import store from '../store/index';
 
 Vue.use(VueRouter);
-const NEED_LOGIN_PAGE = ['home'];
+const NEED_LOGIN_PAGE = [];
 const routes = [
   // {
   //   path: '/',
@@ -185,26 +185,38 @@ router.beforeEach((to, from, next) => {
   // if (store.state.userInfo) {
   //     next();
   // } else {
-      store
-          .dispatch('getUserInfo')
-          .then(() => {
-              next();
-          })
-          .catch(() => {
-              if (
-                  // CONFIG.STATUS_CODE.NO_LOGIN === data.status &&
-                  NEED_LOGIN_PAGE.indexOf(to.name) > -1
-              ) {
-                  console.log('needlogin');
-                  // window.location.replace(`http://192.168.15.46:8080/login/login?returnUrl=${encodeURIComponent(location.href)}`);
-                  next();
-                  // next({ name: 'passportLogin' });
-              } else {
-                  next();
-              }
-          });
+
+    const userInfo = store.getters.getUserInfo;
+    if (userInfo) {
+      next();
+    } else if(NEED_LOGIN_PAGE.indexOf(to.name) > -1) {
+      Vue.prototype.$passport.goH5Login();
+      // window.location.replace(`http://192.168.15.46:8080/login/login?returnUrl=${encodeURIComponent(location.href)}&platformId=10001&userType=0`);
+    } else {
+      next();
+    }
+
+      // store
+      //     .dispatch('getUserInfo')
+      //     .then(() => {
+      //         next();
+      //     })
+      //     .catch(() => {
+      //         if (
+      //             // CONFIG.STATUS_CODE.NO_LOGIN === data.status &&
+      //             NEED_LOGIN_PAGE.indexOf(to.name) > -1
+      //         ) {
+      //             console.log('needlogin');
+      //             // window.location.replace(`http://192.168.15.46:8080/login/login?returnUrl=${encodeURIComponent(location.href)}`);
+      //             next();
+      //             // next({ name: 'passportLogin' });
+      //         } else {
+      //             next();
+      //         }
+      //     });
  // }
-  next();
+  // next();
+
 });
 
 export default router;

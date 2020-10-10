@@ -10,11 +10,20 @@ export default {
     data() {
         return {
             form: {
-                name: this.$store.state.userInfo.name || '',
+                name: '',
             },
             isBtnActive: false,
         }
     },
+
+    created() {
+        const { userInfo } = this.$store.state;
+
+        if (userInfo) {
+            this.form.name = userInfo.name;
+        }
+    },
+
     render() {
         return (
             <div class="container setting setting-name">
@@ -24,7 +33,7 @@ export default {
                     on-click-left={ this.onClickLeft }
                 />
                 <div class="content common-form">
-                    <van-field class="form-item" v-model={ this.form.name } placeholder="请输入用户名" clearable />
+                    <van-field class="form-item" v-model={ this.form.name } placeholder="请输入姓名" clearable />
                 </div>
 
                 <div class={ ['button--default', this.form.name ? 'button--active' : ''] } on-click={ this.handleUpdateName }>

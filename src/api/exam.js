@@ -44,13 +44,13 @@ export default {
     },
 
     // 错题本
-    getWrongQuestions(params) {
-        return axios.post('/exam/v1/errorBook/findByCondition', params)
+    getWrongQuestions(pageNum = 1, pageSize = 10, params) {
+        return axios.post(`/exam/v1/errorBook/findByCondition?pageNum=${pageNum}&pageSize=${pageSize}`, params)
     },
     
     // 移除错题
-    removeWrongQuestion(params) {
-        return axios.post('/exam/v1/errorBook/remove', params)
+    removeWrongQuestion(id) {
+        return axios.post(`/exam/v1/errorBook/remove?id=${id}`)
     },
 
     // 错题

@@ -14,7 +14,7 @@ export default {
     },
 
     upload(params) {
-        return axios.file('/resourceCenter/v1/resource/uploadImage', params)
+        return axios.file('/resource/v1/resource/uploadImage', params)
     },
 
     updateUserInfo(params) {

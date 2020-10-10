@@ -1,7 +1,7 @@
 <template>
     <div class="container learning-plan">
-        <div class="header">
-            <div class="nav">
+        <div class="learning-header">
+            <div class="learning-nav">
                 <img src="../../assets/learning/xx.png" alt="" width="81">
                 <img src="../../assets/learning/sx.png" alt="" srcset="" width="20" @click="$router.push({ name: 'screenList', params: { type: currentTab }})">
             </div>
@@ -24,7 +24,7 @@
             </van-row>
         </div>
         
-        <div class="tabs">
+        <div class="learning-tabs">
             <div 
                 :class="['item', currentTab === i ? 'active' : '' ]" 
                 v-for="(item, i) in tabs" 
@@ -86,11 +86,11 @@ export default {
     background: white!important;
     box-sizing: border-box;
     
-    .header {
+    .learning-header {
         padding-top: 54px;
     }
 
-    .nav {
+    .learning-nav {
         display: flex;
         flex-flow: row;
         height: 80px;
@@ -136,7 +136,7 @@ export default {
         }
     }
 
-    .tabs {
+    .learning-tabs {
         display: flex;
         flex-flow: row;
         margin-top: 64px;
