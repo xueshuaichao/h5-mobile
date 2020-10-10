@@ -119,8 +119,13 @@ export default {
 
     methods: {
         async getStatisticsOfLearn() {
-            const res = await api.getStatisticsOfLearn();
-            this.learnData = res; 
+            this.$loading();
+            try {
+                const res = await api.getStatisticsOfLearn();
+                this.learnData = res; 
+            }finally {
+                this.$toast.clear();   
+            }
         },
 
         onClickLeft() {

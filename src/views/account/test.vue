@@ -6,17 +6,24 @@
             @click-left="$router.go(-1)"
         />
         <div class="content ">
-            <div class="list">
-                <div class="item" v-for="item in list" :key="item.paperId">
-                    <div class="left"> 
-                        <div class="title"> {{ item.sceneName }} </div>
-                        <div class="time"> {{ item.commitTime }} </div>
-                    </div>
-                    <div class="button" @click="handleClickItem(item.paperId)">
-                        查看
+            <van-list
+                v-model="loading"
+                :finished="finished"
+                finished-text="没有更多了"
+                @load="getList"
+            >
+                <div class="list">
+                    <div class="item" v-for="item in list" :key="item.paperId">
+                        <div class="left"> 
+                            <div class="title"> {{ item.sceneName }} </div>
+                            <div class="time"> {{ item.commitTime }} </div>
+                        </div>
+                        <div class="button" @click="handleClickItem(item.paperId, item.sceneId)">
+                            查看
+                        </div>
                     </div>
                 </div>
-            </div>
+            </van-list>
         </div>
     </div>    
 </template>
@@ -31,10 +38,10 @@ export default {
                 pageNum: 1,
                 pageSize: 10,
             },
-
             list: [],
-
             total: 0,
+            loading: false,
+            finished: false,
         }
     },
 
@@ -46,15 +53,25 @@ export default {
         getList() {
             api.getMyExam(this.params).then(({ total, list }) => {
                 this.total = total;
-                this.list = list;
+                
+                if (list && list.length) {
+                    this.list.push(...list);
+                }
+
+                if (this.list.length >= total) {
+                    this.finished = true;
+                }
+
+                this.params.pageNum++;
             })
         },
 
-        handleClickItem(id) {
+        handleClickItem(paperId, sceneId) {
             this.$router.push({
                 path: '/result',
                 query: {
-                    id,
+                    id: paperId,
+                    sceneId
                 },
             });
         }
@@ -65,10 +82,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .content {
     padding: 32px;
     margin-top: 0;
+    background: #F5F5FA;
 }
+
 .list .item{
     display: flex;
     flex-flow: row;
@@ -81,18 +101,22 @@ export default {
     border-radius: 12px;
     box-sizing: border-box;
 }
+
 .left {
     text-align: left;
 }
+
 .title {
     margin-bottom: 16px;
     font-size: 32px;
     color: #272F55;
 }
+
 .time {
     font-size: 24px;
     color: #737386;
 }
+
 .button {
     width: 128px;
     height: 64px;

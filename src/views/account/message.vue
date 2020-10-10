@@ -73,6 +73,7 @@ export default {
 .content {
     padding: 32px;
     margin-top: 0;
+    background: #F5F5FA;
 }
 .list .item{
     display: flex;

@@ -1,5 +1,5 @@
 <template>
-    <div class="showpaperBox"  v-if="istest==true">
+    <div class="wrong-detail">
         <van-nav-bar
             title="错题本"
             left-arrow
@@ -8,110 +8,108 @@
             @click-right="onClickRight"
         />
        <div class="showpaper-title clearfix">
-           <p>{{testlist[testindex].type===1?'单选题':testlist[testindex].type===2?'多选题':'判断题'}}</p>
+           <p>{{ typeName }}</p>
        </div>
        <div class="showpaper-content">
            <div class="showpaper-test">
                 <div class="test-title">
-                    <span>{{testlist[testindex].perMark}}分</span> {{testlist[testindex].title}}
+                    <span>{{ currentQuestion.perMark }}分</span> {{ currentQuestion.title }}
                 </div>
                 <div class="test-questions">
                     <ul>
-                        <li v-for="(opt,index) in testlist[testindex].contentItems" :key="index"
-                            :class="testlist[testindex].userAnswer && testlist[testindex].userAnswer.indexOf(opt.code)!==-1?'active':''"
+                        <li v-for="(item, index) in currentQuestion.contentItems" :key="index"
+                            :class="currentQuestion.userAnswer && currentQuestion.userAnswer.indexOf(item.code) > -1 ? 'active' : ''"
                             >
-                            <span>{{opt.code}}</span> <span>{{opt.value}}</span>
+                            <span>{{ item.code }}</span> <span>{{ item.value }}</span>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="showpaper-bottom">
                 <p>试题解析</p>
-                <p>正确答案：{{testlist[testindex].rightAnswer}}</p>
-                <p>{{testlist[testindex].remark}}</p>
+                <p>正确答案：{{ currentQuestion.rightAnswer }}</p>
+                <p>{{ currentQuestion.remark }}</p>
             </div>
        </div>
        <div class="showpaper-footer">
-            <van-button type="default" size="large" class="showpaper-button" @click="onquestion">上一题</van-button>
-            <van-button type="default" size="large" class="showpaper-button" @click="nextquestion">下一题</van-button>
+            <van-button type="default" size="large" class="showpaper-button" @click="handleClickBtn(-1)">上一题</van-button>
+            <van-button type="default" size="large" class="showpaper-button" @click="handleClickBtn(1)">下一题</van-button>
         </div>
     </div>
 </template>
 <script>
-import exam from '../../api/exam';
+import api from '../../api/exam';
+
+const TYPE_NAME_MAP = ['单选题', '多选题', '判断题'];
+
 export default {
     data() {
         return {
-          testindex:0,
-          istest:false,
-          issheet:false,
-          testlist:[],
-          testform:{},
-          directionList:[],
+            pageNum: 1,
+            pageSize: 10,
+            params: {
+                type: 1,
+                questionDifficulty: 2,
+                sceneCategoryId: ''
+            },
+            typeName: '',
+            currentQuestion: '',
+            currentQuestionIndex: 0,
         };
     },
     
     created() {      
-        this.getExamResultDetail(28)
+        const { query } = this.$route;
+
+        this.typeName = TYPE_NAME_MAP[query.type - 1];
+        this.params = query;
+        this.pageSize = query.count;
+
+        this.getWrongQuestions();
     },
 
-    methods: { 
-        async getExamResultDetail(id){
-            let that=this;
-            exam.getExamResultDetail({paperId:id}).then((res) => {
-                res.sceneQuestionInfoList.forEach(val=>{
-                    
-                    val.questionList.forEach(opt=>{
-                        val.answerList.forEach(opt1=>{
-                            if(opt1.questionId===opt.id){
-                                let param={
-                                    rightAnswer:opt1.rightAnswer,
-                                    userAnswer:opt1.userAnswer
-                                }
-                                Object.assign(opt, param);
-                            }
-                            
-                        })
-                        opt.perMark=val.perMark;
-                        opt.answerList=val.answerList;
-                        that.testlist.push(opt);
-                    })
-                })
-                console.log(that.testlist)
-                this.testform = res;
-                this.istest=true;
-                
-            });
+    methods: {
+        getWrongQuestions() {
+            api.getWrongQuestions(this.pageNum, this.pageSize, this.params).then(({ list, total }) => {
+                this.total = total;
+                this.list = list;
+                this.currentQuestion = list[this.currentQuestionIndex];
+            })
         },
 
+        removeWrongQuestion(id) {
+            api.removeWrongQuestion(id).then(() => {
+                this.$toast('移除成功');
+                this.currentQuestionIndex--;
+                this.handleClickBtn(1);
+            })
+        },
+        
         onClickRight() {
             this.$dialog.confirm({
                 message: '确定移除该题目？',
                 beforeClose: (action, done) => {
                     done()
-                    
                     if (action === 'confirm') {
-                        // todo clear login status
+                        this.removeWrongQuestion(this.currentQuestion.id)
                     }
                 }
             })
         },
 
-        onquestion(){
-            if(this.testindex!==0){
-                this.testindex--;
-            }
-        },
-        nextquestion(){
-            if(this.testindex+1 < this.testform.totalCount){
-                this.testindex++;
-            }
+        handleClickBtn(type){
+            let { currentQuestionIndex: index } = this;
+            const isNext = type > 0;
+             
+            index = Math[isNext ? 'min' : 'max']( isNext ? ++index : --index, isNext ? this.total - 1 : 0);
+            this.currentQuestion = this.list[index];
+            this.currentQuestionIndex = index;
         },
     }
 };
 </script>
-<style lang="less" >
-    .showpaperBox{
+<style lang="less">
+    .wrong-detail{
         width:100%;
         min-height:100%;
         background: #F5F5FA;
@@ -159,7 +157,7 @@ export default {
         }
         .showpaper-content{
             width:calc(100% - 1.6rem);
-            height:calc(100% - 7.573rem);
+            min-height:calc(100% - 7.573rem);
             margin:0 auto;
             overflow-y:auto;
             background: #FFFFFF;
@@ -374,11 +372,9 @@ export default {
                 }
             }
         }
-
-        .van-nav-bar__text {
-            color: #575765;
-        }
-
+    }
+    .van-nav-bar__text {
+        color: #575765;
     }
 
 

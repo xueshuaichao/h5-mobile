@@ -115,7 +115,14 @@ export default {
                     }
                 })
             } else {
-                window.history.back() // 返回答题。
+                // window.history.back() // 返回答题。
+                const { sceneId } = this.$route.query;
+
+                if (sceneId) {
+                    this.$router.push({ path: '/answer', query: { sceneId } })
+                } else {
+                    this.$router.go(-1);
+                }
             }
         },
         btnJump2() {
