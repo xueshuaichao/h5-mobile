@@ -80,7 +80,9 @@ export default {
         removeWrongQuestion(id) {
             api.removeWrongQuestion(id).then(() => {
                 this.$toast('移除成功');
+                this.list.splice(this.currentQuestionIndex, 1);
                 this.currentQuestionIndex--;
+                this.total--;
                 this.handleClickBtn(1);
             })
         },
