@@ -1,14 +1,16 @@
+/* eslint-disable */
 /* eslint-disable no-unused-vars */
-import { Promise } from  'es6-promise-polyfill';
+import { Promise } from 'es6-promise-polyfill';
 import api from './api';
 import { getQueryByName } from './utils';
 import CONF from './config';
-var platInfo = window.centerPlatInfo || {};
-var host = window.passPortHost || window.location.origin;
+
+let platInfo = window.centerPlatInfo || {};
+let host = window.passPortHost || window.location.origin;
 export class Passport {
-    constructor (host, options) {
+    constructor(host, options) {
         host && api.setHost(host);
-        console.log(window.centerPlatInfo)
+        console.log(window.centerPlatInfo);
         if (options && options.header) {
             api.setHeader(options.header);
             platInfo = options.header;
@@ -17,68 +19,74 @@ export class Passport {
             api.setHeader(window.centerPlatInfo);
         }
     }
+
     checkCookie() {
-        return new Promise(function(resolve, reject) {
-            api.checkCookie().then(function(res) {
+        return new Promise(((resolve, reject) => {
+            api.checkCookie().then((res) => {
                 if (res.data) {
                     resolve(res);
                 } else {
                     reject(res);
                 }
-            }, function(err) {
+            }, (err) => {
                 reject(err);
             });
-        });
+        }));
     }
+
     setToken(Token) { // setToken in 其他平台
-        var token = Token || getQueryByName(location.search, 'Token');
-        return new Promise(function(resolve, reject){
+        const token = Token || getQueryByName(location.search, 'Token');
+        return new Promise(((resolve, reject) => {
             if (!token) {
-                reject('no token')
+                reject('no token');
             } else {
-                api.checkToken({}, Token).then(function(res) {
-                    if(res.data) {
+                api.checkToken({}, Token).then((res) => {
+                    if (res.data) {
                         resolve(res);
                     } else {
                         reject(res);
                     }
-                }, function(err) {
+                }, (err) => {
                     reject(err);
                 });
             }
-        })
+        }));
     }
+
     signOut() {
-        return new Promise(function(resolve, reject){
-            api.signOut().then(function(res) {
-                if(res.data && res.code === 0) {
+        return new Promise(((resolve, reject) => {
+            api.signOut().then((res) => {
+                if (res.data && res.code === 0) {
                     resolve(res.data);
                 } else {
                     reject(res);
                 }
-            }, function(err) {
+            }, (err) => {
                 reject(err);
             });
-        })
+        }));
     }
+
     getToken() {
         return getQueryByName(location.search, 'Token');
     }
+
     goPcLogin() {
-        window.location.replace(`${CONF.PassportHost}/pc/login?returnUrl=${encodeURIComponent(location.href)}&platformId=${platInfo.platformId}&userType=${platInfo.userType}`);
+        window.location.replace(`${CONF.PassportHost}/pc/login?returnUrl=${encodeURIComponent(location.href)}`);
+    }
+    goAdminLogin() {
+        window.location.replace(`${CONF.PassportHost}/pc/login?isAdmin=1&returnUrl=${encodeURIComponent(location.href)}`);
     }
     goH5Login() {
         window.location.replace(`${CONF.PassportHost}/h5/login?returnUrl=${encodeURIComponent(location.href)}`);
     }
-
-
 }
 
 
 if (host) {
     // lost protocol
     if (host.indexOf('http:') != 0 && host.indexOf('//') != 0) {
-        host = '//' + host;
+        host = `//${host}`;
     }
 }
 

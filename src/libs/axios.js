@@ -64,6 +64,7 @@ const create = () => {
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
             token: '',
+            webhost: location.origin
         },
         crossDomain: true,
         withCredentials: true,
