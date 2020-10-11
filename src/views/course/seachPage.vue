@@ -1,15 +1,22 @@
 <template>
-    <div class="course-list">
-        <div class="course-list-header clearfix">
-            <img class="header-left fl" src="../../assets/course/course@2x.png" alt="">
+    <div class="seachPage-list">
+        <div class="seachPage-list-header clearfix">
+            <img class="header-left fl" src="../../assets/course/home@2x.png" alt="">
             <van-search
                 class="header-middle fl"
+                :label="labelText"
                 v-model="listparam.name"
                 shape="round"
                 placeholder="输入课程关键字"
-                @focus="$router.push('/seachpage')"
+                @focus="getcourseList('seach')"
             /> 
-            <img @click="gofilter" class="header-right fr" src="../../assets/course/filter@2x.png" alt="">           
+            <span class="seachBtn">搜索</span>           
+        </div>
+        <div class="seachHistory">
+            <div>
+                <span>搜索历史</span>
+                <span></span>
+            </div>
         </div>
         <van-list
             v-if="!isNone" 
@@ -52,10 +59,11 @@
 import api from '@/api/course';
 
 export default {
-    name: 'courseList',
+    name: 'seachPageList',
 
     data() {
         return {
+            labelText: '课程',
             seachtext: '',
             list: [],
             listparam: {

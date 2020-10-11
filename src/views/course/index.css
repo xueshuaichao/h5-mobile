@@ -392,6 +392,46 @@
 .courseDetail-content .content-catalog .catalog-level .firstlevel .listyle1 {
   padding-left: 28px;
 }
+.courseDetail-content .content-catalog .catalog-level .firstlevel .process {
+  color: #E85A3A;
+}
+.courseDetail-content .content-catalog .catalog-level .firstlevel .outyuan {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #FFF1ED;
+  border-radius: 20px;
+  margin-right: 16px;
+}
+.courseDetail-content .content-catalog .catalog-level .firstlevel .outyuan .inner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -6px;
+  margin-left: -6px;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: #E85A3A;
+  border-radius: 12px;
+  text-align: center;
+}
+.courseDetail-content .content-catalog .catalog-level .firstlevel .typestyle {
+  display: inline-block;
+  width: 60px;
+  height: 35px;
+  line-height: 40px;
+  font-size: 12px;
+  border-radius: 2px;
+  color: #E85A3A;
+  text-align: center;
+  border: 1px solid rgba(232, 90, 58, 0.5);
+  margin-right: 16px;
+}
+.courseDetail-content .content-catalog .catalog-level .firstlevel-li {
+  padding-right: 40px;
+}
 .courseDetail-content .content-judge {
   width: 100%;
   padding-top: 48px;
@@ -543,4 +583,141 @@
 .mychose-list .top .info .tongji .selected {
   font-size: 22px;
   color: #A7ADBB;
+}
+.seachPage-list {
+  padding-bottom: 100px;
+  padding: 40px 32px;
+}
+.seachPage-list-header {
+  height: 64px;
+  line-height: 64px;
+  vertical-align: middle;
+}
+.seachPage-list-header .header-left {
+  display: inline-block;
+  width: 72px;
+  height: 36px;
+  vertical-align: middle;
+  margin-top: 12px;
+  margin-right: 10px;
+}
+.seachPage-list-header .header-middle {
+  margin: 0px 20px;
+  width: 72%;
+  height: 64px;
+  background-color: #F5F5FA;
+  border-radius: 32px;
+  border: none;
+}
+.seachPage-list-header .seachBtn {
+  color: #272F55;
+  font-size: 28px;
+}
+.seachPage-list-header .header-right {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  margin-top: 12px;
+}
+.seachPage-list .item {
+  padding: 32px 0px;
+  height: 246px;
+  margin: 32px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6E6EB;
+  box-sizing: border-box;
+  text-align: left;
+}
+.seachPage-list .top {
+  display: flex;
+  flex-flow: row;
+}
+.seachPage-list .top .img {
+  width: 240px;
+  height: 136px;
+  margin-right: 32px;
+  border-radius: 16px;
+}
+.seachPage-list .top .info {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  flex: 1;
+}
+.seachPage-list .top .info .title {
+  font-size: 28px;
+}
+.seachPage-list .top .info p {
+  font-size: 28px;
+  color: #272F55;
+  word-break: break-all;
+}
+.seachPage-list .top .info img {
+  vertical-align: middle;
+  margin-left: 10px;
+}
+.seachPage-list .top .info .status {
+  color: #A7ADBB;
+  font-size: 22px;
+}
+.seachPage-list .top .info .tongji {
+  width: 100%;
+  position: absolute;
+  bottom: -60px;
+}
+.seachPage-list .top .info .tongji .start {
+  display: inline-block;
+  width: 102px;
+  height: 32px;
+  background: #FFF1ED;
+  border-radius: 2px;
+  font-size: 22px;
+  color: #E85A3A;
+}
+.seachPage-list .top .info .tongji .start img {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+.seachPage-list .top .info .tongji .selected {
+  font-size: 22px;
+  color: #A7ADBB;
+}
+.seachPage-list .bottom {
+  margin-top: 32px;
+  font-size: 24px;
+  color: #737386;
+}
+.seachPage-list .progress {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.seachPage-list .progress .text {
+  font-size: 24px;
+  color: #E85A3A;
+}
+.seachPage-list .progress .slider {
+  width: 280px;
+  height: 8px;
+  background: #E6E6EB;
+  border-radius: 4px;
+}
+.seachPage-list .progress .slider--progress {
+  width: 160px;
+  height: 8px;
+  background: linear-gradient(90deg, #F74118 0%, #FF956A 100%);
+  border-radius: 4px;
+}
+.seachPage-list .none {
+  padding-top: 100px;
+  text-align: center;
+  font-size: 24px;
+  color: #A7ADBB;
+}
+.seachPage-list .none img {
+  width: 160px;
 }

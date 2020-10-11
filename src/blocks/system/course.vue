@@ -5,8 +5,8 @@
             <span @click="gomore">更多<img src="../../assets/course/more@2x.png" alt=""></span>
         </div>
         <div class="jingpin-list">
-            <ul>
-                <li v-for="(item, index) in list" :key="index" @click="goDetail(item)">
+            <ul class="clearfix">
+                <li class="fl" v-for="(item, index) in list" :key="index" @click="goDetail(item)">
                     <img :src="item.picUrl" alt="">
                     <p>{{item.name}}</p>
                     <div class="list-content">
