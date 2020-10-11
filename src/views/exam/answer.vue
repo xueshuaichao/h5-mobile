@@ -1,7 +1,7 @@
 <template>
     <div class="answer-page" v-if="istest">
         <div class="answer-top clearfix">
-            养老护理员初级理论考试
+            {{testform.name}}
             <p @click="papersbtn">交卷</p>
         </div>
         <div class="answer-content" >

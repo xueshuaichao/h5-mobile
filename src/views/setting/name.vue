@@ -10,7 +10,7 @@ export default {
     data() {
         return {
             form: {
-                name: '',
+                username: '',
             },
             isBtnActive: false,
         }
@@ -20,7 +20,7 @@ export default {
         const { userInfo } = this.$store.state;
 
         if (userInfo) {
-            this.form.name = userInfo.name;
+            this.form.username = userInfo.username;
         }
     },
 
@@ -33,10 +33,10 @@ export default {
                     on-click-left={ this.onClickLeft }
                 />
                 <div class="content common-form">
-                    <van-field class="form-item" v-model={ this.form.name } placeholder="请输入姓名" clearable />
+                    <van-field class="form-item" v-model={ this.form.username } placeholder="请输入姓名" clearable />
                 </div>
 
-                <div class={ ['button--default', this.form.name ? 'button--active' : ''] } on-click={ this.handleUpdateName }>
+                <div class={ ['button--default', this.form.username ? 'button--active' : ''] } on-click={ this.handleUpdateName }>
                     确认
                 </div>
             </div>
@@ -49,7 +49,7 @@ export default {
         },
 
         handleUpdateName() {
-            if (!this.form.name) {
+            if (!this.form.username) {
                 this.$toast('请输入用户名');
                 return;
             }

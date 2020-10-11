@@ -70,14 +70,14 @@ export default {
                 return;
             }
 
-            this.uodatePassword(oldPassword, password);
+            this.uodatePassword(oldPassword, password, secondPassword);
         },
         
-        async uodatePassword(oldPassword, password) {
+        async uodatePassword(oldPassword, password, secondPassword) {
             this.$loading();
 
             try {
-                const res = await api.updateUserPassword({ oldPassword, newPassword: password });
+                const res = await api.updateUserPassword({ password: oldPassword, newPassword: password, repeatPassword: secondPassword });
                 if (res) {
                     this.$toast('修改成功');
                 }

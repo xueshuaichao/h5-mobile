@@ -62,11 +62,6 @@ export default {
                     value: '请选择区域',
                     id: 0,
                 },
-                // {
-                //     title: '单位',
-                //     value: '请选择养老机构',
-                //     id: 2,
-                // },
             ],
             activeList: [],
             currentColumn: 0,
@@ -75,10 +70,11 @@ export default {
     },
 
     created() {
-       this.items = this.userInfo.organizations;
+       this.items = [this.userInfo.organizations.areaUnit ];
+
        this.activeList.push(this.items);
 
-       this.setDefaultCompanyNamee();
+       this.setDefaultCompanyName();
     },
 
     methods: {
@@ -92,11 +88,10 @@ export default {
             return data;
         },
 
-        setDefaultCompanyNamee() {
+        setDefaultCompanyName() {
             this.columns = [];
             let data = this.items;
             const self = this;
-            console.log(data) 
             this.userInfo.selectedList.forEach((v, i) => {
                 setColumn(data, v, i)
             })
@@ -111,7 +106,7 @@ export default {
                 }
                 self.columns.push({
                     id: i + 1,
-                    title: '区域',
+                    title: '单位',
                     value: item.label,
                     data: item
                 });
@@ -126,10 +121,10 @@ export default {
 
             this.$set(this.columns, this.currentColumn, { ...this.columns[this.currentColumn], value: item.label, data: item })
             
-            if (item.children) {
+            if (item.children && this.columns.length < 2) {
                 this.$set(this.columns, this.currentColumn + 1, { id: i + 1,
-                    title: '区域',
-                    value: '请选择区域', })
+                    title: '单位',
+                    value: '请选择养老机构', })
                 this.$set(this.activeList, this.currentColumn + 1, item.children);
             }
 

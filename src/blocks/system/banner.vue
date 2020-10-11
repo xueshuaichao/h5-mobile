@@ -1,76 +1,100 @@
 <template>
-<div class="swiper-wrap">
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div v-for="(item, i) in images" :key="i" class="swiper-slide">
-                <!-- 具体内容 -->
-                <img :src="item" alt="商品图片" />
+    <div v-if="showbanner" class="swiper-wrap">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div v-for="(item, i) in images" :key="i" class="swiper-slide">
+                    <!-- 具体内容 -->
+                    <img
+                        @click="goDetail(item)"
+                        :src="item.banner"
+                        alt="商品图片"
+                    />
+                </div>
             </div>
+            <div class="swiper-pagination" />
         </div>
-        <div class="swiper-pagination" />
     </div>
-</div>
-    
 </template>
 
 <script>
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.min.css";
-
+import api from "../../api/course";
 export default {
     props: ["videolist"],
     data() {
         return {
+            showbanner: true,
             swiper: null,
-            images: [
-                require("../../assets/account/bg@2x.png"),
-
-                require("../../assets/account/menu-1.png"),
-
-                require("../../assets/account/menu-2.png")
-            ]
+            images: []
         };
     },
     components: {},
     computed: {},
     mounted() {
         // eslint-disable-next-line no-new
-        this.swiper = new Swiper(".swiper-container", {
-            effect: "coverflow",
-            centeredSlides: true,
-            spaceBetween: "18%",
-            slidesPerView: "auto",
-            loopedSlides: 4,
-            loop: true,
-            autoplay: {
-                disableOnInteraction: false
-            },
-            //   loopedSlides: 2,
-            coverflowEffect: {
-                rotate: 0,
-                stretch: 0,
-                depth: 300,
-                modifier: 1,
-                slideShadows: false
-            },
-            pagination: {
-                el: ".swiper-pagination"
-                // clickable: true,
-            }
-        });
+        this.getbannerList();
+        setTimeout(()=>{
+            this.initSwiper();
+        },100)
     },
     methods: {
-        ok() {},
-        cancel() {},
-        changeone() {
-            this.itemid = "";
-            this.videoUrl = null;
-            this.showvideo = false;
+        initSwiper() {
+            this.swiper = new Swiper(".swiper-container", {
+                observer: true,
+                observerParents: true,
+                effect: "coverflow",
+                centeredSlides: true,
+                spaceBetween: "18%",
+                slidesPerView: "auto",
+                loopedSlides: this.images.length+2,
+                loop: true,
+                autoplay: true,
+                //   loopedSlides: 2,
+                coverflowEffect: {
+                    rotate: 0,
+                    stretch: 0,
+                    depth: 300,
+                    modifier: 1,
+                    slideShadows: false
+                },
+                pagination: {
+                    el: ".swiper-pagination"
+                    // clickable: true,
+                },
+                
+            });
         },
-        showVideo(url) {
-            if (url) {
-                this.showvideo = true;
-                this.videoUrl = url;
+        getbannerList() {
+            api.bannerList().then(res => {
+                this.images = res;
+                this.showbanner = true;
+                
+            });
+        },
+        goDetail(item) {
+            const type = item.jumpType;
+            const id = item.quoteId;
+            const { outLink } = item;
+            api.reportClick({
+                id,
+            });
+            if (type === 2) {
+                this.$router.push({
+                    path: '/course/detail',
+                    query: {
+                        id,
+                    },
+                });
+            } else if (type === 3) {
+                this.$router.push({
+                    path: '/taskdetail',
+                    query: {
+                        id,
+                    },
+                });
+            } else if (type === 4) {
+                window.open(outLink);
             }
         }
     }
@@ -98,7 +122,6 @@ export default {
     border-radius: 6px;
     opacity: 1;
 }
-
 </style>
 <style lang="less" scoped>
 .touch-select() {

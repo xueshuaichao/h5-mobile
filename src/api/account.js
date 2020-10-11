@@ -2,7 +2,7 @@ import { axios } from '../libs/axios';
 
 export default {
     getUserInfo() {
-        return axios.get('/learn/v1/user/info')
+        return axios.get('/ucenter/sso/checkCookie')
     },
 
     getLearnCount() {
@@ -18,15 +18,16 @@ export default {
     },
 
     updateUserInfo(params) {
-        return axios.post('/learn/v1/user/update', params);
+        return axios.post('/ucenter/updateByToken', params);
     },
 
     updateUserPassword(params) {
-        return axios.post('/learn/v1/user/updatePassword', params)
+        console.log(params);
+        return axios.post('/ucenter/changePassword', params)
     },
 
     updateUserPhone(params) {
-        return axios.post('/learn/v1/user/updatePhone', params);
+        return axios.post('/ucenter/changePhone', params);
     },
 
     getCode(params) {

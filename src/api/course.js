@@ -59,5 +59,9 @@ export default {
     findBoutiqueCourseList(data) {
         return axios.get('/course/v1/course/student/findBoutiqueCourseList', data);
     },
+    // 获取banner 
+    bannerList() {
+        return axios.get('system/v1/replay/student/list?channel=1');
+    }
 
 }

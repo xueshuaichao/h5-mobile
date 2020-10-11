@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import store from '../store/index';
 
 Vue.use(VueRouter);
-const NEED_LOGIN_PAGE = [];
+const NEED_LOGIN_PAGE = ['account', 'assessment'];
 const routes = [
   // {
   //   path: '/',
@@ -26,11 +26,11 @@ const routes = [
     name: 'courseDetail',
     component: () => import('../views/course/detail.vue')
   },
-  // {
-  //   path: '/jingpin',
-  //   name: 'jingpin',
-  //   component: () => import('../blocks/course/list.vue')
-  // },
+  {
+    path: '/seachpage',
+    name: 'seachpage',
+    component: () => import('../views/course/seachPage.vue')
+  },
   {
     path: '/mychosecourse',
     name: 'mychosecourse',

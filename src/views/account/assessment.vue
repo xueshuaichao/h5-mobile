@@ -10,7 +10,7 @@
             <p class="tip">
                 <img src="../../assets/account/Hi _@2x.png" alt="39" srcset="">
                 <br/>
-                <span v-if="userInfo">{{ userInfo.name || '用户名' }}，</span>这是您的学习数据
+                <span v-if="userInfo">{{ userInfo.username || '用户名' }}，</span>这是您的学习数据
             </p>
 
             <div class="score">

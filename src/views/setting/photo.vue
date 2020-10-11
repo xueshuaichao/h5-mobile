@@ -9,7 +9,7 @@ export default {
     data() {
         return {
             form: {
-                portrait: this.$store.state.userInfo.portrait || '',
+                avatar: this.$store.state.userInfo.avatar || '',
             }
         }
     },
@@ -22,9 +22,11 @@ export default {
                     left-arrow
                     on-click-left={ this.onClickLeft }
                 />
-                <div class="content">
+                <div class="content" on-click={ () => {
+                    if (!this.form.avatar) this.handleClick()
+                }}>
                     {
-                        <img on-click={ this.handleClick } src={ this.form.portrait } />
+                        <img on-click={ this.handleClick } src={ this.form.avatar } />
                     }
                     <input type="file" ref="file" style="display: none" on-change={ this.handleChange }/>
                 </div>
@@ -45,7 +47,7 @@ export default {
             const files = e.target.files;
             this.$loading('上传中');
             api.upload({ file: files[0] }).then((data) => {
-                this.form.portrait = data;
+                this.form.avatar = data;
                 this.$toast.clear();
                 this.$toast.success('上传成功');
 
