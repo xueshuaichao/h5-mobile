@@ -37,18 +37,27 @@
             <div v-if="applyStatus === 0" class="button" @click="startStudy(courseInfo.id)">
                 报名
             </div>
-            <div v-else class="button-disable">
+            <div v-else class="button-disable" @click="show=true">
                 已报名
             </div>
         </div>
+        <userInfo 
+            :show="show"
+            @close="close"
+            @changeApplyStatus="changeApplyStatus"
+        />
     </div>
 </template>
 
 <script>
 import api from '@/api/course';
 import moment from 'moment';
+import userInfo from '../../components/userInfo'
 
 export default {
+    components: {
+        userInfo
+    },
     filters: {
         dataFormat(val) {
             if(val){
@@ -67,11 +76,16 @@ export default {
             catelogList: [],
             applyStatus: 0,
             trainContent: [],
+            show: false,
         };
     },
-    components: {},
     methods: {
-        
+        changeApplyStatus() {
+            this.show = false;
+        },
+        close() {
+            this.show = false;
+        },
         // 清除定时器
         clearTimeing() {
             if (this.IntervalName) {

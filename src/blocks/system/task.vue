@@ -74,7 +74,7 @@ export default {
         },
         jumpMore() {
             this.$router.push({
-                path: '/mytask'
+                path: '/traintask'
             })
         },
     }

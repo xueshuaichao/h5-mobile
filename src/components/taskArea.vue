@@ -1,8 +1,8 @@
 <template>
-    <van-popup v-model="show" round position="bottom" class="task-area" >
+    <van-popup v-model="shows" round position="bottom" class="task-area" @close="closing">
         <div class="header flex">
             <span class="txt">{{ type ? '请选择地区' : '请选择区域单位' }}</span>
-            <span class="close" @click="show = false">关闭</span>
+            <span class="close" @click="closing">关闭</span>
         </div>
         <div class="body">
             <div
@@ -19,19 +19,42 @@
 </template>
 <script>
 import api from '@/api/account';
-import mixins from '../views/setting/mixins';
 
 export default {
-    mixins: [mixins],
+    props: {
+        show: {
+            type: Boolean,
+            default: false
+        },
+        type: {
+            type: Number,
+            default: 0,
+        }
+    },
+    computed: {
+        userInfo() {
+            return this.$store.state.userInfo || { };
+        }
+    },
     data() {
         return {
-            show:  true,
+            shows:  false,
             activeList: [],
             selectedLabels: [],
             selectedList: [],
-            type: 0,
             items: [],
             currentAreaIndex: 0,
+        }
+    },
+    watch: {
+        show(val) {
+            this.shows = val;
+        },
+        type(val, oldVal) {
+            this.currentColumnsIndex = val;
+            if (val !== oldVal) {
+                this.handleClickColumnItem(val);
+            }
         }
     },
     created() {
@@ -42,6 +65,10 @@ export default {
         this.getAreaUnitList();
     },
     methods: {
+         closing() {
+            this.shows = false;
+            this.$emit('close');
+        },
         async getAreaUnitList() {
             const res = await api.getAreaUnitList();
             const items = JSON.parse(res.fieldText).areaUnit 
@@ -51,14 +78,11 @@ export default {
 
             if (this.selectedLabels[0]) {
                 this.currentAreaIndex = items.findIndex(v => v.value === this.selectedList[0]);
-                console.log(this.currentAreaIndex);
             }
         },
 
         handleClickColumnItem(i) {
             this.currentColumnsIndex = i;
-            this.show = true;
-
             if (i) {
                 this.activeList = this.items[this.currentAreaIndex].children;
             } else {
@@ -87,7 +111,21 @@ export default {
                 this.$set(this.selectedLabels, 1, item.label);
                 this.$set(this.selectedList, 1, item.value);
             }
+            this.$emit('data', this.selectedLabels);
         },
+        async updateUserInfo(params, message = '', payload = {}) {
+            this.$loading(message);
+            try {
+                const res = await api.updateUserInfo({ ...params });
+
+                if (res) {
+                    this.$store.commit('setUserInfo', { ...this.userInfo, ...params, ...payload });
+                }
+            } finally {
+                this.$toast.clear();
+            }
+
+        }
     },
 }
 </script>
