@@ -89,7 +89,11 @@ export default {
             api.getAllTypesCount({ questionDifficulty: questionDifficulty || '', sceneCategoryId: sceneCategoryId || '' }).then(res => {
                 this.typesList = res;
                 this.$toast.clear();
-            })
+                
+                if(!res.length) {
+                    this.$toast('暂无数据')
+                }
+            }).catch(this.$toast.clear())
         },
 
         statusbtn(item){
