@@ -102,7 +102,8 @@ export default {
                     path: '/answer',
                     query: {
                         sceneId: item.id,
-                        trainEndTime: this.courseInfo.trainEndTime
+                        trainEndTime: this.courseInfo.trainEndTime,
+                        examType: item.examType,
                     }
                 })
             }
@@ -153,6 +154,7 @@ export default {
                                 type: item1.taskCourseId ? 'course' : 'test',
                                 label: item1.label,
                                 id: item1.taskCourseId ? item1.taskCourseId : item1.scene.id,
+                                examType: item1.taskCourseId ? '' : item1.examType,
                             });
                         });
                     });
