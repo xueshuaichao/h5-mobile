@@ -87,7 +87,6 @@ export default {
     },
     methods: {
         transferTime(time) {
-            console.log(time)
             return Math.round(time / 60);
         },
         jumpToExam() {

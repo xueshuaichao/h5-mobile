@@ -71,14 +71,21 @@
         >
             {{ examtype&&status===1?'任务结束之后，才能查看试卷详情':'查看试卷详情' }}
         </p>
+        <userInfo />
+        <taskArea />
     </div>
 </template>
 <script>
 import api from '../../api/exam';
 import gauge from '../../components/gauge.vue'
+import userInfo from '../../components/userInfo.vue'
+import taskArea from '../../components/taskArea.vue'
+
 export default {
     components: {
         gauge,
+        userInfo,
+        taskArea,
     },
     data() {
         return {
