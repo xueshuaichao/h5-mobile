@@ -32,6 +32,9 @@
   font-size: 28px;
   color: #272F55;
   font-weight: 550;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .jingpin-list ul li img {
   width: 326px;

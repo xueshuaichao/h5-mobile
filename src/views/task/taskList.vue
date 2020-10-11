@@ -24,7 +24,7 @@
           <template #tags>
             <div class="title">
               <span id="title">{{ item.name }}</span>
-              <van-tag round type="danger" class="tag" v-if="item.finishedPercent">NEW</van-tag>
+              <van-tag round type="danger" class="tag" v-if="!item.finishedPercent">NEW</van-tag>
             </div>
             <div class="progressflex">
               <van-progress
@@ -38,8 +38,8 @@
           </template>
           <template #footer>
             <div class="time">
-              {{ item.applyStartTime | dataFormat }}-{{
-                item.applyEndTime | dataFormat
+              {{ item.trainStartTime | dataFormat }}-{{
+                item.trainEndTime | dataFormat
               }}
             </div>
           </template>
@@ -81,13 +81,10 @@ export default {
         });
     },
     goDetail(item) {
-      if(!item.userApplyTaskDto){
-        return
-      }
       this.$router.push({
         path: "/taskdetail",
         query: {
-          id:item.userApplyTaskDto.taskId
+          id:item.id
         }
       });
     },
@@ -123,7 +120,8 @@ export default {
             //     this.refreshing=false 
             // }
             this.taskList.push(...res);
-            if (this.taskList.length == res.total || res.list.length == 0) {
+            if (this.taskList.length == res.total){
+                this.error=false
                 this.finished = true;
             }
             // this.pageNum++;

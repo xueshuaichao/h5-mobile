@@ -5,10 +5,10 @@
             共{{detObj.stageDtos.length}}个阶段，(已完成{{detObj.finishedPercent * 100}}%)
         </van-notice-bar>
         <div v-for="stage in detObj.stageDtos" :key="stage.stage">
-            <span id="step_one">{{stage.stageName}}</span>&nbsp;<span class="class_hour">{{totalClassHour(stage.taskItems)}}课时</span>
+            <span id="step_one">{{stage.stageName?stage.stageName:"阶段"}}</span>&nbsp;<span class="class_hour">{{totalClassHour(stage.taskItems)}}课时</span>
             <div v-for="item in stage.taskItems" :key="item.id">
                 <van-cell-group>
-                    <van-cell @click="goCourse(item.id)" class="study" :title="item.label" value="">
+                    <van-cell @click="goCourse(item.taskCourseId)" class="study" :title="item.label" value="">
                         <template #icon>
                             <img class="courseImg" src="../../assets/task/course_one.png">
                         </template>
