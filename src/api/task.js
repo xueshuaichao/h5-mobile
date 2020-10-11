@@ -8,5 +8,14 @@ export default {
     },
     getDetail(id) {
         return axios.get(`/train/v1/userTask/getTaskInfoByUserId?taskId=${id}`)
-    }
+    },
+    getUserInfo() {
+        return axios.get('/ucenter/sso/checkCookie')
+    },
+    changeTaskApply(data) {
+        return axios.post(
+            `/train/v1/userTask/apply?taskId=${data.taskId}&isApply=${data.isApply}`,
+            data,
+        );
+    },
 }

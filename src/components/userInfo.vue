@@ -13,7 +13,7 @@
         </p>
         <div class="input-wrap input">
             <van-cell-group>
-                <van-field v-model="filter.name"  placeholder="请输入姓名" />
+                <van-field v-model="filter.username"  placeholder="请输入姓名" />
             </van-cell-group>
         </div>
         <p class="label">
@@ -40,14 +40,28 @@
 </van-popup>
 </template>
 <script>
+import api from '../api/task'
+
 export default {
     data() {
         return {
             show: true,
             filter: {
-                name: ''
+                username: '',
+                elderlyOrgName: '',
+                districtName: '',
+                extensionInfo: [],
+                selectedLabels: []
             }
         }
+    },
+    created() {
+        api.getUserInfo().then((res) => {
+            if (res.success) {
+                this.filter = {...this.fiter, ...res.data};
+            }
+        });
+        // api.changeTaskApply().then(() => {})
     },
     methods: {
         onCancel() {
