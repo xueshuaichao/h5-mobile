@@ -28,7 +28,7 @@
             <div class="bar">
             </div>
             <div class="company flex" @click="openArea(1)">
-                <span>{{filter.selectedLabels[1] || '请选择养老机构'}}</span>
+                <span class="area-block">{{filter.selectedLabels[1] || '请选择养老机构'}}</span>
                 <van-icon name="arrow" />
             </div>
         </div>
@@ -183,6 +183,12 @@ export default {
                 line-height: 2.346rem;
                 color: #A7ADBB;
             }
+        }
+        .area-block {
+            width: 260px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .city {
             width: 280px;

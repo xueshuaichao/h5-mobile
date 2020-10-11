@@ -33,8 +33,8 @@ const getPageConfigs = Promise.resolve([
       layout: [
           {
               aid: 'aid_1',
-              block_id: [11, 14, 12, 13],
-              block_instance_id: [111, 121, 131, 141],
+              block_id: [10, 11, 14, 12, 13],
+              block_instance_id: [101, 111, 121, 131, 141],
           },
       ],
       name: 'home',
