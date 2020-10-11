@@ -10,34 +10,6 @@
                         alt="商品图片"
                     />
                 </div>
-                <!-- <div class="swiper-slide">
-                    <img
-                        @click="goDetail(item)"
-                        src="../../assets/exam/instructions-bg.png"
-                        alt="商品图片"
-                    />
-                </div>
-                <div class="swiper-slide">
-                    <img
-                        @click="goDetail(item)"
-                        src="../../assets/exam/instructions-bg.png"
-                        alt="商品图片"
-                    />
-                </div>
-                <div class="swiper-slide">
-                    <img
-                        @click="goDetail(item)"
-                        src="../../assets/exam/instructions-bg.png"
-                        alt="商品图片"
-                    />
-                </div>
-                <div class="swiper-slide">
-                    <img
-                        @click="goDetail(item)"
-                        src="../../assets/exam/instructions-bg.png"
-                        alt="商品图片"
-                    />
-                </div> -->
             </div>
             <div class="swiper-pagination" />
         </div>
