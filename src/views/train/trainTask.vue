@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content">
         <h2 class="head">我的任务</h2>
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
             <van-list
@@ -122,6 +122,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.content{
+    padding: 0px 32px;
+}
 .head{
     height: 48px;
     font-size: 34px;
