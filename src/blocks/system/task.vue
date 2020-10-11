@@ -40,7 +40,7 @@
     </div>
 </template>
 <script>
-import api from '../../api/myitem.js'
+import api from '../../api/task.js'
 import moment from 'moment';
 export default {
     filters: {
@@ -74,7 +74,7 @@ export default {
         },
         jumpMore() {
             this.$router.push({
-                path: '/myitem'
+                path: '/mytask'
             })
         },
     }

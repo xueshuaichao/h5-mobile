@@ -16,11 +16,11 @@
                             <img class="courseStudy" src="../../assets/task/study.png">
                         </template>
                     </van-cell>
-                    <van-cell :title="item.label">
+                    <!-- <van-cell :title="item.label">
                         <template #icon>
                             <img class="courseImg" src="../../assets/task/course_one.png">
                         </template>
-                    </van-cell>
+                    </van-cell> -->
                     <van-cell @click="goTest(item.scene)" :title="item.scene?item.scene.name:'考试名称'">
                         <template #icon>
                             <img class="courseImg" src="../../assets/task/test.png">
@@ -47,7 +47,7 @@
     </div> 
 </template>
 <script>
-import api from '../../api/myitem.js'
+import api from '../../api/task.js'
 export default {
     data(){
         return {
@@ -138,6 +138,7 @@ body{
     border-radius: 6px;
     border: 1px solid white;
     border-radius:5px;
+    text-align: left;
 }
 
 .content {

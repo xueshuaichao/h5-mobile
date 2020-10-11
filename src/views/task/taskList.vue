@@ -52,7 +52,7 @@
 </template>
 <script>
 import moment from "moment";
-import api from "../../api/myitem.js";
+import api from "../../api/task.js";
 export default {
   data() {
     return {
@@ -85,7 +85,7 @@ export default {
         return
       }
       this.$router.push({
-        path: "/mydetail",
+        path: "/taskdetail",
         query: {
           id:item.userApplyTaskDto.taskId
         }
@@ -122,7 +122,7 @@ export default {
             //     this.taskList=[]
             //     this.refreshing=false 
             // }
-            this.taskList.push(...res.list);
+            this.taskList.push(...res);
             if (this.taskList.length == res.total || res.list.length == 0) {
                 this.finished = true;
             }

@@ -7,8 +7,8 @@
             </div> -->
             <div class="user-info-wrap">
                 <div class="user-info">
-                    <img :src="require('../../assets/account/default-photo.png') || userInfo.portrait" alt="" width="62">
-                    <p class="name" v-if="userInfo">{{ userInfo.name }}</p>
+                    <img :src="require('../../assets/account/default-photo.png') || userInfo.avatar" alt="" width="62">
+                    <p class="name" v-if="userInfo">{{ userInfo.username }}</p>
                 </div>
             </div>
             <div class="record">
@@ -83,22 +83,17 @@ export default {
             ]
         };
     },
-    computed: {
-        // ...mapGetters({
-        //     userInfo: 'getUserInfo'
-        // })
-    },
+
     created() {
         this.getUserInfo();
         this.getLearnCount();
-        console.log(this.$store)
     },
 
     methods: {
         async getUserInfo() {
-            const res = await api.getUserInfo({ "userId":"1000118612570985" });
+            const res = await api.getUserInfo();
             this.userInfo = res;
-            this.$store.commit('setUserInfo', res);
+            this.$store.commit('setUserInfo', { ...res, organizations: JSON.parse(res.extensionInfo) });
         },
 
         async getLearnCount() {

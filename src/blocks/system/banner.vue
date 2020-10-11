@@ -40,6 +40,7 @@ export default {
             centeredSlides: true,
             spaceBetween: "18%",
             slidesPerView: "auto",
+            loopedSlides: 4,
             loop: true,
             autoplay: {
                 disableOnInteraction: false

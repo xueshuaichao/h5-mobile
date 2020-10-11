@@ -9,5 +9,4 @@ const URL = {
         API: 'http://mapi.testing1.wdeduc.com',
     },
 };
-
 export default URL[process.env.NODE_ENV];

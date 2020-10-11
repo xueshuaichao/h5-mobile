@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import store from '../store/index';
 
 Vue.use(VueRouter);
-const NEED_LOGIN_PAGE = [];
+const NEED_LOGIN_PAGE = ['account', 'assessment'];
 const routes = [
   // {
   //   path: '/',
@@ -120,13 +120,13 @@ const routes = [
     component: () => import('../views/exam/result.vue')
   },
   {
-    path: '/myitem',
-    name: 'myitem',
+    path: '/mytask',
+    name: 'mytask',
     component: () => import('../views/task/index.vue')
   },
   {
-    path: '/mydetail',
-    name: 'mydetail',
+    path: '/taskdetail',
+    name: 'taskdetail',
     component: () => import('../views/task/detail.vue')
   },
   

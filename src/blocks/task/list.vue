@@ -93,7 +93,7 @@ export default {
         handleClickItem(item) {
             // todo router
             console.log(item)
-            this.$router.push(`/mydetail?id=${item.id}`)
+            this.$router.push(`/taskdetail?id=${item.id}`)
         }
 
     },
