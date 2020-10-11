@@ -21,26 +21,27 @@
         </p>
         <div class="area input-wrap flex">
             <div class="city flex">
-                <span>asa</span>
+                <span>{{filter.districtName || ''}}</span>
                 <van-icon name="arrow" />
             </div>
             <div class="bar">
             </div>
             <div class="company flex">
-                <span>asasa</span>
+                <span>{{filter.elderlyOrgName || ''}}</span>
                 <van-icon name="arrow" />
             </div>
         </div>
     </div>
     <div class="footer">
-        <div class="btn">
-            立即报名
+        <div class="btn" @click="changeApply">
+            {{ status ? '取消报名' : '立即报名' }}
         </div>
     </div>
 </van-popup>
 </template>
 <script>
 import api from '../api/task'
+import { Toast } from 'vant'
 
 export default {
     data() {
@@ -50,21 +51,39 @@ export default {
                 username: '',
                 elderlyOrgName: '',
                 districtName: '',
-                extensionInfo: [],
-                selectedLabels: []
-            }
+            },
+            taskId: 44,
+            status: 0,
         }
     },
     created() {
+        if (this.$route.query.id !== undefined) {
+            this.taskId = this.$route.query.id;
+        }
         api.getUserInfo().then((res) => {
             if (res.success) {
-                this.filter = {...this.fiter, ...res.data};
+                this.filter = {...this.filter, ...res.data};
             }
         });
-        // api.changeTaskApply().then(() => {})
     },
     methods: {
         onCancel() {
+        },
+        changeApply() {
+            const status = this.applyStatus ? 0 : 1;
+            api.changeTaskApply({
+                taskId: this.taskId,
+                isApply: status
+            }).then((res) => {
+                if (res.success) {
+                    this.status = status;
+                    Toast.loading({
+                        duration: 1200,
+                        forbidClick: true,
+                        message: '操作成功',
+                    });
+                }
+            })
         }
     }
 }

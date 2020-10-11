@@ -1,11 +1,11 @@
 <template>
     <van-popup v-model="show" round position="bottom" class="task-area" >
         <div class="header flex">
-            <span class="txt">请选择区域单位</span>
+            <span class="txt">{{ type ? '请选择地区' : '请选择区域单位' }}</span>
             <span class="close" @click="show = false">关闭</span>
         </div>
         <div class="body">
-            <div v-for="(item, i) in activeList[this.currentColumn]"  
+            <div v-for="(item, i) in activeList"  
                 :class="currentItem === i && 'active' " 
                 :key="i" 
                 @click="handleClickItem(item, i)"
@@ -17,95 +17,31 @@
     </van-popup>
 </template>
 <script>
+import api from '../api/task'
+
 export default {
     data() {
         return {
             show:  true,
-            activeList: [
-                [
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    }
-                ],
-                [
-                   {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    },
-                    {
-                        label: 'qqwq',
-                    } 
-                ]
-            ],
+            activeList: [],
             currentColumn: 0,
-            currentItem: 0
+            currentItem: 0,
+            areaUnit: null,
+            type: 0,
+            
         }
+    },
+    created() {
+        api.getAreaList().then((res) => {
+            if (res.fieldText) {
+                this.areaUnit = JSON.parse(res.fieldText).areaUnit;
+                this.activeList = this.areaUnit;
+            }
+        })
     },
     methods: {
         handleClickItem(item, index) {
-            console.log(item, index);
+            this.currentItem = index;
         }
     }
 }

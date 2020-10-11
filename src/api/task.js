@@ -18,4 +18,7 @@ export default {
             data,
         );
     },
+    getAreaList() {
+        return axios.get('/ucenter/field/searchDetail?id=1');
+    }
 }
