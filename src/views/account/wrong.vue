@@ -103,8 +103,9 @@ export default {
         },
         
         classifybtn(item){
+            this.activeId = item.id;
+            this.sceactiveId = null;
             if(item.id !== 0){
-                this.activeId = item.id;
                 this.getChildren(this.activeId);
             } 
         },

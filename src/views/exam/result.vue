@@ -15,7 +15,7 @@
         <div class="page-info">
             <div>
                 <p class="num">
-                    {{detail.rightCount}}%
+                    {{detail.rightRate}}%
                 </p>
                 <p>
                    正确率 
@@ -26,7 +26,7 @@
             </div>
             <div>
                 <p class="num">
-                    36min
+                    {{detail.timeUsed}}min
                 </p>
                 <p>
                    答题时间 
@@ -76,6 +76,7 @@
 <script>
 import api from '../../api/exam';
 import gauge from '../../components/gauge.vue'
+
 export default {
     components: {
         gauge,
@@ -137,8 +138,9 @@ export default {
                 })
         },
         getResult() {
-            api.getResult({paperId: 1}).then((res) => {
-                this.detail = {...res, rate: (res.score / res.totalScore)};
+            api.getResult({paperId: this.paperId}).then((res) => {
+                const timeUsed = Math.round(res.timeUsed/1000/60); 
+                this.detail = {...res, rate: (res.score / res.totalScore), timeUsed};
             })
         }
     }

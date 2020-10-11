@@ -10,7 +10,7 @@
        <div class="showpaper-title clearfix">
            <p>{{ typeName }}</p>
        </div>
-       <div class="showpaper-content">
+       <div class="showpaper-content" v-if="currentQuestion">
            <div class="showpaper-test">
                 <div class="test-title">
                     <span>{{ currentQuestion.perMark }}分</span> {{ currentQuestion.title }}
@@ -31,7 +31,7 @@
                 <p>{{ currentQuestion.remark }}</p>
             </div>
        </div>
-       <div class="showpaper-footer">
+       <div class="showpaper-footer" v-if="currentQuestion">
             <van-button type="default" size="large" class="showpaper-button" @click="handleClickBtn(-1)">上一题</van-button>
             <van-button type="default" size="large" class="showpaper-button" @click="handleClickBtn(1)">下一题</van-button>
         </div>
@@ -70,11 +70,16 @@ export default {
 
     methods: {
         getWrongQuestions() {
+            this.$loading();
             api.getWrongQuestions(this.pageNum, this.pageSize, this.params).then(({ list, total }) => {
-                this.total = total;
-                this.list = list;
-                this.currentQuestion = list[this.currentQuestionIndex];
-            })
+                if (total) {
+                    this.total = total;
+                    this.list = list;
+                    this.currentQuestion = list[this.currentQuestionIndex];
+                }
+
+                this.$toast.clear();
+            }).catch(this.$toast.clear())
         },
 
         removeWrongQuestion(id) {
