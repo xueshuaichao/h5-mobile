@@ -8,7 +8,8 @@
       error-text="请求失败，点击重新加载"
       @load="onLoad"
     >
-      <div
+    <div v-if="taskList">
+        <div
         class="itemcontent"
         v-for="item in taskList"
         :key="item.id"
@@ -45,8 +46,8 @@
           </template>
         </van-card>
         <div class="line"></div>
-      </div>
-      
+        </div>
+      </div>    
     </van-list>
   </van-pull-refresh>
 </template>
@@ -120,7 +121,7 @@ export default {
             //     this.refreshing=false 
             // }
             this.taskList.push(...res);
-            if (this.taskList.length == res.total){
+            if (this.taskList.length == res.total || res.length == 0){
                 this.error=false
                 this.finished = true;
             }

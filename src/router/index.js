@@ -172,7 +172,7 @@ const routes = [
     path: '/message/:id',
     name: 'messageDetail',
     component: () => import('../views/account/message-detail.vue')
-  }
+  },
 ];
 
 const router = new VueRouter({
