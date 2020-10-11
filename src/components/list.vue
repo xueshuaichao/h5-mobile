@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import axios from '@/libs/axios';
+
 export default {
     name: 'List',
     
@@ -18,6 +20,18 @@ export default {
             required: true,
             type: String,
             default: '',
+        },
+
+        params: {
+            type: Object,
+            default() {
+                return {};
+            }
+        },
+
+        method: {
+            type: String,
+            default: 'get',
         }
     },
 
@@ -25,16 +39,15 @@ export default {
         return {
             loading: false,
             finished: false,
-            params: {
-                pageNum: 1,
-                pageSize: 10,
-            }
+            pageNum: 1,
+            pageSize: 10,
         }
     },
 
     methods: {
-        getList() {
-            
+        async getList() {
+            const res = await axios[this.method](`${this.url}?pageNum=${this.pageNum}&pageSize=${this.pageSize}`, this.params)
+            console.log(res);
         },
     }
 }
