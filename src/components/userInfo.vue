@@ -1,11 +1,12 @@
 <template>
 <van-popup
-  van-popup v-model="show" round position="bottom" 
+  van-popup v-model="shows" round position="bottom"
+  @close="closing"
   class="user-info-sheet"
 >
     <div class="header">
         <span class="txt">请填写以下信息</span>
-        <span class="close" @click="onCancel">关闭</span>
+        <span class="close" @click="closing">关闭</span>
     </div>
     <div class="body">
         <p class="label">
@@ -20,14 +21,14 @@
             请选择养老机构
         </p>
         <div class="area input-wrap flex">
-            <div class="city flex">
+            <div class="city flex" @click="openArea(0)">
                 <span>{{filter.selectedLabels[0] || '请选择区域'}}</span>
                 <van-icon name="arrow" />
             </div>
             <div class="bar">
             </div>
-            <div class="company flex">
-                <span>{{filter.selectedLabels[1] || '请选择养老机构'}}</span>
+            <div class="company flex" @click="openArea(1)">
+                <span class="area-block">{{filter.selectedLabels[1] || '请选择养老机构'}}</span>
                 <van-icon name="arrow" />
             </div>
         </div>
@@ -37,21 +38,45 @@
             立即报名
         </div>
     </div>
+    <taskArea
+        ref="area"
+        :show="showArea"
+        :type="type"
+        @close="onclose"
+        @data="getArea"
+    />
 </van-popup>
 </template>
 <script>
 import api from '../api/task'
 import { Toast } from 'vant'
+import taskArea from './taskArea'
 
 export default {
+    components: {
+        taskArea,
+    },
+    props: {
+        show: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
-            show: true,
+            shows: false,
             filter: {
                 username: '',
                 selectedLabels: ['', '']
             },
             taskId: 44,
+            showArea: false,
+            type: 0,
+        }
+    },
+    watch: {
+        show(val) {
+            this.shows = val;
         }
     },
     created() {
@@ -59,31 +84,51 @@ export default {
             this.taskId = this.$route.query.id;
         }
         this.getUserInfo(); 
+       
     },
     methods: {
-        onCancel() {
-            this.show = false;
+        getArea(labels) {
+            this.showArea = false;
+            this.filter.selectedLabels = labels;
+        },
+        openArea(arg) {
+            if (arg && !this.filter.selectedLabels[0]) {
+                Toast.loading({
+                    duration: 1200,
+                    forbidClick: true,
+                    message: '先选择地区',
+                });
+            } else {
+                this.type = arg;
+                this.showArea = true;
+            }
+        },
+        onclose() {
+            this.showArea = false;
+        },
+        closing() {
+            this.shows = false;
+            this.$emit('close')
         },
         async getUserInfo() {
             const res = await api.getUserInfo();
-            if (res.selectedLabels)
             this.filter = { ...this.filter, ...res, selectedLabels: res.selectedLabels || [] };
             this.$store.commit('setUserInfo', { ...res, organizations: JSON.parse(res.extensionInfo) });
         },
         changeApply() {
-            api.changeTaskApply({
-                taskId: this.taskId,
-                isApply: 1
-            }).then((res) => {
-                if (res.success) {
-                    Toast.loading({
-                        duration: 1200,
-                        forbidClick: true,
-                        message: '操作成功',
-                    });
-                }
-            })
-        }
+            if (this.filter.selectedLabels[0] && this.filter.selectedLabels[1] && this.filter.username) {
+                // 补全信息，并报名。
+                this.$refs.area.handleChangeCompanyName();
+                api.changeTaskApply({
+                    taskId: this.taskId,
+                    isApply: 1
+                }).then(() => {
+                    this.$emit('changeApplyStatus');
+                })
+            } else {
+                this.$toast('请补全信息');
+            }
+        },
     }
 }
 </script>
@@ -138,6 +183,12 @@ export default {
                 line-height: 2.346rem;
                 color: #A7ADBB;
             }
+        }
+        .area-block {
+            width: 260px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .city {
             width: 280px;

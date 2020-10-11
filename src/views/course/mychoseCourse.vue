@@ -72,40 +72,39 @@ export default {
         }
     },
     mounted() {
+        // this.changeTab('');
     },
     methods: {
         changeTab(num) {
-            console.log(num);
+            // console.log(num);
             this.tabnum = num;
             this.listparam.studyStatus = num;
             this.listparam.pageNum = 1;
-            this.myChoseCourse();
+            this.myChoseCourse('change');
         },
         onCancel() {},
-        async myChoseCourse() {
-            // if(type){
-            //     this.listparam.pageNum = 1;
-            this.list = [];
-            // }
+        async myChoseCourse(type) {
+            this.isNone = false;
+            if(type){
+                this.listparam.pageNum = 1;
+                this.list = [];
+            }
             const { list, total } = await api.myChoseCourse(this.listparam);
                 
             this.loading = false;
             
             if (!total || (list && !list.length && !this.list.length)) { // no data
+                console.log(1111111)
                 this.isNone = true;
                 return;
             }
             
             if (list && list.length) {
-                this.$nextTick(() => {
-                    this.list.push(...list);
-                })
-                this.isNone = false;
-                console.log(this.list)
+                this.list.push(...list);
             } else {
                 this.finished = true;
             }
-
+            console.log(this.list)
             if (this.list.length >= total || total < 10) { // finished
                 this.finished = true;
             }

@@ -41,14 +41,23 @@
                 已报名
             </div>
         </div>
+        <userInfo 
+            :show="show"
+            @close="close"
+            @changeApplyStatus="changeApplyStatus"
+        />
     </div>
 </template>
 
 <script>
 import api from '@/api/course';
 import moment from 'moment';
+import userInfo from '../../components/userInfo'
 
 export default {
+    components: {
+        userInfo
+    },
     filters: {
         dataFormat(val) {
             if(val){
@@ -67,10 +76,17 @@ export default {
             catelogList: [],
             applyStatus: 0,
             trainContent: [],
+            show: false,
         };
     },
-    components: {},
     methods: {
+        changeApplyStatus() {
+            this.show = false;
+            this.getCourseInfo(this.$route.query.id);
+        },
+        close() {
+            this.show = false;
+        },
         handleRouterJump(item) {
             console.log(item, '跳转触发');
             if (item.type === 'course') {
@@ -85,7 +101,8 @@ export default {
                 this.$router.push({
                     path: '/answer',
                     query: {
-                        sceneId: item.id
+                        sceneId: item.id,
+                        trainEndTime: this.courseInfo.trainEndTime
                     }
                 })
             }
@@ -114,6 +131,7 @@ export default {
             if (currentTimeStamp > this.courseInfo.applyStartTime && currentTimeStamp < this.courseInfo.applyEndTime) {
                 this.$passport.checkCookie().then((res) => {
                     console.log(res)
+                    this.show = true;
                 },() => {
                     this.$passport.goH5Login();
                 });
@@ -128,7 +146,7 @@ export default {
                     this.courseInfo = res;
                     this.courseName = this.courseInfo.name;
                     this.applyStatus = res.applyStatus;
-
+                    
                     res.stageDtos.forEach((item) => {
                         item.taskItems.forEach((item1) => {
                             this.trainContent.push({
@@ -138,14 +156,37 @@ export default {
                             });
                         });
                     });
+                    this.jumpToCourse(res.applyStatus);
                     console.log(res, 'res222');
                 });
+        },
+        // 如果已报名，并且在培训周期内，直接跳到课程页面
+        jumpToCourse(applyStatus) {
+            if (applyStatus === 0) {
+                return;
+            }
+            const courseId = this.trainContent.find((item)=>item.type==='course').id;
+            console.log(courseId, 'courseId11');
+            if (!courseId) {
+                return;
+            }
+            const currentTimeStamp = new Date().getTime();
+            if (currentTimeStamp > this.courseInfo.trainStartTime && currentTimeStamp < this.courseInfo.trainEndTime) {
+                
+                this.$router.push({
+                    path: '/course/detail',
+                    query: {
+                        id: courseId
+                    }
+                })
+            }
+
         },
     },
     mounted() {
         if (this.$route.query.id) {
             // 判断是否登录
-            this.checkLogin();
+            // this.checkLogin();
             // 获取课程内容
             this.getCourseInfo(this.$route.query.id);
         }
