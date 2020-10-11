@@ -3,24 +3,17 @@
         <van-nav-bar
             title="区域单位"
             left-arrow
-            @click-left="onClickLeft"
+            @click-left="$router.go(-1)"
         />
         <div class="content">
             <div class="list">
                 <div class="item van-hairline--bottom" v-for="(item, i) in columns" :key="i" @click="handleClickColumnItem(i)">
                     <p class="title">{{ item.title }}</p>
                     <div class="value">
-                        <span class="default">{{ item.value }}</span>
+                        <span class="default">{{  selectedLabels[i] || item.value }}</span>
                         <van-icon name="arrow" />
                     </div>
                 </div>
-                <!-- <div class="item">
-                    <p class="title">单位</p>
-                    <div class="value">
-                        <span>请选择养老机构</span>
-                        <van-icon name="arrow" />
-                    </div>
-                </div> -->
             </div>
         </div>
 
@@ -35,7 +28,7 @@
                    <span @click="show = false">关闭</span>
                 </div>
                 <div class="popup-body">
-                    <div v-for="(item, i) in activeList[this.currentColumn]"  :class="currentItem === i && 'active' " :key="i" @click="handleClickItem(item, i)">
+                    <div v-for="(item, i) in activeList"  :class="selectedList.includes(item.value) && 'active' " :key="i" @click="handleClickItem(item, i)">
                         {{ item.label }}
                     </div>
                 </div>
@@ -44,6 +37,7 @@
     </div>
 </template>
 <script>
+import api from '@/api/account';
 import mixins from './mixins';
 import './index.less'
 
@@ -62,85 +56,76 @@ export default {
                     value: '请选择区域',
                     id: 0,
                 },
+                {
+                    title: '单位',
+                    value: '请选择养老机构',
+                    id: 1,
+                },
             ],
             activeList: [],
-            currentColumn: 0,
+            selectedLabels: [],
+            selectedList: [],
             currentItem: 0,
+
         }
     },
 
     created() {
-       this.items = [this.userInfo.organizations.areaUnit ];
+        const { selectedLabels, selectedList } = this.userInfo;
 
-       this.activeList.push(this.items);
+        this.selectedLabels = selectedLabels || [];
+        this.selectedList = selectedList || [];
 
-       this.setDefaultCompanyName();
+        this.getAreaUnitList();
     },
 
     methods: {
-        parseData(data) {
-            data.text = data.label;
-            data.id = data.value;
-
-            if (data.children) {
-                data.children.forEach(v => this.parseData(v))
-            }
-            return data;
-        },
-
-        setDefaultCompanyName() {
-            this.columns = [];
-            let data = this.items;
-            const self = this;
-            this.userInfo.selectedList.forEach((v, i) => {
-                setColumn(data, v, i)
-            })
-
-            function setColumn(child, v, i) {
-
-                let item = child.find(item => item.value === v);  
-                console.log(item)            
-                if (item.children) {
-                    self.activeList.push(item.children);
-                    data = item.children;
-                }
-                self.columns.push({
-                    id: i + 1,
-                    title: '单位',
-                    value: item.label,
-                    data: item
-                });
-            }
-        },
-
-        onClickLeft() {
-           this.$router.go(-1);
-        },
-       
-        handleClickItem(item, i) {
-
-            this.$set(this.columns, this.currentColumn, { ...this.columns[this.currentColumn], value: item.label, data: item })
+        async getAreaUnitList() {
+            const res = await api.getAreaUnitList();
+            const items = JSON.parse(res.fieldText).areaUnit 
             
-            if (item.children && this.columns.length < 2) {
-                this.$set(this.columns, this.currentColumn + 1, { id: i + 1,
-                    title: '单位',
-                    value: '请选择养老机构', })
-                this.$set(this.activeList, this.currentColumn + 1, item.children);
-            }
+            this.items = items;
+            this.activeList = items;
 
-            this.currentItem = i;
+            if (this.selectedLabels[0]) {
+                this.currentAreaIndex = items.findIndex(v => v.value === this.selectedList[0]);
+                console.log(this.currentAreaIndex);
+            }
         },
 
         handleClickColumnItem(i) {
+            this.currentColumnsIndex = i;
             this.show = true;
-            this.currentColumn = i;
+
+            if (i) {
+                this.activeList = this.items[this.currentAreaIndex].children;
+            } else {
+                this.activeList = this.items;
+            }
         },
 
         handleChangeCompanyName() {
-            const selectedList = this.columns.map(v => v.data.value);
+            const [areaCode, unitCode] = this.selectedList;
 
-            this.updateUserInfo({ selectedList });
-        }
+            if (!areaCode || !unitCode) {
+                this.$toast('请选择区域单位');
+                return;
+            }
+            this.updateUserInfo({ areaCode, unitCode }, '', { selectedLabels: this.selectedLabels });
+
+        },
+
+        handleClickItem(item, i) {
+            if (!this.currentColumnsIndex) { // 区域
+                this.currentAreaIndex = i;
+
+                this.selectedLabels = [item.label, ''];
+                this.selectedList = [item.value, ''];
+            } else {
+                this.$set(this.selectedLabels, 1, item.label);
+                this.$set(this.selectedList, 1, item.value);
+            }
+        },
     },
 }   
 </script>
@@ -197,6 +182,8 @@ export default {
     }
 
     .popup {
+        overflow: hidden;
+        height: 100%;
         &-header {
            display: flex;
            flex-flow: row;
@@ -217,7 +204,9 @@ export default {
         } 
 
         &-body {
-            padding: 16px;
+            padding: 32px;
+            height: 80%;
+            overflow: scroll;
 
             div {
                 margin-bottom: 24px;
