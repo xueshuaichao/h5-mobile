@@ -41,6 +41,10 @@ export default {
     // 消息
     getMessageList(params) {
         return axios.get('/learn/v1/message/findByCondition', params)
-    }
+    },
 
+    // 区域机构
+    getAreaUnitList() {
+        return axios.get('/ucenter/field/searchDetail?id=1')
+    }
 }
