@@ -128,7 +128,7 @@ export default {
                     this.courseInfo = res;
                     this.courseName = this.courseInfo.name;
                     this.applyStatus = res.applyStatus;
-
+                    
                     res.stageDtos.forEach((item) => {
                         item.taskItems.forEach((item1) => {
                             this.trainContent.push({
@@ -138,8 +138,31 @@ export default {
                             });
                         });
                     });
+                    this.jumpToCourse(res.applyStatus);
                     console.log(res, 'res222');
                 });
+        },
+        // 如果已报名，并且在培训周期内，直接跳到课程页面
+        jumpToCourse(applyStatus) {
+            if (applyStatus === 0) {
+                return;
+            }
+            const courseId = this.trainContent.find((item)=>item.type==='course').id;
+            console.log(courseId, 'courseId11');
+            if (!courseId) {
+                return;
+            }
+            const currentTimeStamp = new Date().getTime();
+            if (currentTimeStamp > this.courseInfo.trainStartTime && currentTimeStamp < this.courseInfo.trainEndTime) {
+                
+                this.$router.push({
+                    path: '/course/detail',
+                    query: {
+                        id: courseId
+                    }
+                })
+            }
+
         },
     },
     mounted() {
