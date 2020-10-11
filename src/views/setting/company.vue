@@ -111,7 +111,7 @@ export default {
                 this.$toast('请选择区域单位');
                 return;
             }
-            this.updateUserInfo({ areaCode, unitCode }, '', { selectedLabels: this.selectedLabels });
+            this.updateUserInfo({ selectedList: this.selectedList }, '', { selectedLabels: this.selectedLabels, selectedList: this.selectedList });
 
         },
 

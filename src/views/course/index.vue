@@ -125,7 +125,7 @@ export default {
             } else {
                 this.finished = true;
             }
-
+            console.log(this.list)
             if (this.list.length >= total || total < 10) { // finished
                 this.finished = true;
             }
