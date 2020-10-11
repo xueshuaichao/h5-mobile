@@ -132,6 +132,31 @@
 .course-list .none img {
   width: 160px;
 }
+.filterpage .footer1 {
+  padding: 0px 5%;
+}
+.filterpage .footer {
+  width: 90%;
+  margin-top: 32px;
+}
+.filterpage .footer .footer-left {
+  width: 15%;
+  text-align: center;
+}
+.filterpage .footer .footer-left p {
+  font-size: 24px;
+  color: #272F55;
+}
+.filterpage .footer .button {
+  width: 80%;
+  height: 88px;
+  font-size: 28px;
+  color: white;
+  text-align: center;
+  line-height: 88px;
+  background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
+  border-radius: 16px;
+}
 .filterpage-header {
   width: 100%;
   position: relative;
@@ -249,28 +274,6 @@
   color: #E85A3A;
   border: 2px solid #E85A3A;
   background: rgba(232, 90, 58, 0.04);
-}
-.filterpage .filters .footer {
-  width: 100%;
-  margin-top: 32px;
-}
-.filterpage .filters .footer .footer-left {
-  width: 15%;
-  text-align: center;
-}
-.filterpage .filters .footer .footer-left p {
-  font-size: 24px;
-  color: #272F55;
-}
-.filterpage .filters .footer .button {
-  width: 80%;
-  height: 88px;
-  font-size: 28px;
-  color: white;
-  text-align: center;
-  line-height: 88px;
-  background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
-  border-radius: 16px;
 }
 .filterpage .sortStatus {
   text-align: left;
@@ -589,6 +592,7 @@
   padding: 40px 32px;
 }
 .seachPage-list-header {
+  position: relative;
   height: 64px;
   line-height: 64px;
   vertical-align: middle;
@@ -607,18 +611,60 @@
   height: 64px;
   background-color: #F5F5FA;
   border-radius: 32px;
+  padding: 0px 60px;
   border: none;
 }
 .seachPage-list-header .seachBtn {
   color: #272F55;
   font-size: 28px;
 }
-.seachPage-list-header .header-right {
+.seachPage-list-header .typename {
+  position: absolute;
+  top: 2px;
+  left: 150px;
+  color: #737386;
+  font-size: 26px;
+}
+.seachPage-list-header .changetype {
+  position: absolute;
+  top: 62px;
+  left: 100px;
+  width: 136px;
+  background-color: #F5F5FA;
+  border-radius: 12px 0px 12px 12px;
+}
+.seachPage-list-header .changetype span {
   display: inline-block;
-  width: 40px;
-  height: 40px;
-  vertical-align: middle;
-  margin-top: 12px;
+  width: 136px;
+  height: 88px;
+  text-align: center;
+  line-height: 88px;
+  font-size: 28px;
+  color: #272F55;
+}
+.seachPage-list-header .changetype .activetype {
+  background-color: #fff;
+}
+.seachPage-list .seachHistory {
+  padding: 48px 0px;
+}
+.seachPage-list .seachHistory-top .toptext {
+  color: #A7ADBB;
+  font-size: 24px;
+}
+.seachPage-list .seachHistory-top .topimg img {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+}
+.seachPage-list .seachHistory-list ul li {
+  padding: 12px 20px;
+  color: #272F55;
+  font-size: 28px;
+  background-color: #F5F5FA;
+  margin-right: 32px;
+  margin-top: 32px;
+  border-radius: 12px;
 }
 .seachPage-list .item {
   padding: 32px 0px;

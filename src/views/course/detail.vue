@@ -334,7 +334,7 @@ export default {
             return true;
         },
         showvideo(val) {
-            if(!val.menuFlag){
+            if(!val.menuFlag && this.isjoin){
                 this.courseItemDetailId = val.courseItemDetailId;
                 // 视频
                 if(val.detailType === '1'){
@@ -347,6 +347,8 @@ export default {
                 } else if(val.detailType === '4'){
                     // 试题
                 }
+            }else {
+                this.$toast('加入选学后才可观看');
             }
         },
         // 

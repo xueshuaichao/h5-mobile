@@ -87,18 +87,18 @@ export default {
     },
     methods: {
         gofilter() {
-            if(this.$route.query.seachlist){
-                this.$router.push({
-                    path: "/course/filter",
-                    query: {
-                        paramslist: this.$route.query.seachlist,
-                    }
-                })
-            } else {
-                this.$router.push({
-                    path: "/course/filter"
-                })
-            }
+            // if(this.$route.query.seachlist){
+            //     this.$router.push({
+            //         path: "/course/filter",
+            //         query: {
+            //             paramslist: this.$route.query.seachlist,
+            //         }
+            //     })
+            // } else {
+            this.$router.push({
+                path: "/course/filter"
+            })
+            // }
             
         },
         onCancel() {},
