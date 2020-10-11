@@ -41,23 +41,19 @@
                                 <span class="catalog-futitle" @click="showvideo(item)">
                                     {{item.title}}
                                 </span>
-                                <span class="catalog-hours">{{item.lessonCount}} 课时</span>
+                                <span class="catalog-hours">3 课时</span>
                             </div>
                         </template>
                         <div class="catalog-level">
                             <ul class="firstlevel">
                                 <li class="firstlevel-li" v-for="(item1, index) in item.childrenList" :key="index">
                                     <p class="firstlevel-li-p pstyle" @click="showvideo(item1)">
-                                        <span v-if="item1.menuFlag" class="outyuan"><span class="inner"></span></span>
-                                        <span v-else class="typestyle">{{gettype(item1)}}</span>{{item1.title}}
-                                        <span v-if="!item1.menuFlag" class="process fr">{{item1.studyProcess ? item1.studyProcess.process : 0}}%</span>
+                                        {{item1.detailName}}
                                     </p>
                                     <ul class="secLevel">
                                         <li class="secLevel-li listyle1" v-for="(item2, index) in item1.childrenList" :key="index">
                                             <p class="secLevel-li-p pstyle1" @click="showvideo(item2)">
-                                                <span v-if="item2.menuFlag" class="outyuan"><span class="inner"></span></span>
-                                                <span v-else class="typestyle">{{gettype(item2)}}</span>{{item2.title}}
-                                                <span v-if="!item1.menuFlag" class="process fr">{{item2.studyProcess ? item2.studyProcess.process : 0}}%</span>
+                                                {{item2.detailName}}
                                             </p>
                                             <ul class="triLevel">
                                                 <li
@@ -68,26 +64,8 @@
                                                         class="triLevel-li-p pstyle1"
                                                         @click="showvideo(item3)"
                                                     >
-                                                        <span v-if="item3.menuFlag" class="outyuan"><span class="inner"></span></span>
-                                                        <span v-else class="typestyle">{{gettype(item3)}}</span>{{item3.title}}
-                                                        <span v-if="!item1.menuFlag" class="process fr">{{item3.studyProcess ? item3.studyProcess.process : 0}}%</span>
+                                                        {{item3.detailName}}
                                                     </p>
-                                                    <ul class="triLevel">
-                                                        <li
-                                                            class="triLevel-li listyle1"
-                                                            v-for="(item4, index) in item3.childrenList" :key="index"
-                                                        >
-                                                            <p
-                                                                class="triLevel-li-p pstyle1"
-                                                                @click="showvideo(item4)"
-                                                            >
-                                                                <span v-if="item4.menuFlag" class="outyuan"><span class="inner"></span></span>
-                                                                <span v-else class="typestyle">{{gettype(item4)}}</span>
-                                                                {{item4.title}}
-                                                                <span class="process fr">{{item4.studyProcess ? item4.studyProcess.process : 0}}%</span>
-                                                            </p>
-                                                        </li>
-                                                    </ul>
                                                 </li>
                                             </ul>
                                         </li>
@@ -104,16 +82,16 @@
             <div v-if="changetype === '2'" class="content-judge">
                 <div v-if="gojudge" class="showjudge clearfix">
                     <div class="showjudge-left fl">
-                        <p class="showjudge-left-top">综合评分 <span>{{courseInfo.starAvg}}</span></p>
+                        <p class="showjudge-left-top">综合评分 <span>4.6</span></p>
                         <van-rate
-                        v-model="this.courseInfo.starAvg"
+                        v-model="judge"
                         :size="27"
                         color="#ffd21e"
                         void-icon="star"
                         void-color="#eee"
-                        readonly
+                        disabled
                         />
-                        <p class="showjudge-left-bottom">{{courseInfo.starCount}}个评价</p>
+                        <p class="showjudge-left-bottom">12个评价</p>
                     </div>
                     <div class="fr showjudge-right">
                         <div class="showjudge-right-btn" @click="gojudge = false">
@@ -131,7 +109,7 @@
                         void-color="#eee"
                         gutter='20px'
                         />
-                    <p class="myjudge-level">{{judgetext}}</p>
+                    <p class="myjudge-level">较差</p>
                     <van-button class="myjudge-button" :disabled="!isjudge"  @click="onChangeJudge">确定</van-button>
                 </div>
             </div>
@@ -149,8 +127,6 @@ import api from '@/api/course';
 export default {
     data() {
         return {
-            judgetext: '',
-            typeText: '视频',
             gojudge: true,
             pdfurl: '',
             hasvideo: false,
@@ -190,18 +166,6 @@ export default {
             if(val>0){
                  this.isjudge = true;
             }
-            switch(val) {
-                case 1: 
-                    return this.judgetext = '较差';
-                case 2: 
-                    return this.judgetext = '一般';
-                case 3: 
-                    return this.judgetext = '较好';
-                case 4: 
-                    return this.judgetext = '棒极了';
-                case 5: 
-                    return this.judgetext = '完美';
-            }
         },
         changetype(val) {
             if(val === '1'){
@@ -210,17 +174,6 @@ export default {
         },
     },
     methods: {
-        gettype(val) {
-            if(val.detailType === '1'){
-                return '视频';
-            } else if(val.detailType === '2'){
-                return '音频';
-            } else if(val.detailType === '3') {
-                return '文档';
-            } else if(val.detailType === '4') {
-                return '试题';
-            }
-        },
         getPDFandYinpin(val) {
             api.getAudioOrDocUrl({ id: val.detailId }).then((res) => {
                 // if (res.success) {
@@ -234,35 +187,10 @@ export default {
                         this.getaliPlay(this.resourceUrl, '2');
                     }else if(val.detailType === '3'){
                         this.pdfurl = data;
-                        // this.$router.push({
-                        //     path: '/showpdf',
-                        //     query: {
-                        //         pdfurl: this.pdfurl,
-                        //     }
-                        // });
-                        // this.hasresourceURl = false;
-                        // this.hasvideo = false;
-                        // console.log(this.pdfurl);
-                        if (
-                            this.pdfurl.includes("docx") ||
-                            this.pdfurl.includes("xls") ||
-                            this.pdfurl.includes("ppt") ||
-                            this.pdfurl.includes("txt")
-                        ) {
-                            this.$Message.info(
-                                "文件格式暂不支持，请选择其他课程"
-                            );
-                            this.ispdf = false;
-                            this.hasresourceURl = false;
-                        } else {
-                            this.ispdf = true;
-                            this.hasresourceURl = true;
-                            this.hasvideo = false;
-                        }
-                        if ($("#J_prismPlayer").length > 0) {
-                            this.player.dispose();
-                            $("#J_prismPlayer").remove();
-                        }
+                        this.ispdf =true;
+                        this.hasresourceURl = false;
+                        this.hasvideo = false;
+                        console.log(this.pdfurl);
                     }
                 // }
             });
@@ -451,7 +379,6 @@ export default {
                 const data = res;
                 this.courseInfo = data;
                 this.courseName = this.courseInfo.name;
-                this.courseInfo.starAvg = this.courseInfo.starAvg.split('.')[0]-0;
                 this.isjoin = this.courseInfo.recordId
                     ? true
                     : false;

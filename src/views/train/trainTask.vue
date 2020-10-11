@@ -14,7 +14,7 @@
                   class="itemcontent"
                   v-for="(item ,index) in trainList"
                   :key="index"
-                  @click="goDetail()"
+                  @click="goDetail(item.id)"
                 >
                     <van-card
                       :thumb="item.iconUrl?item.iconUrl:'https://mz-tet.oss-cn-beijing.aliyuncs.com/minzheng/image/114 (2).jpg'
@@ -105,7 +105,14 @@ export default {
             this.pageNum=1
             this.onLoad();
         },  
-        goDetail(){}     
+        goDetail(id){
+            this.$router.push({
+                name:'trainDetail',
+                query: {
+                    id,
+                }
+            })
+        }     
     }
 }
 </script>
