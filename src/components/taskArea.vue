@@ -5,9 +5,10 @@
             <span class="close" @click="show = false">关闭</span>
         </div>
         <div class="body">
-            <div v-for="(item, i) in activeList"  
-                :class="currentItem === i && 'active' " 
-                :key="i" 
+            <div
+                v-for="(item, i) in activeList"
+                :class="selectedList.includes(item.value) && 'active' "
+                :key="i"
                 @click="handleClickItem(item, i)"
                 class="item"
             >
@@ -17,33 +18,77 @@
     </van-popup>
 </template>
 <script>
-import api from '../api/task'
+import api from '@/api/account';
+import mixins from '../views/setting/mixins';
 
 export default {
+    mixins: [mixins],
     data() {
         return {
             show:  true,
             activeList: [],
-            currentColumn: 0,
-            currentItem: 0,
-            areaUnit: null,
+            selectedLabels: [],
+            selectedList: [],
             type: 0,
-            
+            items: [],
+            currentAreaIndex: 0,
         }
     },
     created() {
-        api.getAreaList().then((res) => {
-            if (res.fieldText) {
-                this.areaUnit = JSON.parse(res.fieldText).areaUnit;
-                this.activeList = this.areaUnit;
-            }
-        })
+        const { selectedLabels, selectedList } = this.userInfo;
+        this.selectedLabels = selectedLabels || [];
+        this.selectedList = selectedList || [];
+
+        this.getAreaUnitList();
     },
     methods: {
-        handleClickItem(item, index) {
-            this.currentItem = index;
-        }
-    }
+        async getAreaUnitList() {
+            const res = await api.getAreaUnitList();
+            const items = JSON.parse(res.fieldText).areaUnit 
+            
+            this.items = items;
+            this.activeList = items;
+
+            if (this.selectedLabels[0]) {
+                this.currentAreaIndex = items.findIndex(v => v.value === this.selectedList[0]);
+                console.log(this.currentAreaIndex);
+            }
+        },
+
+        handleClickColumnItem(i) {
+            this.currentColumnsIndex = i;
+            this.show = true;
+
+            if (i) {
+                this.activeList = this.items[this.currentAreaIndex].children;
+            } else {
+                this.activeList = this.items;
+            }
+        },
+
+        handleChangeCompanyName() {
+            const [areaCode, unitCode] = this.selectedList;
+
+            if (!areaCode || !unitCode) {
+                this.$toast('请选择区域单位');
+                return;
+            }
+            this.updateUserInfo({ areaCode, unitCode }, '', { selectedLabels: this.selectedLabels });
+
+        },
+
+        handleClickItem(item, i) {
+            if (!this.currentColumnsIndex) { // 区域
+                this.currentAreaIndex = i;
+
+                this.selectedLabels = [item.label, ''];
+                this.selectedList = [item.value, ''];
+            } else {
+                this.$set(this.selectedLabels, 1, item.label);
+                this.$set(this.selectedList, 1, item.value);
+            }
+        },
+    },
 }
 </script>
 <style scoped lang="less">

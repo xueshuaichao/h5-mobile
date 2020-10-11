@@ -21,20 +21,20 @@
         </p>
         <div class="area input-wrap flex">
             <div class="city flex">
-                <span>{{filter.districtName || ''}}</span>
+                <span>{{filter.selectedLabels[0] || '请选择区域'}}</span>
                 <van-icon name="arrow" />
             </div>
             <div class="bar">
             </div>
             <div class="company flex">
-                <span>{{filter.elderlyOrgName || ''}}</span>
+                <span>{{filter.selectedLabels[1] || '请选择养老机构'}}</span>
                 <van-icon name="arrow" />
             </div>
         </div>
     </div>
     <div class="footer">
         <div class="btn" @click="changeApply">
-            {{ status ? '取消报名' : '立即报名' }}
+            立即报名
         </div>
     </div>
 </van-popup>
@@ -49,34 +49,33 @@ export default {
             show: true,
             filter: {
                 username: '',
-                elderlyOrgName: '',
-                districtName: '',
+                selectedLabels: ['', '']
             },
             taskId: 44,
-            status: 0,
         }
     },
     created() {
         if (this.$route.query.id !== undefined) {
             this.taskId = this.$route.query.id;
         }
-        api.getUserInfo().then((res) => {
-            if (res.success) {
-                this.filter = {...this.filter, ...res.data};
-            }
-        });
+        this.getUserInfo(); 
     },
     methods: {
         onCancel() {
+            this.show = false;
+        },
+        async getUserInfo() {
+            const res = await api.getUserInfo();
+            if (res.selectedLabels)
+            this.filter = { ...this.filter, ...res, selectedLabels: res.selectedLabels || [] };
+            this.$store.commit('setUserInfo', { ...res, organizations: JSON.parse(res.extensionInfo) });
         },
         changeApply() {
-            const status = this.applyStatus ? 0 : 1;
             api.changeTaskApply({
                 taskId: this.taskId,
-                isApply: status
+                isApply: 1
             }).then((res) => {
                 if (res.success) {
-                    this.status = status;
                     Toast.loading({
                         duration: 1200,
                         forbidClick: true,
