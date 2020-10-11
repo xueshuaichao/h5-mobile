@@ -26,11 +26,11 @@ const routes = [
     name: 'courseDetail',
     component: () => import('../views/course/detail.vue')
   },
-  // {
-  //   path: '/jingpin',
-  //   name: 'jingpin',
-  //   component: () => import('../blocks/course/list.vue')
-  // },
+  {
+    path: '/seachpage',
+    name: 'seachpage',
+    component: () => import('../views/course/seachPage.vue')
+  },
   {
     path: '/mychosecourse',
     name: 'mychosecourse',
