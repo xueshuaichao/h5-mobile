@@ -91,6 +91,6 @@ export default {
         return get(`${$host}/ucenter/sso/checkToken`, data, Object.assign({ Token: token }, $header));
     },
     signOut() {
-        return get(`${$host}/ucenter/sso/logOut`);
+        return get(`${$host}/ucenter/sso/logOut`, {}, $header);
     },
 };

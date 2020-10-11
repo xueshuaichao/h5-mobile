@@ -89,7 +89,7 @@ export default {
     data(){
         return{
             isvcode:false,
-            userMobile:'13716883538',
+            userMobile:'',
             codetime:120,
             testindex:0,
             testlist:[],
@@ -111,10 +111,18 @@ export default {
 
     created() {
         this.joinScene(this.$route.query.sceneId)
-        this.getScenePaper(this.$route.query.sceneId)
+        this.getScenePaper(this.$route.query.sceneId);
+        if(this.$store.state) {
+            this.userMobile = this.$store.state.userInfo.userMobile
+        }
         
     },
-
+    beforeDestroy() {
+        if (this.timer) {
+            clearInterval(this.timer);
+            clearInterval(this.codetimer);
+        }
+    },
     methods: {
         activebtn(item,opt){
             let that=this;
@@ -186,12 +194,15 @@ export default {
                     var seconds1 = seconds< 10 ?'0'+seconds:seconds;
                     this.duration=hours1+':'+minutes1+':'+seconds1
                     self.maxtime -= 1;
-                    self.iscodetime+=1;
-                    if(self.iscodetime===300){
-                        this.iscode=true;
-                        this.verify();
-                        // this.codetimebtn();
+                    if(this.$route.query.examType) {
+                        self.iscodetime+=1;
+                        if(self.iscodetime===300){
+                            this.iscode=true;
+                            this.verify();
+                            // this.codetimebtn();
+                        }
                     }
+                    
                 } else {
                     clearInterval(this.timer);
                        Dialog.alert({
@@ -210,17 +221,23 @@ export default {
             }
         },
         verify(){
-            exam.verify({userMobile:this.userMobile,platformId:10001}).then(() => {
-                const self = this;
-                this.codetimer = setInterval(() => {
-                    if (self.codetime > 0) {
+            const self = this;
+            this.codetimer = setInterval(() => {
+                if (self.codetime > 0) {
                     self.codetime -= 1;
-                        this.$forceUpdate();
-                    } else {
-                        clearInterval(this.codetimer);
-                        self.codehandleConfirm()
-                    }
-                }, 1000);
+                    this.$forceUpdate();
+                } else {
+                    clearInterval(this.codetimer);
+                    self.codehandleConfirm()
+                }
+            }, 1000);
+            exam.verify({userMobile:this.userMobile,platformId:10001}).then((res) => {
+                if(!res.data) {
+                    Dialog.alert({
+                        message: res.message,
+                    });
+                }
+                
             });
         },
         // codetimebtn(){
@@ -232,22 +249,61 @@ export default {
        },
        codehandleConfirm(){
            this.isvcode=false;
-           if(this.vcode===null || this.vcode==''){
-               this.isvcode=true;
-               return;
-           }
-           clearInterval(this.codetimer);
+
+           if (this.vcode === null || this.vcode === '') {
+                if (this.codetime === 0) {
+                    Dialog.alert({
+                        message: '验证码未填写，系统将中止考试。',
+                    }).then(() => {
+                        setTimeout(() => {
+                            this.iscode = false;
+                            this.$router.go(-1);
+                        }, 5000);
+                    });
+                    // this.isvcode = true;
+                    
+                } else {
+                    Dialog.alert({
+                        message: '验证码未填写，请先填写。',
+                    })
+                    this.isvcode = true;
+                }
+
+                return;
+            }
+        //    if(this.vcode===null || this.vcode==''){
+        //        this.isvcode=true;
+        //        return;
+        //    }
            exam.check({userMobile:this.userMobile,vcode:this.vcode}).then((res) => {
-                if(res){
-                    this.iscode=false;
-                }else{
-                    this.iscode=false;
-                       Dialog.alert({
+               if (res.data) {
+                    this.iscode = false;
+                    clearInterval(this.codetimer);
+                } else if (this.codetime === 0) {
+                    this.iscode = false;
+                     Dialog.alert({
                         message: '验证码输入错误，系统将终止考试',
                         }).then(() => {
                             this.$router.go(-1);
                         });
+                    clearInterval(this.codetimer);
+                } else {
+                    Dialog.alert({
+                        message: '验证码输入错误，请重新填写',
+                    })
                 }
+        //         if(res.data){
+        //             this.iscode=false;
+        //         }else{
+        //             this.iscode=false;
+        //                Dialog.alert({
+        //                 message: '验证码输入错误，系统将终止考试',
+        //                 }).then(() => {
+        //                     this.$router.go(-1);
+        //                 });
+        //         }
+        //    clearInterval(this.codetimer);
+
             });
         
        },
