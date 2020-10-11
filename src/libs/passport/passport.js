@@ -9,6 +9,7 @@ let platInfo = window.centerPlatInfo || {};
 let host = window.passPortHost || window.location.origin;
 export class Passport {
     constructor(host, options) {
+        console.log(host, options)
         host && api.setHost(host);
         console.log(window.centerPlatInfo);
         if (options && options.header) {

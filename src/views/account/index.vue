@@ -93,8 +93,7 @@ export default {
         async getUserInfo() {
             const res = await api.getUserInfo();
             this.userInfo = res;
-            console.log(res);
-            this.$store.commit('setUserInfo', res);
+            this.$store.commit('setUserInfo', { ...res, organizations: JSON.parse(res.extensionInfo) });
         },
 
         async getLearnCount() {

@@ -20,8 +20,8 @@
                 <div class="item van-hairline--bottom" @click="$router.push('/setting/photo')">
                     <p class="title">修改头像</p>
                     <div class="value">
-                        <div class="photo" v-if="userInfo.portrait">
-                            <img :src="userInfo.portrait" alt="" width="56">
+                        <div class="photo" v-if="userInfo.avatar">
+                            <img :src="userInfo.avatar" alt="" width="56">
                         </div>
                         <van-icon name="arrow" />
                     </div>
@@ -128,7 +128,7 @@ export default {
                 height: 112px;
                 margin: 24px 0;
                 border-radius: 16px;
-                background: pink;
+                vertical-align: middle;
                 overflow: hidden;
             }
         }

@@ -22,11 +22,12 @@ export default {
     },
 
     updateUserPassword(params) {
-        return axios.post('/learn/v1/user/updatePassword', params)
+        console.log(params);
+        return axios.post('/ucenter/changePassword', params)
     },
 
     updateUserPhone(params) {
-        return axios.post('/learn/v1/user/updatePhone', params);
+        return axios.post('/ucenter/changePhone', params);
     },
 
     getCode(params) {

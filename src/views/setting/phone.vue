@@ -82,10 +82,11 @@ export default {
         },
         
         async updatePhone() {
+            const { phone, verifyCode } = this.form;
             this.$loading();
 
             try {
-                const res = await api.updateUserPhone(this.form);
+                const res = await api.updateUserPhone({ userMobile: phone, vcode: verifyCode });
                 if (res) {
                     this.$toast.clear();
                     this.$toast('修改成功');
