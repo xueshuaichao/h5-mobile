@@ -62,6 +62,10 @@ export default {
     // 获取banner 
     bannerList() {
         return axios.get('system/v1/replay/student/list?channel=1');
-    }
+    },
 
+    // 判断用户是否已报名
+    userTaskGetTaskInfoByUserId(data) {
+        return axios.get('/train/v1/userTask/getTaskInfoByUserId', data);
+    },
 }
