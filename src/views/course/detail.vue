@@ -82,16 +82,16 @@
             <div v-if="changetype === '2'" class="content-judge">
                 <div v-if="gojudge" class="showjudge clearfix">
                     <div class="showjudge-left fl">
-                        <p class="showjudge-left-top">综合评分 <span>4.6</span></p>
+                        <p class="showjudge-left-top">综合评分 <span>{{courseInfo.starAvg}}</span></p>
                         <van-rate
                         v-model="judge"
                         :size="27"
                         color="#ffd21e"
                         void-icon="star"
                         void-color="#eee"
-                        disabled
+                        readonly
                         />
-                        <p class="showjudge-left-bottom">12个评价</p>
+                        <p class="showjudge-left-bottom">{{courseInfo.starCount}}个评价</p>
                     </div>
                     <div class="fr showjudge-right">
                         <div class="showjudge-right-btn" @click="gojudge = false">
@@ -109,7 +109,7 @@
                         void-color="#eee"
                         gutter='20px'
                         />
-                    <p class="myjudge-level">较差</p>
+                    <p class="myjudge-level">{{judgetext}}</p>
                     <van-button class="myjudge-button" :disabled="!isjudge"  @click="onChangeJudge">确定</van-button>
                 </div>
             </div>
@@ -127,6 +127,8 @@ import api from '@/api/course';
 export default {
     data() {
         return {
+            judgetext: '',
+            typeText: '视频',
             gojudge: true,
             pdfurl: '',
             hasvideo: false,
@@ -166,6 +168,19 @@ export default {
             if(val>0){
                  this.isjudge = true;
             }
+            switch(val) {
+                case 1: 
+                    return this.judgetext = '较差';
+                case 2: 
+                    return this.judgetext = '一般';
+                case 3: 
+                    return this.judgetext = '较好';
+                case 4: 
+                    return this.judgetext = '棒极了';
+                case 5: 
+                    return this.judgetext = '完美';
+            }
+
         },
         changetype(val) {
             if(val === '1'){
@@ -174,6 +189,17 @@ export default {
         },
     },
     methods: {
+        gettype(val) {
+            if(val.detailType === '1'){
+                return '视频';
+            } else if(val.detailType === '2'){
+                return '音频';
+            } else if(val.detailType === '3') {
+                return '文档';
+            } else if(val.detailType === '4') {
+                return '试题';
+            }
+        },
         getPDFandYinpin(val) {
             api.getAudioOrDocUrl({ id: val.detailId }).then((res) => {
                 // if (res.success) {
@@ -187,10 +213,31 @@ export default {
                         this.getaliPlay(this.resourceUrl, '2');
                     }else if(val.detailType === '3'){
                         this.pdfurl = data;
-                        this.ispdf =true;
-                        this.hasresourceURl = false;
-                        this.hasvideo = false;
-                        console.log(this.pdfurl);
+                        // this.ispdf =true;
+                        // this.hasresourceURl = false;
+                        // this.hasvideo = false;
+                        // console.log(this.pdfurl);
+                        if (
+                            this.pdfurl.includes("docx") ||
+                            this.pdfurl.includes("xls") ||
+                            this.pdfurl.includes("ppt") ||
+                            this.pdfurl.includes("txt")
+                        ) {
+                            this.$Message.info(
+                                "文件格式暂不支持，请选择其他课程"
+                            );
+                            this.ispdf = false;
+                            this.hasresourceURl = false;
+                        } else {
+                            this.ispdf = true;
+                            this.hasresourceURl = true;
+                            this.hasvideo = false;
+                        }
+                        if ($("#J_prismPlayer").length > 0) {
+                            this.player.dispose();
+                            $("#J_prismPlayer").remove();
+                        }
+
                     }
                 // }
             });
@@ -381,6 +428,7 @@ export default {
                 const data = res;
                 this.courseInfo = data;
                 this.courseName = this.courseInfo.name;
+                this.courseInfo.starAvg = this.courseInfo.starAvg.split('.')[0]-0;
                 this.isjoin = this.courseInfo.recordId
                     ? true
                     : false;
