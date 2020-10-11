@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-        <h2 class="head">我的任务</h2>
+        <h2 class="head">任务列表</h2>
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
             <van-list
                 v-model="loading"
@@ -38,8 +38,8 @@
                         <template #tags>
                           <div class="title">
                             <van-tag round  plain type="danger" class="tag">限制人</van-tag>
+                            <span class="subscribe">已预约人</span>
                           </div>
-                          <span>已预约人</span>
                         </template>
                     </van-card>
                     <div class="line"></div>
@@ -134,8 +134,6 @@ export default {
     line-height: 48px;
 }
 .time{
-    width: 248px;
-    height: 34px;
     font-size: 24px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
@@ -145,7 +143,14 @@ export default {
 }
 .title{
   text-align: left;
-  .tag{
+    font-size: 24px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #737386;
+    line-height: 34px;
+}
+.tag{
+    margin-top: 24px;
     width: 80px;
     height: 32px;
     font-size: 22px;
@@ -154,5 +159,7 @@ export default {
     color: #E85A3A;
     line-height: 32px;
   }
+.subscribe{
+    float: right;
 }
 </style>
