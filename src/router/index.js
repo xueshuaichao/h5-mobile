@@ -129,6 +129,11 @@ const routes = [
     name: 'taskdetail',
     component: () => import('../views/task/detail.vue')
   },
+  {
+    path: '/traintask',
+    name: 'traintask',
+    component: () => import('../views/train/trainTask.vue')
+  },
   
   // 我的测试
   {
