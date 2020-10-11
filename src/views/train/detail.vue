@@ -37,7 +37,7 @@
             <div v-if="applyStatus === 0" class="button" @click="startStudy(courseInfo.id)">
                 报名
             </div>
-            <div v-else class="button-disable" @click="show=true">
+            <div v-else class="button-disable">
                 已报名
             </div>
         </div>
@@ -82,6 +82,7 @@ export default {
     methods: {
         changeApplyStatus() {
             this.show = false;
+            this.getCourseInfo(this.$route.query.id);
         },
         close() {
             this.show = false;
@@ -100,7 +101,8 @@ export default {
                 this.$router.push({
                     path: '/answer',
                     query: {
-                        sceneId: item.id
+                        sceneId: item.id,
+                        trainEndTime: this.courseInfo.trainEndTime
                     }
                 })
             }
@@ -129,6 +131,7 @@ export default {
             if (currentTimeStamp > this.courseInfo.applyStartTime && currentTimeStamp < this.courseInfo.applyEndTime) {
                 this.$passport.checkCookie().then((res) => {
                     console.log(res)
+                    this.show = true;
                 },() => {
                     this.$passport.goH5Login();
                 });
@@ -183,7 +186,7 @@ export default {
     mounted() {
         if (this.$route.query.id) {
             // 判断是否登录
-            this.checkLogin();
+            // this.checkLogin();
             // 获取课程内容
             this.getCourseInfo(this.$route.query.id);
         }
