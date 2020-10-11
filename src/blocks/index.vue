@@ -2,6 +2,7 @@
 import Vue from 'vue';
 
 const idMap = {
+    10: () => import('./system/seacher.vue'),
     11: () => import('./system/banner.vue'),
     12: () => import('./system/course.vue'),
     13: () => import('./system/task.vue'),
