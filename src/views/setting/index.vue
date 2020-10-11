@@ -78,11 +78,9 @@ export default {
                     done()
                     if (action === 'confirm') {
                         // todo clear login status
-                        this.$passport.signOut().then((res) => {
-                            console.log(res)
-                        },() => {
-
-                        } )
+                        this.$passport.signOut().then(() => {
+                            this.$router.push('/')
+                        }).catch(err => this.$toast.fail(err))
                     }
                 }
             })
