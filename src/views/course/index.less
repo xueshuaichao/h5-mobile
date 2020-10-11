@@ -147,6 +147,34 @@
     }
 }
 .filterpage{
+    .footer1{
+        padding: 0px 5%;
+    }
+    .footer {
+        width: 90%;
+        // padding: 0 32px;
+        margin-top: 32px;  
+        .footer-left{
+            width: 15%;
+            text-align: center;
+            p {
+                font-size: 24px;
+                color: #272F55;
+            }
+        }
+        
+
+        .button {
+            width: 80%;
+            height: 88px;
+            font-size: 28px;
+            color: white;
+            text-align: center;
+            line-height: 88px;
+            background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
+            border-radius: 16px;
+        }
+    }
     &-header{
         width: 100%;
         position: relative;
@@ -268,31 +296,6 @@
                     border: 2px solid #E85A3A;
                     background: rgba(232, 90, 58, 0.04);
                 }
-            }
-        }
-        .footer {
-            width: 100%;
-            // padding: 0 32px;
-            margin-top: 32px;  
-            .footer-left{
-                width: 15%;
-                text-align: center;
-                p {
-                    font-size: 24px;
-                    color: #272F55;
-                }
-            }
-            
-    
-            .button {
-                width: 80%;
-                height: 88px;
-                font-size: 28px;
-                color: white;
-                text-align: center;
-                line-height: 88px;
-                background: linear-gradient(135deg, #FF956A 0%, #F74118 100%);
-                border-radius: 16px;
             }
         }
     }
@@ -662,6 +665,7 @@
     padding-bottom: 100px;
     padding: 40px 32px;
     &-header{
+        position: relative;
         height: 64px;
         line-height: 64px;
         vertical-align: middle;
@@ -674,24 +678,76 @@
             margin-right:10px;
         }
         .header-middle{
+            // position: relative;
             margin: 0px 20px;
             width: 72%;
             height: 64px;
             background-color: #F5F5FA;
             border-radius: 32px;
-            // padding: 0px 20px;
+            padding: 0px 60px;
             border: none;
         }
         .seachBtn{
             color: #272F55;
             font-size: 28px;
         }
-        .header-right{
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            vertical-align: middle;
-            margin-top: 12px;
+        .typename{
+            position: absolute;
+            top:2px;
+            left:150px;
+            color: #737386;
+            font-size: 26px;
+
+        }
+        .changetype{
+            position: absolute;
+            top:62px;
+            left:100px;
+            width: 136px;
+            // height: 176px;
+            background-color: #F5F5FA;
+            border-radius: 12px 0px 12px 12px;
+            span{
+                display: inline-block;
+                width: 136px;
+                height: 88px;
+                text-align: center;
+                line-height: 88px;
+                font-size: 28px;
+                color: #272F55;
+            }
+            .activetype{
+                background-color: #fff;
+            }
+        }
+    }
+    .seachHistory{
+        padding: 48px 0px;
+        &-top{
+            .toptext{
+                color: #A7ADBB;
+                font-size: 24px;
+            }
+            .topimg{
+                img{
+                    display: inline-block;
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+        }
+        &-list{
+            ul{
+                li{
+                    padding: 12px 20px;
+                    color:#272F55;
+                    font-size: 28px;
+                    background-color: #F5F5FA;
+                    margin-right: 32px;
+                    margin-top: 32px;
+                    border-radius: 12px;
+                }
+            }
         }
     }
     .item {

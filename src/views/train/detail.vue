@@ -19,7 +19,7 @@
         <div class="courseDetail-content">
             <div class="peixun-content">
                 <p>培训内容</p>
-                <div v-for="(item,index) in trainContent" :key="index" class="content-item">
+                <div v-for="(item,index) in trainContent" :key="index" class="content-item" @click="handleRouterJump(item)">
                     <span>{{item.type === 'course' ? '课程' : '考试'}}</span>{{item.label}}
                 </div>
             </div>
@@ -86,6 +86,25 @@ export default {
         close() {
             this.show = false;
         },
+        handleRouterJump(item) {
+            console.log(item, '跳转触发');
+            if (item.type === 'course') {
+                this.$router.push({
+                    path: '/course/detail',
+                    query: {
+                        id: item.id
+                    }
+                })
+            } else {
+                // answer?sceneId=1
+                this.$router.push({
+                    path: '/answer',
+                    query: {
+                        sceneId: item.id
+                    }
+                })
+            }
+        },
         // 清除定时器
         clearTimeing() {
             if (this.IntervalName) {
@@ -129,7 +148,8 @@ export default {
                         item.taskItems.forEach((item1) => {
                             this.trainContent.push({
                                 type: item1.taskCourseId ? 'course' : 'test',
-                                label: item1.label
+                                label: item1.label,
+                                id: item1.taskCourseId ? item1.taskCourseId : item1.scene.id,
                             });
                         });
                     });

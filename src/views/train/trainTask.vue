@@ -1,6 +1,6 @@
 <template>
-    <van-pannel>
-        <h2>我的任务</h2>
+    <div class="content">
+        <h2 class="head">我的任务</h2>
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
             <van-list
                 v-model="loading"
@@ -28,10 +28,10 @@
                         <template #desc>
                             <div class="time">
                                 <div class="traintime">
-                                    {{item.applyStartTime}}
+                                    培训时间:{{item.applyStartTime | dataFormat}}
                                 </div>
                                 <div class="enlisttime">
-                                    {{item.trainStartTime}}
+                                    报名时间:{{item.trainStartTime | dataFormat}}
                                 </div>
                             </div>
                         </template>
@@ -46,9 +46,10 @@
                 </div>
             </van-list>
     </van-pull-refresh>
-    </van-pannel>
+    </div>
 </template>
 <script>
+import moment from "moment";
 import api from '../../api/task.js'
 export default {
     data(){
@@ -61,9 +62,6 @@ export default {
             pageNum: 1,
             pageSize: 10,
         }
-    },
-    created(){
-        this.getTrainList()        
     },
     methods:{
         onLoad(){
@@ -113,11 +111,36 @@ export default {
                 }
             })
         }     
+    },
+    filters: {
+    dataFormat(val) {
+      if (val) {
+        return moment(val).format("YYYY.MM.DD HH:mm");
+      }
     }
+  }
 }
 </script>
 <style lang="less" scoped>
+.content{
+    padding: 0px 32px;
+}
+.head{
+    height: 48px;
+    font-size: 34px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #272F55;
+    line-height: 48px;
+}
 .time{
+    width: 248px;
+    height: 34px;
+    font-size: 24px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #737386;
+    line-height: 34px;
     text-align: left;
 }
 .title{

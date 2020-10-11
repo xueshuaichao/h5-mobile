@@ -23,7 +23,7 @@
                     <img class="img" :src="item.picUrl" alt="">
                     <div class="info">
                         <p class="title"> 
-                            {{ item.name }}{{ item.name }}{{ item.name }}{{ item.name }}
+                            {{ item.name }}
                         </p>
                         <p class="status">{{ item.lastCategoryName }}</p>
                         <div class="tongji clearfix">

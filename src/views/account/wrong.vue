@@ -84,11 +84,16 @@ export default {
     
     methods: {
         getAllTypesCount() {
+            const { questionDifficulty, sceneCategoryId } = this;
             this.$loading();
-            api.getAllTypesCount().then(res => {
+            api.getAllTypesCount({ questionDifficulty: questionDifficulty || '', sceneCategoryId: sceneCategoryId || '' }).then(res => {
                 this.typesList = res;
                 this.$toast.clear();
-            })
+                
+                if(!res.length) {
+                    this.$toast('暂无数据')
+                }
+            }).catch(this.$toast.clear())
         },
 
         statusbtn(item){
@@ -100,6 +105,8 @@ export default {
                 this.questionDifficulty = this.statusId;
             }
             this.$refs.item1.toggle();
+
+            this.getAllTypesCount();
         },
         
         classifybtn(item){
@@ -120,6 +127,7 @@ export default {
             }
             
             this.$refs.item.toggle();
+            this.getAllTypesCount();
         },
         
         getChildren(id) {
@@ -155,7 +163,7 @@ export default {
                 path: `/wrong/detail/${type}`,
                 query: {
                     questionDifficulty,
-                    sceneCategoryId,
+                    sceneCategoryId: sceneCategoryId === 0 ? '' : sceneCategoryId,
                     type,
                     count,                       
                 }
