@@ -11,9 +11,10 @@
                 style="height: 233px"
             />
             <iframe v-if="ispdf" :src="pdfurl" style="width: 100%;height: 233px;position: absolute; left: 0px"/>
-            <span class="detail-fenlei">
+            <!-- <span class="detail-fenlei">
                 {{courseInfo.categoryName}}
-            </span>
+            </span> -->
+            <div class="train-duration"><span>培训周期:{{courseInfo.trainStartTime | dataFormat}} - {{courseInfo.trainEndTime | dataFormat}}</span></div>
         </div>
         <div class="courseDetail-content">
             <div class="peixun-content">
@@ -25,13 +26,10 @@
             <div class="baoming-content">
                 <p>报名信息</p>
                 <div class="content-item">
-                    <span>报名时间</span>2020.9.10  12:00 - 2020.9.21  12:00
+                    <span>报名时间</span>{{courseInfo.applyStartTime | dataFormat}} - {{courseInfo.applyEndTime | dataFormat}}
                 </div>
                 <div class="content-item">
-                    <span>报名人数</span>12
-                </div>
-                <div class="content-item">
-                    <span>已报名</span>12
+                    <span>已报名</span>{{courseInfo.applyCount}}
                 </div>
             </div>
         </div>
@@ -48,7 +46,16 @@
 
 <script>
 import api from '@/api/course';
+import moment from 'moment';
+
 export default {
+    filters: {
+        dataFormat(val) {
+            if(val){
+                return moment(val).format('YYYY.MM.DD HH:mm')
+            }
+		}
+    },
     data() {
         return {
             pdfurl: '',
@@ -78,36 +85,32 @@ export default {
                 console.log(res)
                 
             },() => {
-                this.$passport.goH5Login();
+                // this.$passport.goH5Login();
             });
         },
-        // 加入选学
+        // 点击报名
         startStudy() {
-            this.$passport.checkCookie().then((res) => {
-                console.log(res)
-            },() => {
-                this.$passport.goH5Login();
-            });
+            // 判断是否在报名时间内
+            const currentTimeStamp = new Date().getTime();
+            console.log(currentTimeStamp);
+            if (currentTimeStamp > this.courseInfo.applyStartTime && currentTimeStamp < this.courseInfo.applyEndTime) {
+                this.$passport.checkCookie().then((res) => {
+                    console.log(res)
+                },() => {
+                    this.$passport.goH5Login();
+                });
+            } else {
+                this.$toast('不在报名期限内');
+            }
         },
-        // courseDetail(id) {
-        //     api.findById(id).then((res) => {
-        //         // console.log(res);
-        //         const data = res;
-        //         this.courseInfo = data;
-        //         this.courseName = this.courseInfo.name;
-        //         this.isjoin = this.courseInfo.recordId
-        //             ? true
-        //             : false;
-        //     }) 
-        // },
         getCourseInfo(id) {
             return api
                 .userTaskGetTaskInfoByUserId({taskId:id})
                 .then((res) => {
-                    const data = res;
-                    this.courseInfo = data;
+                    this.courseInfo = res;
                     this.courseName = this.courseInfo.name;
                     this.applyStatus = res.applyStatus;
+
                     res.stageDtos.forEach((item) => {
                         item.taskItems.forEach((item1) => {
                             this.trainContent.push({
@@ -118,18 +121,6 @@ export default {
                     });
                     console.log(res, 'res222');
                 });
-        },
-        findCourseItemByCourseId() {
-            const param = {
-                courseId: this.courseInfo.id,
-                recordId: this.courseInfo.recordId,
-            };
-            api.findCourseItemByCourseId(param).then((res) => {
-                this.catelogList = res;
-                console.log(res)
-            }).catch((err) => {
-                console.log(err)
-            })
         },
     },
     mounted() {
@@ -173,6 +164,12 @@ export default {
 // .courseDetail {
 //     background: #F5F5FA;
 // }
+.train-duration {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 1000px;
+}
 .courseDetail-content {
     background: #F5F5FA;
 }
@@ -201,6 +198,7 @@ export default {
     .content-item{
         display: flex;
         margin-bottom: 24px;
+        align-items: center;
         span{
             display: block;
             width: 60px;

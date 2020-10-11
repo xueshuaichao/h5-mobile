@@ -94,6 +94,7 @@ export default {
                 path: '/answer',
                 query: {
                     sceneId: this.sceneId,
+                    examType:1
                 }
             })
         }
