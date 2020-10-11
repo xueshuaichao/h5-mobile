@@ -64,7 +64,7 @@ export default {
             
             this.$loading();
             try {
-                await api.getCode({ phone });
+                await api.getCode({ userMobile: phone });
                 this.$toast.clear();
                 this.$toast.success('发送成功');
                 this.timer();

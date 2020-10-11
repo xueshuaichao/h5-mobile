@@ -121,7 +121,7 @@ export default {
             //     this.refreshing=false 
             // }
             this.taskList.push(...res);
-            if (this.taskList.length == res.total || this.taskList.length == 0){
+            if (this.taskList.length == res.total || res.length == 0){
                 this.error=false
                 this.finished = true;
             }
