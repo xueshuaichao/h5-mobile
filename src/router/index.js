@@ -26,11 +26,11 @@ const routes = [
     name: 'courseDetail',
     component: () => import('../views/course/detail.vue')
   },
-  // {
-  //   path: '/jingpin',
-  //   name: 'jingpin',
-  //   component: () => import('../blocks/course/list.vue')
-  // },
+  {
+    path: '/seachpage',
+    name: 'seachpage',
+    component: () => import('../views/course/seachPage.vue')
+  },
   {
     path: '/mychosecourse',
     name: 'mychosecourse',
@@ -128,6 +128,16 @@ const routes = [
     path: '/taskdetail',
     name: 'taskdetail',
     component: () => import('../views/task/detail.vue')
+  },
+  {
+    path: '/traintask',
+    name: 'traintask',
+    component: () => import('../views/train/trainTask.vue')
+  },
+  {
+    path: '/trainDetail',
+    name: 'trainDetail',
+    component: () => import('../views/train/detail.vue')
   },
   
   // 我的测试

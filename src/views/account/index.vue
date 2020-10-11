@@ -7,7 +7,7 @@
             </div> -->
             <div class="user-info-wrap">
                 <div class="user-info">
-                    <img :src="require('../../assets/account/default-photo.png') || userInfo.avatar" alt="" width="62">
+                    <img :src=" userInfo.avatar || require('../../assets/account/default-photo.png')" alt="" width="62" class="photo">
                     <p class="name" v-if="userInfo">{{ userInfo.username }}</p>
                 </div>
             </div>
