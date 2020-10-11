@@ -10,6 +10,34 @@
                         alt="商品图片"
                     />
                 </div>
+                <!-- <div class="swiper-slide">
+                    <img
+                        @click="goDetail(item)"
+                        src="../../assets/exam/instructions-bg.png"
+                        alt="商品图片"
+                    />
+                </div>
+                <div class="swiper-slide">
+                    <img
+                        @click="goDetail(item)"
+                        src="../../assets/exam/instructions-bg.png"
+                        alt="商品图片"
+                    />
+                </div>
+                <div class="swiper-slide">
+                    <img
+                        @click="goDetail(item)"
+                        src="../../assets/exam/instructions-bg.png"
+                        alt="商品图片"
+                    />
+                </div>
+                <div class="swiper-slide">
+                    <img
+                        @click="goDetail(item)"
+                        src="../../assets/exam/instructions-bg.png"
+                        alt="商品图片"
+                    />
+                </div> -->
             </div>
             <div class="swiper-pagination" />
         </div>
@@ -34,6 +62,9 @@ export default {
     mounted() {
         // eslint-disable-next-line no-new
         this.getbannerList();
+        setTimeout(()=>{
+            this.initSwiper();
+        },100)
     },
     methods: {
         initSwiper() {
@@ -64,10 +95,8 @@ export default {
         },
         getbannerList() {
             api.bannerList().then(res => {
-                this.initSwiper();
                 this.images = res;
                 this.showbanner = true;
-                console.log(this.images);
                 
             });
         },
