@@ -31,7 +31,7 @@ export default {
     },
 
     getCode(params) {
-        return axios.get('/learn/v1/user/sendSms', params)
+        return axios.post('/ucenter/smsCode/changeInfo', params)
     },
 
     getMyExam(params) {

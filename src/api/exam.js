@@ -54,8 +54,8 @@ export default {
     },
 
     // 错题
-    getAllTypesCount() {
-        return axios.get('/exam/v1/errorBook/findErrorTypeCount')
+    getAllTypesCount(params) {
+        return axios.get('/exam/v1/errorBook/findErrorTypeCount', params)
     }
     
     
