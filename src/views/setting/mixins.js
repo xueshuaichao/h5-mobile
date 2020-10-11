@@ -12,10 +12,10 @@ export default {
         async updateUserInfo(params, message = '') {
             this.$loading(message);
             try {
-                const res = await api.updateUserInfo({ id: this.userInfo.userId, ...params });
+                const res = await api.updateUserInfo({ ...params });
 
                 if (res) {
-                    // this.$store.commit('setUserInfo', { ...this.userInfo, ...params });
+                    this.$store.commit('setUserInfo', { ...this.userInfo, ...params });
                     this.$router.go(-1);
                 }
             } finally {

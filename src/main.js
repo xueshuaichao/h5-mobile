@@ -18,8 +18,8 @@ import { Passport } from './libs/passport/passport';
 Vue.use(Vant);
 Vue.use(customPlugins);
 
-
 Vue.config.productionTip = false;
+
 Vue.prototype.$passport = new Passport(URL.API, {header: {webhost: location.origin}});
 
 // new Vue({
@@ -33,8 +33,8 @@ const getPageConfigs = Promise.resolve([
       layout: [
           {
               aid: 'aid_1',
-              block_id: [11, 12, 13],
-              block_instance_id: [111, 121, 131],
+              block_id: [11, 14, 12, 13],
+              block_instance_id: [111, 121, 131, 141],
           },
       ],
       name: 'home',
@@ -126,6 +126,7 @@ Vue.prototype.$passport.checkCookie().then(res => {
 })
 // buildApp();
 function buildApp (userInfo) {
+    console.log(userInfo, 'userInfo')
     if (userInfo) {
         store.commit('setUserInfo', userInfo);
     }

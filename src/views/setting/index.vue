@@ -11,7 +11,7 @@
                     <p class="title">姓名</p>
                     <div class="value">
                         <span>
-                           {{ userInfo.name || '完善信息' }}
+                           {{ userInfo.username || '完善信息' }}
                         </span>
                         <span></span>
                         <van-icon name="arrow" />
