@@ -22,7 +22,9 @@ export default {
                     left-arrow
                     on-click-left={ this.onClickLeft }
                 />
-                <div class="content">
+                <div class="content" on-click={ () => {
+                    if (!this.form.avatar) this.handleClick()
+                }}>
                     {
                         <img on-click={ this.handleClick } src={ this.form.avatar } />
                     }
