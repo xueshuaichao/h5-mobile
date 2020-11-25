@@ -234,6 +234,7 @@ export default {
 }
 .courseDetail-content {
     background: #F5F5FA;
+    margin-bottom: 100px;
 }
 .courseDetail-btn .button-disable {
   width: 100%;
